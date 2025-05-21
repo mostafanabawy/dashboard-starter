@@ -7,8 +7,8 @@
         <!-- Reactive form for search and filter -->
         <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="flex items-center p-2">
             <!-- searchText: main search input -->
-            <input type="search" class="form-input mb-6 border-black" placeholder="Search..." formControlName="searchText" />
-            <button type="submit" class="btn btn-primary mb-6 ml-2">Search</button>
+            <input type="search" class="form-input mb-6 border-black" [placeholder]="'table.Search' | translate" formControlName="searchText" />
+            <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2">{{ "table.Search" | translate}}</button>
            
         </form>
         <!-- 
@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="relative mb-4">
                                             <label for="answer" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{ "Answer" | translate}}</label>
-                                            <textarea id="answer" type="text" rows="6" placeholder="Answer" class="form-input"
+                                            <textarea id="answer" type="text" rows="6" placeholder="Answer" class="form-input [direction:ltr]"
                                                 formControlName="answer"></textarea>
                                         </div>
                                         <div class="relative mb-4">

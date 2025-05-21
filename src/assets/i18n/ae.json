@@ -156,7 +156,9 @@
         "Date": "التاريخ",
         "Questions": "الأسئلة",
         "FollowUp": "متابعة",
-        "Answer": "الإجابة"
+        "Answer": "الإجابة",
+        "Search": "بحث",
+        "Export": "تحميل البيانات"
     },
     "table2": {
         "Question": "السؤال",

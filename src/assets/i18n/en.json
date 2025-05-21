@@ -141,7 +141,10 @@
         "Date": "Date",
         "Questions": "Questions",
         "FollowUp": "Follow Up",
-        "Answer": "Answer"
+        "Answer": "Answer",
+        "Search": "Search",
+        "Search By": "Search By",
+        "Export": "Export Data"
     },
     "table2": {
         "Question": "Question",
