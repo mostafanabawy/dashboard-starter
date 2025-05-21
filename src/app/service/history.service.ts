@@ -17,7 +17,6 @@ export class HistoryService {
       query = { Question: formData.searchText };
     }
 
-    console.log(query);
 
     const params = new HttpParams()
       .set('action', 'getpagewithsearch')

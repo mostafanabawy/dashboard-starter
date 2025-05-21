@@ -5,9 +5,9 @@
                 <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="p-2">
                     <div class="flex items-center">
                         <!-- searchText: main search input -->
-                        <input type="search" class="form-input mb-6 border-black" placeholder="Search..."
+                        <input type="search" class="form-input mb-6 border-black" [placeholder]="'table.Search' | translate"
                             formControlName="searchText" />
-                        <button type="submit" class="btn btn-primary mb-6 ml-2">Search</button>
+                        <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2">{{ "table.Search" | translate}}</button>
                     </div>
                     <!-- searchBy: select field for search type -->
                     <select class="border mb-6 ml-2 font-extrabold text-white-light bg-[#2d3f69] cursor-pointer border-black rounded-md p-1" formControlName="searchBy">
