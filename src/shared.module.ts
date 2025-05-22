@@ -26,10 +26,12 @@ import { NgxCustomModalComponent } from 'ngx-custom-modal';
 // apexchart
 import { NgApexchartsModule } from 'ng-apexcharts';
 
+
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, TranslateModule.forChild(),
          NgScrollbarModule, MenuModule, IconModule,
-          DataTableModule, NgxCustomModalComponent, NgApexchartsModule],
+          DataTableModule, NgxCustomModalComponent,
+        NgApexchartsModule],
     declarations: [],
     exports: [
         // modules
@@ -42,6 +44,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
         NgxCustomModalComponent,
         IconModule,
         NgApexchartsModule
+
     ],
 })
 export class SharedModule {

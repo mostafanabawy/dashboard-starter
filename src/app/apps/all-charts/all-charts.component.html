@@ -1,9 +1,24 @@
-<section>
+<section class="mt-9 space-y-9">
+    <h5 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "AllCharts" | translate}}</h5>
+    <!-- pie chart -->
     <div class="panel">
         <div class="mb-5 overflow-hidden">
+            <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"CallStatusChart" | translate}}</h6>
             <apx-chart [series]="pieChart.series" [chart]="pieChart.chart" [labels]="pieChart.labels"
                 [colors]="pieChart.colors" [responsive]="pieChart.responsive" [stroke]="pieChart.stroke"
                 [legend]="pieChart.legend" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
     </div>
+
+    <div class="panel">
+        <div class="mb-5 overflow-hidden">
+            <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"FollowUpChart" | translate}}</h6>
+            <apx-chart [series]="columnChart.series" [chart]="columnChart.chart" [colors]="columnChart.colors"
+                [dataLabels]="columnChart.dataLabels" [stroke]="columnChart.stroke"
+                [plotOptions]="columnChart.plotOptions" [grid]="columnChart.grid" [xaxis]="columnChart.xaxis"
+                [yaxis]="columnChart.yaxis" [tooltip]="columnChart.tooltip"
+                class="rounded-lg bg-white dark:bg-black"></apx-chart>
+        </div>
+    </div>
+
 </section>

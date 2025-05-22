@@ -7,8 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-crm',
-    templateUrl: './crm.component.html',
-    standalone: false
+    templateUrl: './crm.component.html'
 })
 export class CRMComponent {
   userForm!: FormGroup;

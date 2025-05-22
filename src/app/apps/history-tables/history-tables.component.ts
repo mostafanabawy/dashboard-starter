@@ -7,8 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-history-tables',
-    templateUrl: './history-tables.component.html',
-    standalone: false
+    templateUrl: './history-tables.component.html'
 })
 export class HistoryTablesComponent implements OnInit {
   constructor(

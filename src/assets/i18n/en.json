@@ -164,5 +164,8 @@
         "callerType": "Caller Type",
         "askedQuestions": "Asked Questions",
         "answer": "Answer"
-    }
+    },
+    "AllCharts": "All Charts",
+    "CallStatusChart": "Call Status Distribution Pie Chart",
+    "FollowUpChart": "Follow Up Tasks by Agents"
 }

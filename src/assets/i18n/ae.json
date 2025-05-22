@@ -187,5 +187,8 @@
     },
     "Edit Question": "تعديل السؤال",
     "Save": "حفظ",
-    "Cancel": "إلغاء"
+    "Cancel": "إلغاء",
+    "AllCharts": "جميع الرسوم البيانية",
+    "CallStatusChart": "مخطط دائري لحالة المكالمة",
+    "FollowUpChart": "المتابعة حسب الوكلاء"
 }
