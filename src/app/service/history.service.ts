@@ -30,7 +30,7 @@ export class HistoryService {
       { params }  // query string parameters
     );
   }
-  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId') {
+  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50) {
     let query: any = {};
     if (payload.searchBy && payload.searchText) {
       query[payload.searchBy] = payload.searchText;
@@ -40,7 +40,7 @@ export class HistoryService {
     const params = new HttpParams()
       .set('action', 'getpagewithsearch')
       .set('pageno', `${pageNumber}`)
-      .set('pagesize', '50')
+      .set('pagesize', `${pageSize}`)
       .set('sortfield', `${sortField}`)
       .set('sortdirection', `${sort}`);
     return this.http.post('http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx',

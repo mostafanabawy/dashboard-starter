@@ -28,6 +28,7 @@ export class AllChartsComponent {
   }
   pieChart: any;
   columnChart: any;
+  lineChart: any;
   store: any;
   @Input() data: any[] = [];
   initCharts() {
@@ -85,16 +86,22 @@ export class AllChartsComponent {
 
     /* column chart */
     const isRtl = this.store.rtlClass === 'rtl' ? true : false;
+    const callerCounts: { [caller: string]: number } = {};
+    this.data.forEach(item => {
+      if (item.CallStatus === 'Follow Up') {
+        const caller = item.CallerName;
+        callerCounts[caller] = (callerCounts[caller] || 0) + 1;
+      }
+    });
+    const callerNames = Object.keys(callerCounts);
+    const counts = Object.values(callerCounts);
+    console.log(counts);
     this.columnChart = {
       series: [
         {
-          name: 'Net Profit',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-        },
-        {
-          name: 'Revenue',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-        },
+          name: 'Agent',
+          data: [...counts]
+        }
       ],
       chart: {
         height: 300,
@@ -126,7 +133,7 @@ export class AllChartsComponent {
         borderColor: '#e0e6ed',
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        categories: [...callerNames],
         axisBorder: {
           color: '#e0e6ed',
         },
@@ -144,6 +151,51 @@ export class AllChartsComponent {
             return val;
           },
         },
+      },
+    };
+
+    /* line chart */
+    
+    this.lineChart = {
+      series: [
+      {
+        name: 'Sales',
+        data: [45, 55, 75, 25, 45, 110],
+      },
+      ],
+      chart: {
+      height: 300,
+      type: 'line',
+      toolbar: false,
+      },
+      colors: ['#4361ee'],
+      tooltip: {
+      marker: false,
+      y: {
+        formatter(number: string) {
+        return '$' + number;
+        },
+      },
+      theme: 'light',
+      },
+      stroke: {
+      width: 2,
+      curve: 'smooth',
+      },
+      xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+      axisBorder: {
+        color: '#e0e6ed',
+      },
+      },
+      yaxis: {
+      opposite: isRtl ? true : false,
+      labels: {
+        offsetX: isRtl ? -20 : 0,
+      },
+      },
+      grid: {
+      borderColor: '#e0e6ed'
       },
     };
 
