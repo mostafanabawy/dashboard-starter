@@ -23,9 +23,13 @@ import { IconModule } from 'src/app/shared/icon/icon.module';
 import { DataTableModule } from '@bhplugin/ng-datatable';
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
 
+// apexchart
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, TranslateModule.forChild(),
-         NgScrollbarModule, MenuModule, IconModule, DataTableModule, NgxCustomModalComponent],
+         NgScrollbarModule, MenuModule, IconModule,
+          DataTableModule, NgxCustomModalComponent, NgApexchartsModule],
     declarations: [],
     exports: [
         // modules
@@ -37,6 +41,7 @@ import { NgxCustomModalComponent } from 'ngx-custom-modal';
         MenuModule,
         NgxCustomModalComponent,
         IconModule,
+        NgApexchartsModule
     ],
 })
 export class SharedModule {

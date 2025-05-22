@@ -10,7 +10,7 @@
                     href="javascript:;"
                     aria-label="toggle sidebar"
                     role="button"
-                    class="collapse-icon flex h-8 w-8 items-center rounded-full text-white-light ms-auto transition duration-300 hover:bg-gray-500/10 hover:text-primary dark:text-white-light dark:hover:bg-dark-light/10 rtl:rotate-180"
+                    class="collapse-icon flex h-8 w-8 items-center rounded-full text-white-light ms-auto transition duration-300 hover:bg-gray-500/10 hover:text-primary dark:text-white-light dark:hover:bg-dark-light/10 rtl:rotate-180 cursor-pointer"
                     (click)="storeData.dispatch({ type: 'toggleSidebar'})"
                 >
                     <icon-carets-down class="m-auto rotate-90" />
@@ -21,7 +21,7 @@
                     <li class="accordion menu nav-item">
                         <button
                             type="button"
-                            class="nav-link group w-full"
+                            class="nav-link group w-full cursor-pointer"
                             [ngClass]="{ active: activeDropdown.includes('dashboard') }"
                             (click)="toggleAccordion('dashboard')"
                         >
@@ -39,7 +39,7 @@
                         <div [@slideDownUp]="!activeDropdown.includes('dashboard')" class="accordion-content">
                             <ul class="sub-menu text-gray-500">
                                 <li>
-                                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)]"
+                                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
                                         >{{ 'CRM' | translate }}</a
                                     >
                                 </li>

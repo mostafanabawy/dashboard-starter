@@ -9,6 +9,7 @@ import { CRMComponent } from './crm.component';
 import { HistoryTablesComponent } from './history-tables/history-tables.component';
 import { HistoryTabsComponent } from './history-tabs/history-tabs.component';
 import { QuestionsTableComponent } from './questions-table/questions-table.component';
+import { AllChartsComponent } from './all-charts/all-charts.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
         CRMComponent,
         HistoryTablesComponent,
         HistoryTabsComponent,
-        QuestionsTableComponent
+        QuestionsTableComponent,
+        AllChartsComponent
     ],
 })
 export class AppsModule {}
