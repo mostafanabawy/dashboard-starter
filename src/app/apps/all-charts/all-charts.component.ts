@@ -51,7 +51,6 @@ export class AllChartsComponent {
       }
     });
     const statusCountsArray = Object.values(statusCounts);
-    console.log(statusCountsArray);
     this.pieChart = {
       series: [...statusCountsArray],
       chart: {
@@ -95,7 +94,6 @@ export class AllChartsComponent {
     });
     const callerNames = Object.keys(callerCounts);
     const counts = Object.values(callerCounts);
-    console.log(counts);
     this.columnChart = {
       series: [
         {

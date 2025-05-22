@@ -168,5 +168,6 @@
     "AllCharts": "All Charts",
     "CallStatusChart": "Call Status Distribution Pie Chart",
     "FollowUpChart": "Follow Up Tasks by Agents",
-    "WeeklyCaseChart": "Weekly Case Submission Trend"
+    "WeeklyCaseChart": "Weekly Case Submission Trend",
+    "footer1": "© {{year}}. All rights reserved."
 }

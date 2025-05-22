@@ -718,3 +718,10 @@ pre code.hljs {
 .ng-scroll-viewport {
     @apply w-full;
 }
+
+.datatable .bh-datatable .bh-pagination .bh-page-item.bh-active{
+    @apply !border-none
+}
+.datatable .bh-datatable .bh-pagination .bh-page-item:hover{
+    @apply !border-none
+}
