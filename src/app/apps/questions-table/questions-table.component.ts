@@ -30,14 +30,12 @@ export class QuestionsTableComponent {
       console.log(res);
     });
     this.translateCols();
+    this.translate.onLangChange.subscribe(() => {
+      this.translateCols(); // Re-translate when language changes
+    });
   }
   loading = true;
-  cols = [
-    { field: 'Question', title: 'Question' },
-    { field: 'AnswerEN', title: 'Answer' },
-    { field: 'AnswerAR', title: 'Notes' },
-    { field: 'action', title: 'Action', filter: false, headerClass: 'justify-center' }
-  ];
+  cols : any[] = [];
   translateCols() {
     this.translate.get([
       'table2.Question',

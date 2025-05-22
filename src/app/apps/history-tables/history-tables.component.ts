@@ -4,6 +4,7 @@ import { HistoryService } from 'src/app/service/history.service';
 import alasql from 'alasql';
 import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-history-tables',
   templateUrl: './history-tables.component.html'
@@ -25,45 +26,53 @@ export class HistoryTablesComponent implements OnInit {
     });
     (window as any).XLSX = XLSX;
     this.translateCols();
+    this.langChangeSub = this.translate.onLangChange.subscribe(() => {
+      this.translateCols();
+    });
   }
   search1 = '';
-  cols = [
-    { field: 'RecordId', title: 'RecordId', maxWidth: '6%' },
-    { field: 'CallerName', title: 'Caller Name', maxWidth: '8%' },
-    { field: 'PhoneNumber', title: 'Phone Number', maxWidth: '7%' },
-    { field: 'WhatsAppNumber', title: 'Other Number', maxWidth: '7%' },
-    { field: 'CallerType', title: 'Caller Type', maxWidth: '6%' },
-    { field: 'ExtraField1', title: 'Type Of Call', maxWidth: '6%' },
-    { field: 'CallStatus', title: 'Status', maxWidth: '5%' },
-    { field: 'City', title: 'City', maxWidth: '6%' },
-    { field: 'SchoolName', title: 'SchoolName', maxWidth: '10%' },
-    { field: 'Percentage', title: 'Percentage', maxWidth: '5%' },
-    { field: 'CertificateType', title: 'CertificateType', maxWidth: '7%' },
-    { field: 'Answer', title: 'Notes', maxWidth: '10%' },
-    { field: 'CreationDate', title: 'Date', maxWidth: '6%' },
-    { field: 'ExtraField3', title: 'Questions', maxWidth: '10%' },
-    { field: 'FollowUp', title: 'Follow Up', maxWidth: '6%' },
-    { field: 'Answer', title: 'Answer', maxWidth: '5%' }
-  ];
+  cols: any[] = [];
+  private langChangeSub!: Subscription;
   translateCols() {
-    this.cols = [
-      { field: 'RecordId', title: this.translate.instant('table.RecordId'), maxWidth: '6%' },
-      { field: 'CallerName', title: this.translate.instant('table.CallerName'), maxWidth: '8%' },
-      { field: 'PhoneNumber', title: this.translate.instant('table.PhoneNumber'), maxWidth: '7%' },
-      { field: 'WhatsAppNumber', title: this.translate.instant('table.OtherNumber'), maxWidth: '7%' },
-      { field: 'CallerType', title: this.translate.instant('table.CallerType'), maxWidth: '6%' },
-      { field: 'ExtraField1', title: this.translate.instant('table.TypeOfCall'), maxWidth: '6%' },
-      { field: 'CallStatus', title: this.translate.instant('table.Status'), maxWidth: '5%' },
-      { field: 'City', title: this.translate.instant('table.City'), maxWidth: '6%' },
-      { field: 'SchoolName', title: this.translate.instant('table.SchoolName'), maxWidth: '10%' },
-      { field: 'Percentage', title: this.translate.instant('table.Percentage'), maxWidth: '5%' },
-      { field: 'CertificateType', title: this.translate.instant('table.CertificateType'), maxWidth: '7%' },
-      { field: 'Answer', title: this.translate.instant('table.Notes'), maxWidth: '10%' },
-      { field: 'CreationDate', title: this.translate.instant('table.Date'), maxWidth: '6%' },
-      { field: 'ExtraField3', title: this.translate.instant('table.Questions'), maxWidth: '10%' },
-      { field: 'FollowUp', title: this.translate.instant('table.FollowUp'), maxWidth: '6%' },
-      { field: 'Answer', title: this.translate.instant('table.Answer'), maxWidth: '5%' }
+    const keys = [
+      'table.RecordId',
+      'table.CallerName',
+      'table.PhoneNumber',
+      'table.OtherNumber',
+      'table.CallerType',
+      'table.TypeOfCall',
+      'table.Status',
+      'table.City',
+      'table.SchoolName',
+      'table.Percentage',
+      'table.CertificateType',
+      'table.Notes',
+      'table.Date',
+      'table.Questions',
+      'table.FollowUp',
+      'table.Answer'
     ];
+
+    this.translate.get(keys).subscribe(translations => {
+      this.cols = [
+        { field: 'RecordId', title: translations['table.RecordId'], maxWidth: '6%' },
+        { field: 'CallerName', title: translations['table.CallerName'], maxWidth: '8%' },
+        { field: 'PhoneNumber', title: translations['table.PhoneNumber'], maxWidth: '7%' },
+        { field: 'WhatsAppNumber', title: translations['table.OtherNumber'], maxWidth: '7%' },
+        { field: 'CallerType', title: translations['table.CallerType'], maxWidth: '6%' },
+        { field: 'ExtraField1', title: translations['table.TypeOfCall'], maxWidth: '6%' },
+        { field: 'CallStatus', title: translations['table.Status'], maxWidth: '5%' },
+        { field: 'City', title: translations['table.City'], maxWidth: '6%' },
+        { field: 'SchoolName', title: translations['table.SchoolName'], maxWidth: '10%' },
+        { field: 'Percentage', title: translations['table.Percentage'], maxWidth: '5%' },
+        { field: 'CertificateType', title: translations['table.CertificateType'], maxWidth: '7%' },
+        { field: 'Answer', title: translations['table.Notes'], maxWidth: '10%' },
+        { field: 'CreationDate', title: translations['table.Date'], maxWidth: '6%' },
+        { field: 'ExtraField3', title: translations['table.Questions'], maxWidth: '10%' },
+        { field: 'FollowUp', title: translations['table.FollowUp'], maxWidth: '6%' },
+        { field: 'Answer', title: translations['table.Answer'], maxWidth: '5%' }
+      ];
+    });
   }
 
   rows = signal<any>([])
@@ -105,12 +114,18 @@ export class HistoryTablesComponent implements OnInit {
         });
         break;
       case 'sort':
-        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc"? 1 : 2, data.sort_column ).subscribe((res: any) => {
+        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column).subscribe((res: any) => {
           this.rows.set(res.result.items)
           this.loading = false
           console.log(res);
         });
         break;
+    }
+  }
+  ngOnDestroy() {
+    // Prevent memory leaks
+    if (this.langChangeSub) {
+      this.langChangeSub.unsubscribe();
     }
   }
 }
