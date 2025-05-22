@@ -4,8 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { HistoryService } from 'src/app/service/history.service';
 
 @Component({
-  selector: 'app-questions-table',
-  templateUrl: './questions-table.component.html'
+    selector: 'app-questions-table',
+    templateUrl: './questions-table.component.html',
+    standalone: false
 })
 export class QuestionsTableComponent {
   constructor(

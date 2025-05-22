@@ -6,8 +6,9 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-crm',
-  templateUrl: './crm.component.html',
+    selector: 'app-crm',
+    templateUrl: './crm.component.html',
+    standalone: false
 })
 export class CRMComponent {
   userForm!: FormGroup;

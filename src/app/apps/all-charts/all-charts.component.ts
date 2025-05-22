@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-all-charts',
-  templateUrl: './all-charts.component.html',
+    selector: 'app-all-charts',
+    templateUrl: './all-charts.component.html',
+    standalone: false
 })
 export class AllChartsComponent {
   constructor() {
