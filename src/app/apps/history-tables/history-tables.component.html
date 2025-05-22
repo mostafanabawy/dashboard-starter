@@ -15,13 +15,13 @@
                         <select
                             class="ml-2 text-sm font-semibold text-white bg-gradient-to-b from-[#161F3B] to-[#273866] cursor-pointer !border-none rounded-md px-1 py-2"
                             formControlName="searchBy" aria-label="search By">
-                            <option value="" disabled selected>{{ "table.SearchBy" | translate}}</option>
-                            <option value="">Caller Name ( Default )</option>
-                            <option value="PhoneNumber">Phone Number</option>
-                            <option value="SchoolName">School Name</option>
-                            <option value="WhatsAppNumber">WhatsApp Number</option>
-                            <option value="City">City</option>
-                            <option value="FollowUp">Follow Up</option>
+                            <option class="text-black" value="" disabled selected>{{ "table.SearchBy" | translate}}</option>
+                            <option class="text-black" value="">Caller Name ( Default )</option>
+                            <option class="text-black" value="PhoneNumber">Phone Number</option>
+                            <option class="text-black" value="SchoolName">School Name</option>
+                            <option class="text-black" value="WhatsAppNumber">WhatsApp Number</option>
+                            <option class="text-black" value="City">City</option>
+                            <option class="text-black" value="FollowUp">Follow Up</option>
                         </select>
                         <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
                             "table.Export" | translate}}</button>
