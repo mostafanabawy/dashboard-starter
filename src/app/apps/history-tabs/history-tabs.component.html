@@ -1,13 +1,13 @@
 <div class="mb-5">
     <div class="mt-3 flex flex-wrap border-b border-white-light dark:border-[#191e3a]">
         <a href="javascript:;"
-            class="-mb-[1px] block border border-transparent p-3.5 py-2 !outline-none transition duration-300 hover:text-secondary dark:hover:border-b-black"
+            class="-mb-[1px] block border border-transparent p-3.5 py-2 !outline-none transition duration-300 hover:text-secondary dark:hover:border-b-black cursor-pointer"
             [ngClass]="{ '!border-white-light !border-b-white  text-secondary dark:!border-[#191e3a] dark:!border-b-black': tab1.toLowerCase() === 'questions' }"
             (click)="tab1 = 'questions'">
             {{ "Questions" | translate }}
         </a>
         <a href="javascript:;"
-            class="-mb-[1px] block border border-transparent p-3.5 py-2 !outline-none transition duration-300 hover:text-secondary dark:hover:border-b-black"
+            class="-mb-[1px] block border border-transparent p-3.5 py-2 !outline-none transition duration-300 hover:text-secondary dark:hover:border-b-black cursor-pointer"
             [ngClass]="{ '!border-white-light !border-b-white text-secondary dark:!border-[#191e3a] dark:!border-b-black': tab1.toLowerCase() === 'history' }"
             (click)="tab1 = 'history'">
             {{ "History" | translate }}
@@ -19,9 +19,9 @@
             <app-questions-table></app-questions-table>
             
         </div>
-        <div *ngIf="tab1.toLowerCase() === 'history'" class="overflow-x-auto">
+        <div *ngIf="tab1.toLowerCase() === 'history'" class="">
             <div class="flex items-start">
-                <div class="flex-auto">
+                <div class="flex-auto overflow-x-auto relative">
                     <h4 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "All History" | translate}}</h4>
                    <app-history-tables></app-history-tables>
                 </div>

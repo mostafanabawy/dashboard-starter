@@ -1,16 +1,19 @@
 <div>
     <div class="panel mt-6 pb-0">
-        <div class="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
-            <div class="ltr:ml-auto rtl:mr-auto w-full">
-                <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="p-2">
+        <div class="mb-5 flex flex-col gap-5 md:flex-row md:items-center sticky right-0 left-0">
+            <div class="sticky left-0 right-0 grow">
+                <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="p-2 sticky left-0 right-0">
                     <div class="flex items-center">
                         <!-- searchText: main search input -->
                         <input type="search" class="form-input mb-6 border-black" [placeholder]="'table.Search' | translate"
                             formControlName="searchText" />
-                        <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2">{{ "table.Search" | translate}}</button>
+                        <button type="submit" class="btn btn-primary cursor-pointer mb-6 ltr:ml-2 rtl:mr-2">{{
+                            "table.Search" | translate}}</button>
                     </div>
                     <!-- searchBy: select field for search type -->
-                    <select class="border mb-6 ml-2 font-extrabold text-white-light bg-[#2d3f69] cursor-pointer border-black rounded-md p-1" formControlName="searchBy">
+                    <select
+                        class="border mb-6 ml-2 font-extrabold text-white-light bg-[#2d3f69] cursor-pointer border-black rounded-md p-1"
+                        formControlName="searchBy">
                         <option value="" disabled selected>{{ "table.SearchBy" | translate}}</option>
                         <option value="">Caller Name ( Default )</option>
                         <option value="PhoneNumber">Phone Number</option>
@@ -20,17 +23,15 @@
                         <option value="FollowUp">Follow Up</option>
                     </select>
                 </form>
-                <button (click)="exportData()" class="btn btn-primary !mt-6 hover:opacity-80">{{ "table.Export" | translate}}</button>
+                <button (click)="exportData()" class="btn btn-primary cursor-pointer !mt-6 hover:opacity-80">{{
+                    "table.Export" | translate}}</button>
             </div>
         </div>
         <div class="datatable">
             <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap"
-                [loading]="rows().length? false : true" [sortable]="true" [stickyHeader]="true"
-                [isServerMode]="true" [loading]="loading ? true : false"
-                [totalRows]="totalRows()"
-                [pageSize]="50"
+                [loading]="rows().length? false : true" [sortable]="true" [stickyHeader]="true" [isServerMode]="true"
+                [loading]="loading ? true : false" [totalRows]="totalRows()" [pageSize]="50"
                 (changeServer)="onServerChange($event)"
-                
                 firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
                 lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg> '
                 previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'

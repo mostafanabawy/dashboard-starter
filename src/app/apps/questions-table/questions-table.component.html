@@ -8,7 +8,7 @@
         <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="flex items-center p-2 flex-col sm:flex-row">
             <!-- searchText: main search input -->
             <input type="search" class="form-input mb-6 border-black" [placeholder]="'table.Search' | translate" formControlName="searchText" />
-            <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2">{{ "table.Search" | translate}}</button>
+            <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2 cursor-pointer">{{ "table.Search" | translate}}</button>
            
         </form>
         <!-- 
@@ -48,7 +48,7 @@
                         <!-- login -->
                         <div>
                             <!-- Trigger -->
-                            <button type="button" class="ltr:mr-2 rtl:ml-2" ngxTippy="Edit"
+                            <button type="button" class="ltr:mr-2 rtl:ml-2 cursor-pointer" ngxTippy="Edit"
                                 (click)="editRow(value); modal20.open()" aria-label="Edit Row">
                                 <icon-pencil />
                             </button>
