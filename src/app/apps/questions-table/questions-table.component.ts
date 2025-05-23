@@ -2,6 +2,7 @@ import { Component, effect, OnChanges, signal, SimpleChanges } from '@angular/co
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { HistoryService } from 'src/app/service/history.service';
+import { QuestionsAPIResponse } from 'src/app/types/questions.types';
 
 @Component({
     selector: 'app-questions-table',
@@ -23,7 +24,7 @@ export class QuestionsTableComponent {
 
 
   ngOnInit() {
-    this.tabsHisoryService.fetchQuestions(1, this.searchForm.value).subscribe((res: any) => {
+    this.tabsHisoryService.fetchQuestions(1, this.searchForm.value).subscribe((res: QuestionsAPIResponse) => {
       this.rows.set(res.result.items)
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.currentPage.set(res.result.PagingInfo[0].CurrentPage);
@@ -103,7 +104,7 @@ export class QuestionsTableComponent {
   onSearchSubmit() {
     this.loading = true;
     this.currentPage.set(1);
-    this.tabsHisoryService.fetchQuestions(this.currentPage(), this.searchForm.value).subscribe((res: any) => {
+    this.tabsHisoryService.fetchQuestions(this.currentPage(), this.searchForm.value).subscribe((res: QuestionsAPIResponse) => {
       this.rows.set(res.result.items);
       if (res.result.items.length > 0) {
         this.totalRows.set(res.result.PagingInfo[0].TotalRows + 1);

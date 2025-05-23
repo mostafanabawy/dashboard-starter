@@ -1,5 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { QuestionsAPIResponse } from '../types/questions.types';
+import { Observable } from 'rxjs';
+import { HistoryAPIResponse } from '../types/history.types';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +11,7 @@ export class HistoryService {
   constructor(
     private http: HttpClient
   ) { }
-  fetchQuestions(pageNo: number, formData: { searchText: string, searchBy: string }) {
+  fetchQuestions(pageNo: number, formData: { searchText: string, searchBy: string }) : Observable<QuestionsAPIResponse> {
     console.log(formData);
     let query: any = {};
     if (formData.searchBy && formData.searchText) {
@@ -24,13 +27,13 @@ export class HistoryService {
       .set('pagesize', '1000')
       .set('sortfield', 'ID')
       .set('sortdirection', '1');
-    return this.http.post(
+    return this.http.post<QuestionsAPIResponse>(
       'http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx',
       query,         // empty POST body
       { params }  // query string parameters
     );
   }
-  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50) {
+  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50) : Observable<HistoryAPIResponse> {
     let query: any = {};
     if (payload.searchBy && payload.searchText) {
       query[payload.searchBy] = payload.searchText;
@@ -43,7 +46,7 @@ export class HistoryService {
       .set('pagesize', `${pageSize}`)
       .set('sortfield', `${sortField}`)
       .set('sortdirection', `${sort}`);
-    return this.http.post('http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx',
+    return this.http.post<HistoryAPIResponse>('http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx',
       query,         // empty POST body
       { params }  // query string parameters
     )

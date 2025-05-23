@@ -5,6 +5,7 @@ import alasql from 'alasql';
 import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { HistoryAPIResponse } from 'src/app/types/history.types';
 @Component({
   selector: 'app-history-tables',
   templateUrl: './history-tables.component.html'
@@ -18,7 +19,7 @@ export class HistoryTablesComponent implements OnInit {
     this.initForm();
   }
   ngOnInit() {
-    this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value).subscribe((res: any) => {
+    this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value).subscribe((res: HistoryAPIResponse) => {
       this.rows.set(res.result.items);
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.loading = false;
@@ -108,14 +109,14 @@ export class HistoryTablesComponent implements OnInit {
     switch (data.change_type) {
       case 'page':
         this.currentPage.set(data.current_page)
-        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value).subscribe((res: any) => {
+        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
           console.log(res);
         });
         break;
       case 'sort':
-        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column).subscribe((res: any) => {
+        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
           console.log(res);
