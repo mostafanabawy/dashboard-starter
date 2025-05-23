@@ -36,7 +36,7 @@
             <div [ngClass]="isSubmitForm ? userForm.controls['WhatsAppNumber'].errors ? 'has-error' : 'has-success' : ''"> 
                 <label class="text-[#2d3f69] font-extrabold" for="WhatsAppNumber">{{ "WhatsApp Number" |
                     translate}}</label>
-                <input id="WhatsAppNumber" name="WhatsAppNumber" type="text"
+                <input id="WhatsAppNumber" name="WhatsAppNumber" type="tel"
                     [placeholder]="'WhatsApp Number' | translate" class="form-input" formControlName="WhatsAppNumber">
                 <ng-container *ngIf="isSubmitForm && userForm.controls['WhatsAppNumber'].errors">
                     <p class="mt-1 text-danger">Please enter a number made from 11 digits.</p>
