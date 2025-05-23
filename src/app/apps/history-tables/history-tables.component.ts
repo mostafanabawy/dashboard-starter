@@ -6,8 +6,8 @@ import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 @Component({
-    selector: 'app-history-tables',
-    templateUrl: './history-tables.component.html'
+  selector: 'app-history-tables',
+  templateUrl: './history-tables.component.html'
 })
 export class HistoryTablesComponent implements OnInit {
   constructor(
@@ -99,8 +99,9 @@ export class HistoryTablesComponent implements OnInit {
     });
   }
   exportData() {
-    alasql('SELECT * INTO XLSX("History.xlsx",{headers:true}) FROM ?', [this.rows()]);
-
+    this.tabsHisoryService.fetchHistory(1, this.searchForm.value, 1, 'RecordId', 1000).subscribe((res: any) => {
+      alasql('SELECT * INTO XLSX("History.xlsx",{headers:true}) FROM ?', [res.result.items]);
+    });
   }
   onServerChange(data: any) {
     console.log(data);
