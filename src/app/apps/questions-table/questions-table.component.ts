@@ -60,25 +60,26 @@ export class QuestionsTableComponent {
   totalRows = signal<number>(0);
   initForm() {
     this.singleRowForm = this.fb.group({
-      questionId: [{ value: "", disabled: true }],
-      question: [''],
-      answer: [''],
-      notes: ['']
+      ID: [{ value: "", disabled: true }],
+      Question: [''],
+      AnswerEN: [''],
+      AnswerAR: ['']
     });
     this.searchForm = this.fb.group({
       searchText: [''],
       searchBy: ['']
     });
+
   }
 
 
   editRow(row: any) {
     console.log(row);
     this.singleRowForm.patchValue({
-      questionId: row.ID,
-      question: row.Question,
-      answer: row.AnswerEN,
-      notes: row.AnswerAR
+      ID: row.ID,
+      Question: row.Question,
+      AnswerEN: row.AnswerEN,
+      AnswerAR: row.AnswerAR
     });
   }
   onEdit(modal20: any) {

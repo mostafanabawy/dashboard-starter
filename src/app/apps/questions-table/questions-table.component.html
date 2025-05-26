@@ -28,27 +28,27 @@
                 <ng-template #modalBody>
                     <form (ngSubmit)="onAdd(modal21);" [formGroup]='singleRowForm'>
                         <div class="relative mb-4">
-                            <label for="questionId" class="hidden">questionId</label>
-                            <textarea id="questionId" type="text" class="form-input hidden"
-                                formControlName="questionId"></textarea>
+                            <label for="ID" class="hidden">questionId</label>
+                            <textarea id="ID" type="text" class="form-input hidden"
+                                formControlName="ID"></textarea>
                         </div>
                         <div class="relative mb-4">
-                            <label for="question" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                            <label for="Question" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                 "table2.Question" | translate}}</label>
-                            <textarea id="question" type="text" rows="5" placeholder="Question" class="form-input"
-                                formControlName="question"></textarea>
+                            <textarea id="Question" type="text" rows="5" placeholder="Question" class="form-input"
+                                formControlName="Question"></textarea>
                         </div>
                         <div class="relative mb-4">
-                            <label for="answer" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                            <label for="AnswerEN" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                 "Answer" | translate}}</label>
-                            <textarea id="answer" type="text" rows="6" placeholder="Answer"
-                                class="form-input [direction:ltr]" formControlName="answer"></textarea>
+                            <textarea id="AnswerEN" type="text" rows="6" placeholder="Answer"
+                                class="form-input [direction:ltr]" formControlName="AnswerEN"></textarea>
                         </div>
                         <div class="relative mb-4">
-                            <label for="notes" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                            <label for="AnswerAR" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                 "Notes" | translate}}</label>
-                            <textarea id="notes" type="text" placeholder="Notes" class="form-input"
-                                formControlName="notes"></textarea>
+                            <textarea id="AnswerAR" type="text" placeholder="Notes" class="form-input"
+                                formControlName="AnswerAR"></textarea>
                         </div>
                         <div class="flex items-center justify-end">
                             <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{
@@ -114,30 +114,30 @@
                                 <ng-template #modalBody>
                                     <form (ngSubmit)="onEdit(modal20);" [formGroup]='singleRowForm'>
                                         <div class="relative mb-4">
-                                            <label for="questionId" class="hidden">questionId</label>
-                                            <textarea id="questionId" type="text" class="form-input hidden"
-                                                formControlName="questionId"></textarea>
+                                            <label for="ID" class="hidden">questionId</label>
+                                            <textarea id="ID" type="text" class="form-input hidden"
+                                                formControlName="ID"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="question"
+                                            <label for="Question"
                                                 class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                                 "table2.Question" | translate}}</label>
-                                            <textarea id="question" type="text" rows="5" placeholder="Question"
-                                                class="form-input" formControlName="question"></textarea>
+                                            <textarea id="Question" type="text" rows="5" placeholder="Question"
+                                                class="form-input" formControlName="Question"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="answer"
+                                            <label for="AnswerEN"
                                                 class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                                 "Answer" | translate}}</label>
-                                            <textarea id="answer" type="text" rows="6" placeholder="Answer"
-                                                class="form-input [direction:ltr]" formControlName="answer"></textarea>
+                                            <textarea id="AnswerEN" type="text" rows="6" placeholder="Answer"
+                                                class="form-input [direction:ltr]" formControlName="AnswerEN"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="notes"
+                                            <label for="AnswerAR"
                                                 class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                                 "Notes" | translate}}</label>
-                                            <textarea id="notes" type="text" placeholder="Notes" class="form-input"
-                                                formControlName="notes"></textarea>
+                                            <textarea id="AnswerAR" type="text" placeholder="Notes" class="form-input"
+                                                formControlName="AnswerAR"></textarea>
                                         </div>
                                         <div class="flex items-center justify-end">
                                             <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{
