@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { slideDownUp } from '../shared/animations';
+import { AppState, indexState } from '../types/auth.types';
 
 @Component({
     moduleId: module.id,
@@ -13,12 +14,12 @@ import { slideDownUp } from '../shared/animations';
 })
 export class SidebarComponent {
     active = false;
-    store: any;
+    store!: indexState;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
     constructor(
         public translate: TranslateService,
-        public storeData: Store<any>,
+        public storeData: Store<AppState>,
         public router: Router,
     ) {
         this.initStore();

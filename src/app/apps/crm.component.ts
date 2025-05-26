@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { HistoryService } from '../service/history.service';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { AppState, indexState } from '../types/auth.types';
 
 @Component({
     selector: 'app-crm',
@@ -25,11 +26,11 @@ export class CRMComponent {
     'Suppliers',
     'Others'
   ];
-  store: any;
+  store!: indexState;
   constructor(
     private fb: FormBuilder,
     private historyTabsService: HistoryService,
-    private storeData: Store<any>,
+    private storeData: Store<AppState>,
     private translate: TranslateService
   ) {
     this.initStore();

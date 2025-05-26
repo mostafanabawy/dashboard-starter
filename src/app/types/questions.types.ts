@@ -22,7 +22,3 @@ export interface QuestionsAPIResponse {
   };
 }
 
-export interface AppState {
-  auth: any;
-  index: any;
-}

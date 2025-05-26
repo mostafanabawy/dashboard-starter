@@ -6,18 +6,20 @@ import { AppService } from 'src/app/service/app.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as AuthActions from "../store/auth/auth.actions"
 import Swal from 'sweetalert2';
+import { AppState } from '../types/auth.types';
+import { AuthState } from '../store/auth/auth.reducer';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  store: any;
+  store!: AuthState;
   loginForm!: FormGroup;
   isSubmitForm = false;
   constructor(
     public translate: TranslateService,
-    public storeData: Store<any>,
+    public storeData: Store<AppState>,
     public router: Router,
     private appSetting: AppService,
     private fb: FormBuilder

@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { toggleAnimation } from 'src/app/shared/animations';
 
 import * as AuthActions from "../store/auth/auth.actions"
+import { AppState } from '../types/auth.types';
 @Component({
     moduleId: module.id,
     selector: 'header',
@@ -15,7 +16,7 @@ import * as AuthActions from "../store/auth/auth.actions"
     standalone: false
 })
 export class HeaderComponent {
-    store: any;
+    store!: AppState;
     search = false;
     username = signal<string>('');
     notifications = [
@@ -79,7 +80,7 @@ export class HeaderComponent {
 
     constructor(
         public translate: TranslateService,
-        public storeData: Store<any>,
+        public storeData: Store<AppState>,
         public router: Router,
         private appSetting: AppService,
         private sanitizer: DomSanitizer,
@@ -94,7 +95,7 @@ export class HeaderComponent {
             }))
             .subscribe((d) => {
                 this.store = d;
-                this.username.set(this.store.auth?.UserName);
+                this.username.set(this.store.auth.UserName!);
             });
     }
 

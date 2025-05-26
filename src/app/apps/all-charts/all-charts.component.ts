@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HistoryService } from 'src/app/service/history.service';
+import { AppState } from 'src/app/types/auth.types';
 
 @Component({
   selector: 'app-all-charts',
@@ -8,7 +9,7 @@ import { HistoryService } from 'src/app/service/history.service';
 })
 export class AllChartsComponent {
   constructor(
-    private storeData: Store<any>,
+    private storeData: Store<AppState>,
     private tabsHistoryService: HistoryService
   ) {
     this.initStore();
@@ -40,7 +41,7 @@ export class AllChartsComponent {
   pieChart: any;
   columnChart: any;
   lineChart: any;
-  store: any;
+  store!: AppState;
   data: any[] = [];
 
   initCharts() {
@@ -96,7 +97,7 @@ export class AllChartsComponent {
     };
 
     /* column chart */
-    const isRtl = this.store.rtlClass === 'rtl' ? true : false;
+    const isRtl = this.store.index.rtlClass === 'rtl' ? true : false;
     const callerCounts: { [caller: string]: number } = {};
     this.data.forEach(item => {
       if (item.CallStatus === 'Follow Up') {
@@ -170,7 +171,7 @@ export class AllChartsComponent {
       series: [
         {
           name: 'Sales',
-          data: [45, 55, 75, 25, 45, 110],
+          data: [45, 55, 75, 25, 45, 110, 60, 70]
         },
       ],
       chart: {
@@ -193,7 +194,7 @@ export class AllChartsComponent {
         curve: 'smooth',
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         axisBorder: {
           color: '#e0e6ed',
         },

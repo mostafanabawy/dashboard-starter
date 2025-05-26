@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { $themeConfig } from '../theme.config';
 import { TranslateService } from '@ngx-translate/core';
+import { AppState } from '../types/auth.types';
 
 @Injectable()
 export class AppService {
     storeData: any;
-    constructor(public translate: TranslateService, public store: Store<any>) {
+    constructor(public translate: TranslateService, private store: Store<AppState>) {
         this.initStoreData();
     }
 

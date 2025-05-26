@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { AppState, QuestionsAPIResponse } from '../types/questions.types';
+import { QuestionsAPIResponse } from '../types/questions.types';
 import { Observable } from 'rxjs';
 import { HistoryAPIResponse } from '../types/history.types';
 import { Store } from '@ngrx/store';
+import { AppState } from '../types/auth.types';
 
 @Injectable({
   providedIn: 'root'
