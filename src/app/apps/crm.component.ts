@@ -51,7 +51,7 @@ export class CRMComponent {
       CertificateType: [''],
       City: [''],
       ExtraField1: ['', Validators.required],
-      ExtraField3: ['', Validators.required],
+      ExtraField3: [[], Validators.required],
       ExtraFiled2: [''], // Note: spelling as per your list
       FollowUp: ['', Validators.required],
       Percentage: [''],
@@ -61,6 +61,15 @@ export class CRMComponent {
       notes: [''],
     });
   }
+  onPhoneNumberBlur(){
+    if(this.userForm.get('PhoneNumber')!.value){
+      const phoneNumberValue = this.userForm.get('PhoneNumber')!.value;
+      this.historyTabsService.initialHistoryFetchVal.set(phoneNumberValue);
+    }else{
+      this.historyTabsService.initialHistoryFetchVal.set(null);
+    }
+    
+  }
 
 
   onSubmit() {
@@ -68,7 +77,10 @@ export class CRMComponent {
     if (this.userForm.valid) {
       //form validated success
       try {
-        this.historyTabsService.sendFormMainData(this.userForm.value).subscribe((res: any) => {
+        const formData = this.userForm.value;
+        formData.ExtraField3 = formData.ExtraField3.join(';'); 
+        console.log(formData);
+        this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
           console.log(res);
           this.userForm.reset();
           this.isSubmitForm = false;

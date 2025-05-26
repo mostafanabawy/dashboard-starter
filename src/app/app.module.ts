@@ -37,6 +37,9 @@ import { HeaderComponent } from './layouts/header';
 import { FooterComponent } from './layouts/footer';
 import { SidebarComponent } from './layouts/sidebar';
 import { ThemeCustomizerComponent } from './layouts/theme-customizer';
+import { authReducer } from './store/auth/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/auth/auth.effects';
 
 @NgModule({
     imports: [
@@ -53,7 +56,8 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
                 deps: [HttpBackend],
             },
         }),
-        StoreModule.forRoot({ index: indexReducer }),
+        StoreModule.forRoot({ index: indexReducer , auth: authReducer }),
+        EffectsModule.forRoot([AuthEffects]),
         SharedModule.forRoot(),
     ],
     declarations: [AppComponent, HeaderComponent, FooterComponent, SidebarComponent, ThemeCustomizerComponent, IndexComponent, AppLayout, AuthLayout],

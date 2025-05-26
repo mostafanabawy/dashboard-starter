@@ -21,3 +21,8 @@ export interface QuestionsAPIResponse {
     PagingInfo: PagingInfo[];
   };
 }
+
+export interface AppState {
+  auth: any;
+  index: any;
+}

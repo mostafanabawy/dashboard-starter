@@ -26,11 +26,15 @@ import { NgxCustomModalComponent } from 'ngx-custom-modal';
 // apexchart
 import { NgApexchartsModule } from 'ng-apexcharts';
 
+// select
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, TranslateModule.forChild(),
          NgScrollbarModule, MenuModule, IconModule,
           DataTableModule, NgxCustomModalComponent,
+          NgSelectModule,
         NgApexchartsModule],
     declarations: [],
     exports: [
@@ -43,7 +47,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
         MenuModule,
         NgxCustomModalComponent,
         IconModule,
-        NgApexchartsModule
+        NgApexchartsModule,
+        NgSelectModule
 
     ],
 })

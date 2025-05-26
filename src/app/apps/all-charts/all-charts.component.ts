@@ -1,5 +1,6 @@
-import { Component, Input, input, Signal, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { HistoryService } from 'src/app/service/history.service';
 
 @Component({
   selector: 'app-all-charts',
@@ -7,30 +8,41 @@ import { Store } from '@ngrx/store';
 })
 export class AllChartsComponent {
   constructor(
-    private storeData: Store<any>
+    private storeData: Store<any>,
+    private tabsHistoryService: HistoryService
   ) {
     this.initStore();
   }
   ngOnInit() {
-    this.initCharts();
+    this.storeData.dispatch({ type: 'toggleMainLoader', payload: true });
+    this.tabsHistoryService.fetchHistory(1, { searchText: '', searchBy: 'PhoneNumber' }).subscribe((res) => {
+      this.data = res.result.items;
+      console.log('Fetched Data:', this.data);
+      this.initCharts();
+      this.storeData.dispatch({ type: 'toggleMainLoader', payload: false });
+    });
   }
   initStore() {
     this.storeData
-      .select((d) => d.index)
+      .select((d) => ({
+        index: d.index,
+        auth: d.auth
+      }))
       .subscribe((d) => {
         this.store = d;
       });
   }
-  ngOnChanges(changes: SimpleChanges) {
+  /* ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] && this.data && this.data.length > 0) {
       this.initCharts();
     }
-  }
+  } */
   pieChart: any;
   columnChart: any;
   lineChart: any;
   store: any;
-  @Input() data: any[] = [];
+  data: any[] = [];
+
   initCharts() {
     /* pie chart */
     const labels = [
@@ -153,47 +165,47 @@ export class AllChartsComponent {
     };
 
     /* line chart */
-    
+
     this.lineChart = {
       series: [
-      {
-        name: 'Sales',
-        data: [45, 55, 75, 25, 45, 110],
-      },
+        {
+          name: 'Sales',
+          data: [45, 55, 75, 25, 45, 110],
+        },
       ],
       chart: {
-      height: 300,
-      type: 'line',
-      toolbar: false,
+        height: 300,
+        type: 'line',
+        toolbar: false,
       },
       colors: ['#4361ee'],
       tooltip: {
-      marker: false,
-      y: {
-        formatter(number: string) {
-        return '$' + number;
+        marker: false,
+        y: {
+          formatter(number: string) {
+            return '$' + number;
+          },
         },
-      },
-      theme: 'light',
+        theme: 'light',
       },
       stroke: {
-      width: 2,
-      curve: 'smooth',
+        width: 2,
+        curve: 'smooth',
       },
       xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
-      axisBorder: {
-        color: '#e0e6ed',
-      },
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+        axisBorder: {
+          color: '#e0e6ed',
+        },
       },
       yaxis: {
-      opposite: isRtl ? true : false,
-      labels: {
-        offsetX: isRtl ? -20 : 0,
-      },
+        opposite: isRtl ? true : false,
+        labels: {
+          offsetX: isRtl ? -20 : 0,
+        },
       },
       grid: {
-      borderColor: '#e0e6ed'
+        borderColor: '#e0e6ed'
       },
     };
 

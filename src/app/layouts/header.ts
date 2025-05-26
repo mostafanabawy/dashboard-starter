@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppService } from '../service/app.service';
@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { toggleAnimation } from 'src/app/shared/animations';
 
+import * as AuthActions from "../store/auth/auth.actions"
 @Component({
     moduleId: module.id,
     selector: 'header',
@@ -16,6 +17,7 @@ import { toggleAnimation } from 'src/app/shared/animations';
 export class HeaderComponent {
     store: any;
     search = false;
+    username = signal<string>('');
     notifications = [
         {
             id: 1,
@@ -86,9 +88,13 @@ export class HeaderComponent {
     }
     async initStore() {
         this.storeData
-            .select((d) => d.index)
+            .select((d) => ({
+                index: d.index,
+                auth: d.auth
+            }))
             .subscribe((d) => {
                 this.store = d;
+                this.username.set(this.store.auth?.UserName);
             });
     }
 
@@ -133,11 +139,14 @@ export class HeaderComponent {
     changeLanguage(item: any) {
         this.translate.use(item.code);
         this.appSetting.toggleLanguage(item);
-        if (this.store.locale?.toLowerCase() === 'ae') {
+        if (this.store.index.locale?.toLowerCase() === 'ae') {
             this.storeData.dispatch({ type: 'toggleRTL', payload: 'rtl' });
         } else {
             this.storeData.dispatch({ type: 'toggleRTL', payload: 'ltr' });
         }
         window.location.reload();
+    }
+    logout() {
+        this.storeData.dispatch(AuthActions.logout());
     }
 }

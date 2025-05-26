@@ -1,17 +1,30 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { QuestionsAPIResponse } from '../types/questions.types';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
+import { AppState, QuestionsAPIResponse } from '../types/questions.types';
 import { Observable } from 'rxjs';
 import { HistoryAPIResponse } from '../types/history.types';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
   constructor(
-    private http: HttpClient
-  ) { }
-  fetchQuestions(pageNo: number, formData: { searchText: string, searchBy: string }) : Observable<QuestionsAPIResponse> {
+    private http: HttpClient,
+    private storeData: Store<AppState>
+  ) {
+    this.initStore();
+  }
+  initialHistoryFetchVal = signal<number | null>(null);
+  store!: any;
+  initStore() {
+    this.storeData
+      .select((d) => d.auth)
+      .subscribe((d) => {
+        this.store = d;
+      });
+  }
+  fetchQuestions(pageNo: number, formData: { searchText: string, searchBy: string }): Observable<QuestionsAPIResponse> {
     console.log(formData);
     let query: any = {};
     if (formData.searchBy && formData.searchText) {
@@ -33,40 +46,60 @@ export class HistoryService {
       { params }  // query string parameters
     );
   }
-  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50) : Observable<HistoryAPIResponse> {
+  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50): Observable<HistoryAPIResponse> {
     let query: any = {};
     if (payload.searchBy && payload.searchText) {
       query[payload.searchBy] = payload.searchText;
     } else if (payload.searchText) {
       query = { CallStatus: payload.searchText, CallerName: payload.searchText };
     }
+    console.log(query);
     const params = new HttpParams()
-      .set('action', 'getpagewithsearch')
+      .set('page', '/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch')
       .set('pageno', `${pageNumber}`)
       .set('pagesize', `${pageSize}`)
       .set('sortfield', `${sortField}`)
       .set('sortdirection', `${sort}`);
-    return this.http.post<HistoryAPIResponse>('http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx',
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    return this.http.post<HistoryAPIResponse>('https://vcld.ws/badsyaproxystg.php',
       query,         // empty POST body
-      { params }  // query string parameters
+      { params, headers }  // query string parameters
     )
   }
   sendFormMainData(formData: any) {
     const params = new HttpParams()
-      .set('action', 'insert')
+      .set('page', '/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
     return this.http.post(
-      'http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx',
+      'https://vcld.ws/badsyaproxystg.php',
       formData,
-      { params }  // query string parameters
+      { params, headers }  // query string parameters
     );
   }
   editRowFormData(formData: any) {
     const params = new HttpParams()
-      .set('action', 'update')
+      .set('page', 'CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=update');
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
     return this.http.post(
-      'http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityQuestions/update.ashx',
+      'https://vcld.ws/badsyaproxystg.php',
       formData,
-      { params }  // query string parameters
+      { params, headers }  // query string parameters
+    );
+  }
+  addRowFormData(formData: any) {
+    console.log(this.store.token);
+    const params = new HttpParams()
+      .set('page', '/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=insert');
+
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    return this.http.post(
+      'https://vcld.ws/badsyaproxystg.php',
+      formData,
+      { params, headers }  // query string parameters
     );
   }
 

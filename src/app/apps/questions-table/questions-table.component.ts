@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { HistoryService } from 'src/app/service/history.service';
 import { QuestionsAPIResponse } from 'src/app/types/questions.types';
+import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-questions-table',
-    templateUrl: './questions-table.component.html',
-    standalone: false
+  selector: 'app-questions-table',
+  templateUrl: './questions-table.component.html',
+  standalone: false
 })
 export class QuestionsTableComponent {
   constructor(
@@ -16,9 +17,6 @@ export class QuestionsTableComponent {
     private translate: TranslateService
   ) {
     this.initForm();
-    effect(() => {
-      console.log('Current page changed:', this.currentPage());
-    });
   }
 
 
@@ -37,7 +35,7 @@ export class QuestionsTableComponent {
     });
   }
   loading = true;
-  cols : any[] = [];
+  cols: any[] = [];
   translateCols() {
     this.translate.get([
       'table2.Question',
@@ -83,24 +81,76 @@ export class QuestionsTableComponent {
       notes: row.AnswerAR
     });
   }
-  onSubmit() {
+  onEdit(modal20: any) {
     console.log(this.singleRowForm.value);
     this.tabsHisoryService.editRowFormData(this.singleRowForm.value).subscribe((res: any) => {
-      console.log(res);
+      const toast: any = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: { container: 'toast' },
+      });
+      toast.fire({
+        icon: 'success',
+        title: "row updated successfully",
+        padding: '10px 20px',
+      });
+      this.loading = true;
+      modal20.close();
+      this.tabsHisoryService.fetchQuestions(1, this.searchForm.value).subscribe((res: QuestionsAPIResponse) => {
+        this.rows.set(res.result.items);
+        if (res.result.items.length > 0) {
+          this.totalRows.set(res.result.PagingInfo[0].TotalRows + 1);
+        } else {
+          this.totalRows.set(res.result.PagingInfo[0].TotalRows);
+        }
+        this.loading = false
+        console.log(res);
+      });
     });
   }
-  /*  onServerChange(data: any) {
-     switch (data.change_type) {
-       case 'page':
-         this.currentPage.set(data.current_page)
-         this.tabsHisoryService.fetchQuestions(data.current_page).subscribe((res: any) => {
-           this.rows.set(res.result.items)
-           this.loading = false
-           console.log(res);
-         });
-         break;
-     }
-   } */
+  openAddForm(modal21: any) {
+    this.singleRowForm.reset();
+    this.singleRowForm.patchValue({
+      questionId: "",
+      question: "",
+      answer: "",
+      notes: ""
+    });
+    modal21.open();
+  }
+  onAdd(modal21: any) {
+    this.tabsHisoryService.addRowFormData(this.singleRowForm.value).subscribe((res: any) => {
+      const toast: any = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: { container: 'toast' },
+      });
+      toast.fire({
+        icon: 'success',
+        title: "row added successfully",
+        padding: '10px 20px',
+      });
+      this.loading = true;
+      modal21.close();
+      this.tabsHisoryService.fetchQuestions(1, this.searchForm.value).subscribe((res: QuestionsAPIResponse) => {
+        this.rows.set(res.result.items);
+        if (res.result.items.length > 0) {
+          this.totalRows.set(res.result.PagingInfo[0].TotalRows + 1);
+        } else {
+          this.totalRows.set(res.result.PagingInfo[0].TotalRows);
+        }
+        this.loading = false
+        console.log(res);
+      });
+    });
+  }
+  onPageChange(event: any) {
+    this.currentPage.set(event)
+  }
   onSearchSubmit() {
     this.loading = true;
     this.currentPage.set(1);

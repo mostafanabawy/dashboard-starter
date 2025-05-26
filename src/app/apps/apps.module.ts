@@ -10,6 +10,7 @@ import { HistoryTablesComponent } from './history-tables/history-tables.componen
 import { HistoryTabsComponent } from './history-tabs/history-tabs.component';
 import { QuestionsTableComponent } from './questions-table/questions-table.component';
 import { AllChartsComponent } from './all-charts/all-charts.component';
+import { LoginComponent } from './login.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
         HistoryTablesComponent,
         HistoryTabsComponent,
         QuestionsTableComponent,
-        AllChartsComponent
+        AllChartsComponent,
+        LoginComponent  
     ],
 })
 export class AppsModule {}

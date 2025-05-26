@@ -1,5 +1,5 @@
 <div>
-<!-- [page]="currentPage()" paginationInfo="{0} to {1} of {2}" [noDataContent]="'No Data Found'"
+    <!-- [page]="currentPage()" paginationInfo="{0} to {1} of {2}" [noDataContent]="'No Data Found'"
                 (changeServer)="onServerChange($event)"
                 [isServerMode]="true"
                  -->
@@ -7,19 +7,69 @@
         <!-- Reactive form for search and filter -->
         <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="flex items-center p-2 flex-col sm:flex-row">
             <!-- searchText: main search input -->
-            <input type="search" class="form-input mb-6 border-black" [placeholder]="'table.Search' | translate" formControlName="searchText" />
-            <button type="submit" class="btn btn-primary mb-6 ltr:ml-2 rtl:mr-2 cursor-pointer">{{ "table.Search" | translate}}</button>
-           
+            <input type="search" class="form-input border-black" [placeholder]="'table.Search' | translate"
+                formControlName="searchText" />
+            <button type="submit" class="btn btn-primary ltr:ml-2 rtl:mr-2 cursor-pointer hover:opacity-80">{{
+                "table.Search" | translate}}</button>
+
         </form>
+        <div class="flex gap-4 items-center mb-8 mt-4 ms-5">
+            <button type="button" (click)="openAddForm(modal21)" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">
+                Add Question
+            </button>
+            <!-- Modal -->
+            <ngx-custom-modal #modal21 customClass="modal-top auth-modal extra-large-modal">
+                <ng-template #modalHeader>
+                    <div class="!py-5">
+                        <h3 class="text-2xl font-extrabold text-[#2d3f69] ltr:text-left rtl:text-right">
+                            {{ "Edit Question" | translate}}</h3>
+                    </div>
+                </ng-template>
+                <ng-template #modalBody>
+                    <form (ngSubmit)="onAdd(modal21);" [formGroup]='singleRowForm'>
+                        <div class="relative mb-4">
+                            <label for="questionId" class="hidden">questionId</label>
+                            <textarea id="questionId" type="text" class="form-input hidden"
+                                formControlName="questionId"></textarea>
+                        </div>
+                        <div class="relative mb-4">
+                            <label for="question" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                "table2.Question" | translate}}</label>
+                            <textarea id="question" type="text" rows="5" placeholder="Question" class="form-input"
+                                formControlName="question"></textarea>
+                        </div>
+                        <div class="relative mb-4">
+                            <label for="answer" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                "Answer" | translate}}</label>
+                            <textarea id="answer" type="text" rows="6" placeholder="Answer"
+                                class="form-input [direction:ltr]" formControlName="answer"></textarea>
+                        </div>
+                        <div class="relative mb-4">
+                            <label for="notes" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                "Notes" | translate}}</label>
+                            <textarea id="notes" type="text" placeholder="Notes" class="form-input"
+                                formControlName="notes"></textarea>
+                        </div>
+                        <div class="flex items-center justify-end">
+                            <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{
+                                "Save" | translate}}</button>
+                            <button type="button" (click)="modal21.close()"
+                                class="btn btn-outline-secondary cursor-pointer">{{ "Cancel" |
+                                translate}}</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </ngx-custom-modal>
+        </div>
         <!-- 
             Input names:
             - searchText: main search input
             - searchBy: select field for search type (question, answer, notes)
         -->
         <div class="datatable">
-            <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap table-hover" 
-                [totalRows]="totalRows()" [stickyHeader]="true" [loading]="loading ? true : false"
-                 firstArrow='
+            <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap table-hover" [totalRows]="totalRows()"
+                [stickyHeader]="true" [loading]="loading ? true : false" [page]="currentPage()"
+                (pageChange)="onPageChange($event)" firstArrow='
       <span role="button" aria-label="First Page" tabindex="0" title="First Page">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180">
           <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -57,35 +107,44 @@
                             <ngx-custom-modal #modal20 customClass="modal-top auth-modal extra-large-modal">
                                 <ng-template #modalHeader>
                                     <div class="!py-5">
-                                        <h3 class="text-2xl font-extrabold text-[#2d3f69] ltr:text-left rtl:text-right">{{ "Edit Question" | translate}}</h3>
+                                        <h3 class="text-2xl font-extrabold text-[#2d3f69] ltr:text-left rtl:text-right">
+                                            {{ "Edit Question" | translate}}</h3>
                                     </div>
                                 </ng-template>
                                 <ng-template #modalBody>
-                                    <form (ngSubmit)="onSubmit()" [formGroup]='singleRowForm'>
+                                    <form (ngSubmit)="onEdit(modal20);" [formGroup]='singleRowForm'>
                                         <div class="relative mb-4">
                                             <label for="questionId" class="hidden">questionId</label>
                                             <textarea id="questionId" type="text" class="form-input hidden"
                                                 formControlName="questionId"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="question" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{ "table2.Question" | translate}}</label>
+                                            <label for="question"
+                                                class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                                "table2.Question" | translate}}</label>
                                             <textarea id="question" type="text" rows="5" placeholder="Question"
                                                 class="form-input" formControlName="question"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="answer" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{ "Answer" | translate}}</label>
-                                            <textarea id="answer" type="text" rows="6" placeholder="Answer" class="form-input [direction:ltr]"
-                                                formControlName="answer"></textarea>
+                                            <label for="answer"
+                                                class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                                "Answer" | translate}}</label>
+                                            <textarea id="answer" type="text" rows="6" placeholder="Answer"
+                                                class="form-input [direction:ltr]" formControlName="answer"></textarea>
                                         </div>
                                         <div class="relative mb-4">
-                                            <label for="notes" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{ "Notes" | translate}}</label>
+                                            <label for="notes"
+                                                class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
+                                                "Notes" | translate}}</label>
                                             <textarea id="notes" type="text" placeholder="Notes" class="form-input"
                                                 formControlName="notes"></textarea>
                                         </div>
                                         <div class="flex items-center justify-end">
-                                            <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{ "Save" | translate}}</button>
+                                            <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{
+                                                "Save" | translate}}</button>
                                             <button type="button" (click)="modal20.close()"
-                                                class="btn btn-outline-secondary cursor-pointer">{{ "Cancel" | translate}}</button>
+                                                class="btn btn-outline-secondary cursor-pointer">{{ "Cancel" |
+                                                translate}}</button>
                                         </div>
                                     </form>
                                 </ng-template>

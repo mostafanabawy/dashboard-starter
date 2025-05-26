@@ -1,5 +1,6 @@
-<section class="mt-9 space-y-9">
+<section class="mt-3 space-y-9">
     <h5 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "AllCharts" | translate}}</h5>
+    @if (pieChart) {
     <!-- pie chart -->
     <div class="panel">
         <div class="mb-5 overflow-hidden">
@@ -9,7 +10,9 @@
                 [legend]="pieChart.legend" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
     </div>
+    }
 
+    @if (columnChart) {
     <div class="panel">
         <div class="mb-5 overflow-hidden">
             <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"FollowUpChart" | translate}}</h6>
@@ -20,14 +23,17 @@
                 class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
     </div>
+    }
 
-    <!-- <div class="panel">
+    @if (lineChart) {
+    <div class="panel">
         <div class="mb-5 overflow-hidden">
             <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"WeeklyCaseChart" | translate}}</h6>
             <apx-chart [series]="lineChart.series" [chart]="lineChart.chart" [colors]="lineChart.colors"
                 [tooltip]="lineChart.tooltip" [stroke]="lineChart.stroke" [xaxis]="lineChart.xaxis"
                 [yaxis]="lineChart.yaxis" [grid]="lineChart.grid" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-    </div> -->
+    </div>
+    }
 
 </section>

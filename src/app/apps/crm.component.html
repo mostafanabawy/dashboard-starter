@@ -18,7 +18,7 @@
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
                         class="font-bold text-red-500">*</span></label>
                 <input id="PhoneNumber" name="PhoneNumber" type="tel" placeholder="Phone Number" class="form-input"
-                    formControlName="PhoneNumber">
+                    formControlName="PhoneNumber" (blur)="onPhoneNumberBlur()">
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['PhoneNumber'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
@@ -33,7 +33,8 @@
                         enter a number made from 11 digits.</p>
                 </ng-container>
             </div>
-            <div [ngClass]="isSubmitForm ? userForm.controls['WhatsAppNumber'].errors ? 'has-error' : 'has-success' : ''"> 
+            <div
+                [ngClass]="isSubmitForm ? userForm.controls['WhatsAppNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="WhatsAppNumber">{{ "WhatsApp Number" |
                     translate}}</label>
                 <input id="WhatsAppNumber" name="WhatsAppNumber" type="tel"
@@ -180,7 +181,8 @@
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
             </div>
-            <div [ngClass]="isSubmitForm ? userForm.controls['CertificateType'].errors ? 'has-error' : 'has-success' : ''">
+            <div
+                [ngClass]="isSubmitForm ? userForm.controls['CertificateType'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="CertificateType">{{ "Certificate Type" |
                     translate}}</label>
                 <select id="CertificateType" name="CertificateType" class="form-select cursor-pointer"
@@ -202,20 +204,22 @@
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
             </div>
-            <!-- <div
-                [ngClass]="isSubmitForm ? userForm.controls['askedQuestions'].errors ? 'has-error' : 'has-success' : ''">
-                <label class="text-[#2d3f69] font-extrabold" for="askedQuestions">Asked Questions <span class="font-bold text-red-500">*</span></label>
+            <div
+                [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
+                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">Asked Questions <span
+                        class="font-bold text-red-500">*</span></label>
                 <ng-select [items]="options" id="ExtraField3" formControlName="ExtraField3" [multiple]="true"
-                    [clearable]="false" placeholder="Select an option" class="custom-multiselect">
+                    [clearable]="false" placeholder="Select an option"
+                    class="custom-multiselect !border h-fit cursor-pointer">
                 </ng-select>
-                <ng-container *ngIf="isSubmitForm && !userForm.controls['askedQuestions'].errors">
+                <ng-container *ngIf="isSubmitForm && !userForm.controls['ExtraField3'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
-                <ng-container *ngIf="isSubmitForm && userForm.controls['askedQuestions'].errors">
-                    <p class="mt-1 text-danger">Asked Questions is required.</p>
+                <ng-container *ngIf="isSubmitForm && userForm.controls['ExtraField3'].errors">
+                    <p class="mt-1 text-danger">{{ getErrorMessage("askedQuestions", "required") }}</p>
                 </ng-container>
-            </div> -->
-            <div [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
+            </div>
+            <!-- <div [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{ "Asked Questions" | translate }} <span
                         class="font-bold text-red-500">*</span></label>
                 <select id="ExtraField3" name="ExtraField3" class="form-select cursor-pointer"
@@ -230,7 +234,7 @@
                 <ng-container *ngIf="isSubmitForm && userForm.controls['ExtraField3'].errors">
                     <p class="mt-1 text-danger">{{ getErrorMessage("askedQuestions", "required") }}</p>
                 </ng-container>
-            </div>
+            </div> -->
         </div>
         <div [ngClass]="isSubmitForm ? userForm.controls['Answer'].errors ? 'has-error' : 'has-success' : ''">
             <label class="text-[#2d3f69] font-extrabold" for="Answer">{{ "Answer" | translate}} <span

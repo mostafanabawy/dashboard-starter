@@ -7,7 +7,7 @@
                         <!-- searchText: main search input -->
                         <input type="search" class="form-input mb-6 border-black"
                             [placeholder]="'table.Search' | translate" formControlName="searchText" />
-                        <button type="submit" class="btn btn-primary cursor-pointer mb-6 ltr:ml-2 rtl:mr-2">{{
+                        <button type="submit" class="btn btn-primary cursor-pointer mb-6 ltr:ml-2 rtl:mr-2 hover:opacity-80">{{
                             "table.Search" | translate}}</button>
                     </div>
                     <div class="flex gap-4 items-center">
@@ -45,7 +45,4 @@
             </ng-datatable>
         </div>
     </div>
-    @if (rows().length > 0){
-    <app-all-charts [data]="rows()"></app-all-charts>
-    }
 </div>

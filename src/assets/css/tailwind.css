@@ -328,7 +328,7 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
     }
 
     .btn-gradient {
-        @apply bg-gradient-to-r from-[#EF1262] to-[#4361EE] text-white hover:from-[#4361EE] hover:to-[#EF1262];
+        @apply bg-blue-500 text-white hover:from-[#4361EE] hover:to-[#EF1262];
     }
 
     /* Badge */
@@ -724,4 +724,8 @@ pre code.hljs {
 }
 .datatable .bh-datatable .bh-pagination .bh-page-item:hover{
     @apply !border-none
+}
+
+.app-background {
+    @apply bg-[radial-gradient(rgb(255,254,234)_0%,rgb(255,254,234)_35%,rgba(183,232,235,0.51)_100%)];
 }

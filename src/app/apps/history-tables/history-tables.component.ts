@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HistoryService } from 'src/app/service/history.service';
 import alasql from 'alasql';
@@ -17,9 +17,20 @@ export class HistoryTablesComponent implements OnInit {
     private translate: TranslateService
   ) {
     this.initForm();
+    effect(() => {
+      const value = this.tabsHisoryService.initialHistoryFetchVal();
+
+      // Fetch or update based on the new value
+      this.tabsHisoryService.fetchHistory(this.currentPage(), { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
+        this.rows.set(res.result.items);
+        this.totalRows.set(res.result.PagingInfo[0].TotalRows);
+        this.loading = false;
+        console.log(res);
+      });
+    });
   }
   ngOnInit() {
-    this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value).subscribe((res: HistoryAPIResponse) => {
+    this.tabsHisoryService.fetchHistory(this.currentPage(), { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
       this.rows.set(res.result.items);
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.loading = false;
