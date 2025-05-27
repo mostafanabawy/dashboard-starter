@@ -173,7 +173,8 @@
     "All History": "جميع الإدخالات السابقة",
     "action": "إجراء",
     "formErrors": {
-        "required": "برجاء إدخال  {{field}}"
+        "required": "برجاء إدخال  {{field}}",
+        "pattern": "برجاء إدخال رقم مكون من 11 رقم."
     },
     "fieldNames": {
         "name": "الاسم",

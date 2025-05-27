@@ -5,6 +5,6 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './history-tabs.component.html'
 })
 export class HistoryTabsComponent {
-  tab1: string = 'questions';
+  tab1: string = 'History';
   
 }

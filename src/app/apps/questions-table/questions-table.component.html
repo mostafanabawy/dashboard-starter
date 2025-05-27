@@ -14,7 +14,8 @@
 
         </form>
         <div class="flex gap-4 items-center mb-8 mt-4 ms-5">
-            <button type="button" (click)="openAddForm(modal21)" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">
+            <button type="button" (click)="openAddForm(modal21)"
+                class="btn btn-primary cursor-pointer !border-none hover:opacity-80">
                 Add Question
             </button>
             <!-- Modal -->
@@ -29,8 +30,7 @@
                     <form (ngSubmit)="onAdd(modal21);" [formGroup]='singleRowForm'>
                         <div class="relative mb-4">
                             <label for="ID" class="hidden">questionId</label>
-                            <textarea id="ID" type="text" class="form-input hidden"
-                                formControlName="ID"></textarea>
+                            <textarea id="ID" type="text" class="form-input hidden" formControlName="ID"></textarea>
                         </div>
                         <div class="relative mb-4">
                             <label for="Question" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
@@ -130,7 +130,8 @@
                                                 class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">{{
                                                 "Answer" | translate}}</label>
                                             <textarea id="AnswerEN" type="text" rows="6" placeholder="Answer"
-                                                class="form-input [direction:ltr]" formControlName="AnswerEN"></textarea>
+                                                class="form-input [direction:ltr]"
+                                                formControlName="AnswerEN"></textarea>
                                         </div>
                                         <div class="relative mb-4">
                                             <label for="AnswerAR"
@@ -143,8 +144,7 @@
                                             <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">{{
                                                 "Save" | translate}}</button>
                                             <button type="button" (click)="modal20.close()"
-                                                class="btn btn-outline-secondary cursor-pointer">{{ "Cancel" |
-                                                translate}}</button>
+                                                class="btn btn-outline-secondary cursor-pointer">{{ "Cancel" | translate}}</button>
                                         </div>
                                     </form>
                                 </ng-template>

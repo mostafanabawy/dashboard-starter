@@ -28,6 +28,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 
 // select
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
          NgScrollbarModule, MenuModule, IconModule,
           DataTableModule, NgxCustomModalComponent,
           NgSelectModule,
+          FlatpickrModule.forRoot(),
         NgApexchartsModule],
     declarations: [],
     exports: [
@@ -48,8 +50,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         NgxCustomModalComponent,
         IconModule,
         NgApexchartsModule,
-        NgSelectModule
-
+        NgSelectModule,
+        FlatpickrModule
     ],
 })
 export class SharedModule {

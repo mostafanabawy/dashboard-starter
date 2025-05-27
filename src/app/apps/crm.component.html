@@ -29,8 +29,8 @@
                     <ng-container *ngIf="isSubmitForm && !userForm.controls['PhoneNumber'].errors">
                         <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                     </ng-container>
-                    <p class="mt-1 text-danger" *ngIf="userForm.controls['PhoneNumber'].errors?.['pattern']">please
-                        enter a number made from 11 digits.</p>
+                    <p class="mt-1 text-danger" *ngIf="userForm.controls['PhoneNumber'].errors?.['pattern']">
+                        {{"formErrors.pattern" | translate}}</p>
                 </ng-container>
             </div>
             <div
@@ -206,7 +206,7 @@
             </div>
             <div
                 [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
-                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">Asked Questions <span
+                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{"fieldNames.askedQuestions" | translate}} <span
                         class="font-bold text-red-500">*</span></label>
                 <ng-select [items]="options" id="ExtraField3" formControlName="ExtraField3" [multiple]="true"
                     [clearable]="false" placeholder="Select an option"

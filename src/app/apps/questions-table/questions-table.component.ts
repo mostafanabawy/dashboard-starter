@@ -60,7 +60,7 @@ export class QuestionsTableComponent {
   totalRows = signal<number>(0);
   initForm() {
     this.singleRowForm = this.fb.group({
-      ID: [{ value: "", disabled: true }],
+      ID: [{ value: "" }],
       Question: [''],
       AnswerEN: [''],
       AnswerAR: ['']

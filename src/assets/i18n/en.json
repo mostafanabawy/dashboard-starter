@@ -153,7 +153,8 @@
         "Action": "Action"
     },
     "formErrors": {
-        "required": "{{field}} is required."
+        "required": "{{field}} is required.",
+        "pattern": "Please enter a number made from 11 digits."
     },
     "fieldNames": {
         "name": "Name",

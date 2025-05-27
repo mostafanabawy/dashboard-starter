@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { HistoryService } from '../service/history.service';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { AppState, indexState } from '../types/auth.types';
+import { AppState } from '../types/auth.types';
 
 @Component({
     selector: 'app-crm',
@@ -26,7 +26,7 @@ export class CRMComponent {
     'Suppliers',
     'Others'
   ];
-  store!: indexState;
+  store!: AppState;
   constructor(
     private fb: FormBuilder,
     private historyTabsService: HistoryService,
@@ -38,7 +38,10 @@ export class CRMComponent {
   }
   async initStore() {
     this.storeData
-      .select((d) => d.index)
+      .select((d) => ({
+        index: d.index,
+        auth: d.auth
+      }))
       .subscribe((d) => {
         this.store = d;
       });
@@ -79,8 +82,8 @@ export class CRMComponent {
       //form validated success
       try {
         const formData = this.userForm.value;
-        formData.ExtraField3 = formData.ExtraField3.join(';'); 
-        console.log(formData);
+        formData.ExtraField3 = formData.ExtraField3.join(';');
+        formData.extrafiled2 = this.store.auth.UserName
         this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
           console.log(res);
           this.userForm.reset();

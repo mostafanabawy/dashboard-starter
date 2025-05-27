@@ -35,24 +35,41 @@ export class HistoryService {
     }
 
 
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
     const params = new HttpParams()
-      .set('action', 'getpagewithsearch')
+      .set('page', '/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=getpagewithsearch')
       .set('pageno', `${pageNo}`)
       .set('pagesize', '1000')
       .set('sortfield', 'ID')
       .set('sortdirection', '1');
     return this.http.post<QuestionsAPIResponse>(
-      'http://208.109.190.145:8085/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx',
+      'https://vcld.ws/badsyaproxystg.php',
       query,         // empty POST body
-      { params }  // query string parameters
+      { params, headers }  // query string parameters
     );
   }
-  fetchHistory(pageNumber: number, payload: { searchText: string, searchBy: string }, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 50): Observable<HistoryAPIResponse> {
+  fetchHistory(pageNumber: number, payload: any, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 10): Observable<HistoryAPIResponse> {
     let query: any = {};
     if (payload.searchBy && payload.searchText) {
       query[payload.searchBy] = payload.searchText;
     } else if (payload.searchText) {
       query = { CallStatus: payload.searchText, CallerName: payload.searchText };
+    } else {
+      query = Object.fromEntries(
+        Object.entries(payload).filter(([_, value]) => value !== '' && value !== null && value !== undefined)
+      );
+      if (typeof query.DateFrom === 'string') {
+        const [dayFrom, monthFrom, yearFromRaw] = query.DateFrom.split("-");
+        const yearFrom = Number(yearFromRaw.length === 2 ? '20' + yearFromRaw : yearFromRaw);
+        query.DateFrom = new Date(Date.UTC(yearFrom, Number(monthFrom) - 1, Number(dayFrom))).toISOString();
+      }
+
+      if (typeof query.DateTo === 'string') {
+        const [dayTo, monthTo, yearToRaw] = query.DateTo.split("-");
+        const yearTo = Number(yearToRaw.length === 2 ? '20' + yearToRaw : yearToRaw);
+        query.DateTo = new Date(Date.UTC(yearTo, Number(monthTo) - 1, Number(dayTo))).toISOString();
+      }
     }
     console.log(query);
     const params = new HttpParams()

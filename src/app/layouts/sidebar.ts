@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { slideDownUp } from '../shared/animations';
-import { AppState, indexState } from '../types/auth.types';
+import { AppState } from '../types/auth.types';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +14,7 @@ import { AppState, indexState } from '../types/auth.types';
 })
 export class SidebarComponent {
     active = false;
-    store!: indexState;
+    store!: AppState;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
     constructor(
@@ -26,7 +26,10 @@ export class SidebarComponent {
     }
     async initStore() {
         this.storeData
-            .select((d) => d.index)
+            .select((d) => ({
+                index: d.index,
+                auth: d.auth
+            }))
             .subscribe((d) => {
                 this.store = d;
             });

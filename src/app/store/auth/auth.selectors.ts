@@ -12,3 +12,8 @@ export const isLoggedIn = createSelector(
   selectToken,
   (token) => !!token
 );
+
+export const selectGroupID = createSelector(
+  selectAuthState,
+  (state) => state.GroupID
+);

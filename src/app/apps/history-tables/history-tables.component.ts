@@ -1,11 +1,16 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HistoryService } from 'src/app/service/history.service';
 import alasql from 'alasql';
 import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { HistoryAPIResponse } from 'src/app/types/history.types';
+import { AuthState } from 'src/app/store/auth/auth.reducer';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/types/auth.types';
+import { FlatpickrDefaultsInterface } from 'angularx-flatpickr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-history-tables',
   templateUrl: './history-tables.component.html'
@@ -14,20 +19,28 @@ export class HistoryTablesComponent implements OnInit {
   constructor(
     private tabsHisoryService: HistoryService,
     private fb: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private storeData: Store<AppState>,
+    public router: Router
   ) {
+    this.initStore();
     this.initForm();
     effect(() => {
       const value = this.tabsHisoryService.initialHistoryFetchVal();
 
       // Fetch or update based on the new value
-      this.tabsHisoryService.fetchHistory(this.currentPage(), { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
+      this.tabsHisoryService.fetchHistory(1, { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
         this.rows.set(res.result.items);
         this.totalRows.set(res.result.PagingInfo[0].TotalRows);
         this.loading = false;
         console.log(res);
       });
     });
+    this.basic = {
+      dateFormat: 'd-m-y',
+      // position: this.store.rtlClass === 'rtl' ? 'auto right' : 'auto left',
+      monthSelectorType: 'dropdown'
+    };
   }
   ngOnInit() {
     this.tabsHisoryService.fetchHistory(this.currentPage(), { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
@@ -44,7 +57,9 @@ export class HistoryTablesComponent implements OnInit {
   }
   search1 = '';
   cols: any[] = [];
+  store!: AuthState;
   private langChangeSub!: Subscription;
+  basic: FlatpickrDefaultsInterface;
   translateCols() {
     const keys = [
       'table.RecordId',
@@ -94,20 +109,44 @@ export class HistoryTablesComponent implements OnInit {
   totalRows = signal<number>(0);
   loading = true;
   initForm() {
-    this.searchForm = this.fb.group({
+    console.log(this.store);
+    this.searchForm = this.router.url !== "/history" ? this.fb.group({
       searchText: [''],
       searchBy: ['']
-    });
+    }) :
+      this.fb.group({
+        CallStatus: [''],
+        DateFrom: [''],
+        DateTo: [''],
+        ExtraField1: [''],
+        FollowUp: [''],
+        IsSearch: [true],
+        PhoneNumber: ['', [
+          Validators.pattern(/^\d{11}$/)
+        ]]
+      });
+
+
   }
 
+  initStore() {
+    this.storeData
+      .select((d) => d.auth)
+      .subscribe((d) => {
+        this.store = d;
+      });
+  }
   onSearch() {
     this.loading = true;
     this.currentPage.set(1);
     this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value).subscribe((res: any) => {
       this.rows.set(res.result.items);
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
+      this.pageSize.set(res.result.PagingInfo[0].PageSize);
       this.loading = false;
       console.log(res);
+      console.log(this.rows());
+      console.log(this.totalRows());
     });
   }
   exportData() {

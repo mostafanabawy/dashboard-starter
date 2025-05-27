@@ -1,4 +1,4 @@
-﻿<div [ngClass]="{ 'dark text-white-dark': store.isDarkMode }" class="pe-2">
+﻿<div [ngClass]="{ 'dark text-white-dark': store.index.isDarkMode }" class="pe-2">
     <nav class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
         <div class="h-full bg-gradient-to-b from-[#161F3B] to-[#273866] dark:bg-[#0e1726]">
             <div class="flex items-center justify-between px-5 py-3 bg-[#192343]">
@@ -47,6 +47,11 @@
                                     <a routerLink="/charts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
                                         >{{ 'charts' | translate }}</a
                                     >
+                                </li>
+                                <li *ngIf="store.auth.GroupID === 1006">
+                                    <a routerLink="/history" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer">
+                                        {{ 'History' | translate }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>

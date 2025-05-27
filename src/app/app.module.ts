@@ -40,6 +40,8 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
 import { authReducer } from './store/auth/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
+import { HistoryGuard } from './guards/history.guard';
+import { AuthGuard } from './store/auth/auth.guard';
 
 @NgModule({
     imports: [
@@ -61,7 +63,7 @@ import { AuthEffects } from './store/auth/auth.effects';
         SharedModule.forRoot(),
     ],
     declarations: [AppComponent, HeaderComponent, FooterComponent, SidebarComponent, ThemeCustomizerComponent, IndexComponent, AppLayout, AuthLayout],
-    providers: [Title],
+    providers: [Title, HistoryGuard, AuthGuard],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
