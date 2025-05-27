@@ -208,8 +208,8 @@
                 [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{"fieldNames.askedQuestions" | translate}} <span
                         class="font-bold text-red-500">*</span></label>
-                <ng-select [items]="options" id="ExtraField3" formControlName="ExtraField3" [multiple]="true"
-                    [clearable]="false" placeholder="Select an option"
+                <ng-select [items]="options"  formControlName="ExtraField3" [multiple]="true"
+                    [clearable]="false" placeholder="Select an option" bindLabel="ExtraField3" labelForId="ExtraField3"
                     class="custom-multiselect !border h-fit cursor-pointer">
                 </ng-select>
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['ExtraField3'].errors">
