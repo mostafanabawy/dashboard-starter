@@ -11,7 +11,7 @@ export class HistoryGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.store.select(selectGroupID).pipe(
       map((groupID) => {
-        if (groupID !== 1006) {
+        if (groupID !== 1004) {
           this.router.navigate(['/']);
           return false;
         }

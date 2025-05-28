@@ -209,6 +209,8 @@ export class AllChartsComponent {
         borderColor: '#e0e6ed'
       },
     };
-
+  }
+  exportData(){
+    console.log("btn pressed");
   }
 }

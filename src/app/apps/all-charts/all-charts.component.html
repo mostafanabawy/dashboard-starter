@@ -9,6 +9,8 @@
                 [colors]="pieChart.colors" [responsive]="pieChart.responsive" [stroke]="pieChart.stroke"
                 [legend]="pieChart.legend" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
+        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+                            "table.Export" | translate}}</button>
     </div>
     }
 
@@ -22,6 +24,8 @@
                 [yaxis]="columnChart.yaxis" [tooltip]="columnChart.tooltip"
                 class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
+        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+                            "table.Export" | translate}}</button>
     </div>
     }
 
@@ -33,6 +37,8 @@
                 [tooltip]="lineChart.tooltip" [stroke]="lineChart.stroke" [xaxis]="lineChart.xaxis"
                 [yaxis]="lineChart.yaxis" [grid]="lineChart.grid" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
+        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+                            "table.Export" | translate}}</button>
     </div>
     }
 

@@ -37,12 +37,16 @@ export class HistoryService {
 
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
-    const params = new HttpParams()
-      .set('page', '/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=getpagewithsearch')
-      .set('pageno', `${pageNo}`)
+    
+    const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=getpagewithsearch&pageno=${pageNo}&pagesize=1000&sortfield=ID&sortdirection=1`)
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    })
+      /* .set('page', `${encoded}`) */
+      /* .set('pageno', `${pageNo}`)
       .set('pagesize', '1000')
       .set('sortfield', 'ID')
-      .set('sortdirection', '1');
+      .set('sortdirection', '1'); */
     return this.http.post<QuestionsAPIResponse>(
       'https://vcld.ws/badsyaproxystg.php',
       query,         // empty POST body
@@ -72,12 +76,10 @@ export class HistoryService {
       }
     }
     console.log(query);
-    const params = new HttpParams()
-      .set('page', '/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch')
-      .set('pageno', `${pageNumber}`)
-      .set('pagesize', `${pageSize}`)
-      .set('sortfield', `${sortField}`)
-      .set('sortdirection', `${sort}`);
+    const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch&pageno=${pageNumber}&pagesize=${pageSize}&sortfield=${sortField}&sortdirection=${sort}`);
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
     return this.http.post<HistoryAPIResponse>('https://vcld.ws/badsyaproxystg.php',
@@ -86,8 +88,10 @@ export class HistoryService {
     )
   }
   sendFormMainData(formData: any) {
-    const params = new HttpParams()
-      .set('page', '/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
+    const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
     return this.http.post(
@@ -97,8 +101,11 @@ export class HistoryService {
     );
   }
   editRowFormData(formData: any) {
-    const params = new HttpParams()
-      .set('page', 'CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=update');
+
+    const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=update`);
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
     return this.http.post(
@@ -109,8 +116,10 @@ export class HistoryService {
   }
   addRowFormData(formData: any) {
     console.log(this.store.token);
-    const params = new HttpParams()
-      .set('page', '/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=insert');
+    const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=insert');
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
 
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);

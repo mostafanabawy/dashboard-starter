@@ -95,7 +95,7 @@ export class HeaderComponent {
             }))
             .subscribe((d) => {
                 this.store = d;
-                this.username.set(this.store.auth.UserName!);
+                this.username.set(this.store.auth.DisplayName!);
             });
     }
 
