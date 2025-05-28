@@ -62,7 +62,7 @@
     "pagination": "ترقيم الصفحات",
     "popovers": "بوبوفرز",
     "progress_bar": "شريط التقدم",
-    "search": "يبحث",
+    "search": "بحث",
     "tooltips": "تلميحات",
     "treeview": "تريفيو",
     "typography": "الطباعة",
@@ -197,6 +197,21 @@
     "footer1": "© {{year}}.  جميع الحقوق محفوظة",
     "good": "يبدو جيداً!",
     "Add Question": "إضافة سؤال",
-    "Sign Out": "تسجيل الخروج"
+    "Sign Out": "تسجيل الخروج",
+    "Sign In": "تسجيل الدخول",
+    "loginForm": {
+        "title": "أدخل اسم المستخدم وكلمة المرور لتسجيل الدخول",
+        "username": "اسم المستخدم",
+        "enterUsername": "أدخل اسم المستخدم",
+        "password": "كلمة المرور",
+        "enterPassword": "أدخل كلمة المرور"
+    },
+    "table3": {
+        "Day": "اليوم",
+        "Cases": "الحالات"
+    },
+    "dateFrom": "التاريخ من",
+    "dateTo": "التاريخ إلى"
+
 
 }

@@ -34,10 +34,10 @@ export class HistoryService {
       query = { Question: formData.searchText };
     }
 
-    // const headers = new HttpHeaders()
-    //   .set('x-auth', `${this.store.token}`);
-    const headers = {}; // <-- header left as empty object
-    
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    // const headers = {}; // <-- header left as empty object
+
     const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=getpagewithsearch&pageno=${pageNo}&pagesize=1000&sortfield=ID&sortdirection=1`)
     const params = new HttpParams({
       fromString: `page=${encoded}`
@@ -75,9 +75,9 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    // const headers = new HttpHeaders()
-    //   .set('x-auth', `${this.store.token}`);
-    const headers = {}; // <-- header left as empty object
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    // const headers = {}; // <-- header left as empty object
     return this.http.post<HistoryAPIResponse>('https://vcld.ws/badsyaproxystg.php',
       query,
       { params, headers }
@@ -88,9 +88,9 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    // const headers = new HttpHeaders()
-    //   .set('x-auth', `${this.store.token}`);
-    const headers = {}; // <-- header left as empty object
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    // const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
@@ -103,9 +103,9 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    // const headers = new HttpHeaders()
-    //   .set('x-auth', `${this.store.token}`);
-    const headers = {}; // <-- header left as empty object
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    // const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
@@ -119,12 +119,26 @@ export class HistoryService {
       fromString: `page=${encoded}`
     });
 
-    // const headers = new HttpHeaders()
-    //   .set('x-auth', `${this.store.token}`);
-    const headers = {}; // <-- header left as empty object
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    // const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
+      { params, headers }
+    );
+  }
+
+  getChartsData(payload: any): Observable<any> {
+    const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=statstics');
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+    return this.http.post(
+      'https://vcld.ws/badsyaproxystg.php',
+      payload,
       { params, headers }
     );
   }

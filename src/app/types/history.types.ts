@@ -37,3 +37,25 @@ export interface HistoryAPIResponse {
     PagingInfo: PagingInfo[];
   };
 }
+
+export type StatusDistributionItem = {
+    CallStatus: string;
+    Total: number;
+};
+
+export type FollowUpActivityItem = {
+    EnteredBy: string | null;
+    PendingFollowUps: number;
+};
+
+export type CaseTrendItem = {
+    Day: string;
+    CasesLogged: number;
+};
+
+export type ChartStatsResponse = {
+    StatusDistribution: StatusDistributionItem[];
+    FollowUpActivity: FollowUpActivityItem[];
+    CaseTrends: CaseTrendItem[];
+};
+

@@ -1,5 +1,27 @@
-<section class="mt-3 space-y-9">
+<section class="mt-3 space-y-9 relative">
     <h5 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "AllCharts" | translate}}</h5>
+
+    <div class="panel">
+        <div class="mb-5 sticky right-0 left-0">
+            <form [formGroup]="dataFromToForm" (ngSubmit)="onSearch()">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="StartDate">{{ "dateFrom" | translate }}</label>
+                        <input type="text" mwlFlatpickr id="StartDate" formControlName="StartDate" [options]="basic"
+                            class="form-input" />
+                    </div>
+                    <div>
+                        <label for="EndDate">{{ "dateTo" | translate }}</label>
+                        <input type="text" mwlFlatpickr id="EndDate" formControlName="EndDate" [options]="basic"
+                            class="form-input" />
+                    </div>
+                </div>
+                <button type="submit"
+                    class="btn btn-primary cursor-pointer ltr:ml-auto rtl:mr-auto mt-5 !border-none hover:opacity-80">{{
+                    "search" | translate}}</button>
+            </form>
+        </div>
+    </div>
     @if (pieChart) {
     <!-- pie chart -->
     <div class="panel">
@@ -9,8 +31,9 @@
                 [colors]="pieChart.colors" [responsive]="pieChart.responsive" [stroke]="pieChart.stroke"
                 [legend]="pieChart.legend" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
-                            "table.Export" | translate}}</button>
+        <button (click)="exportData(data.StatusDistribution)" type="button"
+            class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+            "table.Export" | translate}}</button>
     </div>
     }
 
@@ -24,8 +47,9 @@
                 [yaxis]="columnChart.yaxis" [tooltip]="columnChart.tooltip"
                 class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
-                            "table.Export" | translate}}</button>
+        <button (click)="exportData(data.FollowUpActivity)" type="button"
+            class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+            "table.Export" | translate}}</button>
     </div>
     }
 
@@ -33,12 +57,26 @@
     <div class="panel">
         <div class="mb-5 overflow-hidden">
             <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"WeeklyCaseChart" | translate}}</h6>
+            <div class="datatable mb-16 mt-4">
+                <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap" [stickyHeader]="true"
+                    skin="whitespace-wrap table-hover"
+                    firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+                    lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg> '
+                    previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+                    nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'>
+
+                    <ng-template slot="CreationDate" let-value="data">
+                        {{ value.CreationDate | date }}
+                    </ng-template>
+                </ng-datatable>
+            </div>
             <apx-chart [series]="lineChart.series" [chart]="lineChart.chart" [colors]="lineChart.colors"
                 [tooltip]="lineChart.tooltip" [stroke]="lineChart.stroke" [xaxis]="lineChart.xaxis"
                 [yaxis]="lineChart.yaxis" [grid]="lineChart.grid" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
-                            "table.Export" | translate}}</button>
+        <button (click)="exportData(data.CaseTrends)" type="button"
+            class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+            "table.Export" | translate}}</button>
     </div>
     }
 

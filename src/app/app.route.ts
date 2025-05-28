@@ -11,6 +11,7 @@ import { AllChartsComponent } from './apps/all-charts/all-charts.component';
 import { GuestGuard } from './store/auth/guest.guard';
 import { HistoryTablesComponent } from './apps/history-tables/history-tables.component';
 import { HistoryGuard } from './guards/history.guard';
+import { chartsGuard } from './guards/charts.guard';
 
 export const routes: Routes = [
     {
@@ -21,7 +22,7 @@ export const routes: Routes = [
             // dashboard
             { path: '', component: CRMComponent},
             { path: '', loadChildren: () => import('./apps/apps.module').then((d) => d.AppsModule) },
-            { path: 'charts', component: AllChartsComponent},
+            { path: 'charts', component: AllChartsComponent, canActivate: [chartsGuard]},
             { path: 'history', component: HistoryTablesComponent, canActivate: [HistoryGuard]}
         ],
     },

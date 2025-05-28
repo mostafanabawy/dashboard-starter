@@ -43,7 +43,7 @@
                                         >{{ 'CRM' | translate }}</a
                                     >
                                 </li>
-                                <li>
+                                <li *ngIf="store.auth.GroupID === 1004">
                                     <a routerLink="/charts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
                                         >{{ 'charts' | translate }}</a
                                     >

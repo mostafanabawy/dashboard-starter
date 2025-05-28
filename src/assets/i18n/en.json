@@ -171,5 +171,21 @@
     "FollowUpChart": "Follow Up Tasks by Agents",
     "WeeklyCaseChart": "Weekly Case Submission Trend",
     "footer1": "© {{year}}. All rights reserved.",
-    "good": "Looks Good!"
+    "good": "Looks Good!",
+    "table3": {
+        "Day": "Day",
+        "Cases": "Cases"
+    },
+    "Add Question": "Add Question",
+    "Sign Out": "Sign Out",
+    "Sign In": "Sign In",
+    "loginForm": {
+        "title": "Enter your username and password to sign in",
+        "username": "Username",
+        "enterUsername": "Enter username",
+        "password": "Password",
+        "enterPassword": "Enter password"
+    },
+    "dateFrom": "Date From",
+    "dateTo": "Date To"
 }

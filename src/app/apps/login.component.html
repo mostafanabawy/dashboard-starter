@@ -17,23 +17,23 @@
 
                 <div class="mx-auto w-full max-w-[440px]">
                     <div class="mb-10">
-                        <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Sign in</h1>
-                        <p class="text-base font-bold leading-normal text-white-dark">Enter your Username and Password to login</p>
+                        <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl text-center">{{ 'Sign In' | translate }}</h1>
+                        <p class="text-base font-bold leading-normal text-white-dark text-center">{{ 'loginForm.title' | translate }}</p>
                     </div>
                     <form class="space-y-5 dark:text-white" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
                         <div>
-                            <label for="UserName">Username</label>
+                            <label for="UserName">{{ 'loginForm.username' | translate }}</label>
                             <div class="relative text-white-dark">
-                                <input id="UserName" name="UserName" type="text" placeholder="Enter Username" class="form-input ps-10 placeholder:text-white-dark" formControlName="UserName"/>
+                                <input id="UserName" name="UserName" type="text" [placeholder]="'loginForm.enterUsername' | translate" class="form-input ps-10 placeholder:text-white-dark" formControlName="UserName"/>
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-mail [fill]="true" />
                                 </span>
                             </div>
                         </div>
                         <div>
-                            <label for="PassWord">Password</label>
+                            <label for="PassWord">{{ 'loginForm.password' | translate }}</label>
                             <div class="relative text-white-dark">
-                                <input id="PassWord" name="PassWord" type="password" placeholder="Enter Password" class="form-input ps-10 placeholder:text-white-dark" formControlName="PassWord"/>
+                                <input id="PassWord" name="PassWord" type="password" [placeholder]="'loginForm.enterPassword' | translate" class="form-input ps-10 placeholder:text-white-dark" formControlName="PassWord"/>
                                 <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                     <icon-lock-dots [fill]="true" />
                                 </span>
@@ -42,8 +42,8 @@
                         <div *ngIf="isSubmitForm && store.error" class="mb-4 rounded bg-red-100 px-4 py-2 text-sm text-red-700 border border-red-300">
                             Invalid username or password. Please try again.
                         </div>
-                        <button type="submit" class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                            Sign in
+                        <button type="submit" class="btn btn-primary cursor-pointer hover:opacity-90 !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                            {{ 'Sign In' | translate }}
                         </button>
                     </form> 
                 </div>
