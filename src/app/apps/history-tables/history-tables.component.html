@@ -8,23 +8,27 @@
                         <!-- searchText: main search input -->
                         <input type="search" class="form-input mb-6 border-black"
                             [placeholder]="'table.Search' | translate" formControlName="searchText" />
-                        <button type="submit" class="btn btn-primary cursor-pointer mb-6 ltr:ml-2 rtl:mr-2 hover:opacity-80">{{
+                        <button type="submit"
+                            class="btn btn-primary cursor-pointer mb-6 ltr:ml-2 rtl:mr-2 hover:opacity-80">{{
                             "table.Search" | translate}}</button>
                     </div>
                     <div class="flex gap-4 items-center">
-                        <!-- searchBy: select field for search type -->
-                        <select
-                            class="ml-2 text-sm font-semibold text-white bg-gradient-to-b from-[#161F3B] to-[#273866] cursor-pointer !border-none rounded-md pe-1 py-2"
-                            formControlName="searchBy" aria-label="search By">
-                            <option class="text-black" value="" disabled selected>{{ "table.SearchBy" | translate}}</option>
-                            <option class="text-black" value="">Caller Name ( Default )</option>
-                            <option class="text-black" value="PhoneNumber">Phone Number</option>
-                            <option class="text-black" value="SchoolName">School Name</option>
-                            <option class="text-black" value="WhatsAppNumber">WhatsApp Number</option>
-                            <option class="text-black" value="City">City</option>
-                            <option class="text-black" value="FollowUp">Follow Up</option>
-                        </select>
-                        <button (click)="exportData()" type="button" class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
+                        <div class="bg-gradient-to-b from-[#161F3B] to-[#273866] overflow-hidden rounded-md px-2">
+                            <!-- searchBy: select field for search type -->
+                            <select class="text-sm font-semibold text-white cursor-pointer bg-inherit py-2 outline-none"
+                                formControlName="searchBy" aria-label="search By">
+                                <option class="text-black" value="" disabled selected>{{ "table.SearchBy" | translate}}
+                                </option>
+                                <option class="text-black" value="">Caller Name ( Default )</option>
+                                <option class="text-black" value="PhoneNumber">Phone Number</option>
+                                <option class="text-black" value="SchoolName">School Name</option>
+                                <option class="text-black" value="WhatsAppNumber">WhatsApp Number</option>
+                                <option class="text-black" value="City">City</option>
+                                <option class="text-black" value="FollowUp">Follow Up</option>
+                            </select>
+                        </div>
+                        <button (click)="exportData()" type="button"
+                            class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
                             "table.Export" | translate}}</button>
                     </div>
                 </form>
