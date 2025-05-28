@@ -34,23 +34,18 @@ export class HistoryService {
       query = { Question: formData.searchText };
     }
 
-
-    const headers = new HttpHeaders()
-      .set('x-auth', `${this.store.token}`);
+    // const headers = new HttpHeaders()
+    //   .set('x-auth', `${this.store.token}`);
+    const headers = {}; // <-- header left as empty object
     
     const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=getpagewithsearch&pageno=${pageNo}&pagesize=1000&sortfield=ID&sortdirection=1`)
     const params = new HttpParams({
       fromString: `page=${encoded}`
     })
-      /* .set('page', `${encoded}`) */
-      /* .set('pageno', `${pageNo}`)
-      .set('pagesize', '1000')
-      .set('sortfield', 'ID')
-      .set('sortdirection', '1'); */
     return this.http.post<QuestionsAPIResponse>(
       'https://vcld.ws/badsyaproxystg.php',
-      query,         // empty POST body
-      { params, headers }  // query string parameters
+      query,
+      { params, headers }
     );
   }
   fetchHistory(pageNumber: number, payload: any, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 10): Observable<HistoryAPIResponse> {
@@ -80,11 +75,12 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    const headers = new HttpHeaders()
-      .set('x-auth', `${this.store.token}`);
+    // const headers = new HttpHeaders()
+    //   .set('x-auth', `${this.store.token}`);
+    const headers = {}; // <-- header left as empty object
     return this.http.post<HistoryAPIResponse>('https://vcld.ws/badsyaproxystg.php',
-      query,         // empty POST body
-      { params, headers }  // query string parameters
+      query,
+      { params, headers }
     )
   }
   sendFormMainData(formData: any) {
@@ -92,12 +88,13 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    const headers = new HttpHeaders()
-      .set('x-auth', `${this.store.token}`);
+    // const headers = new HttpHeaders()
+    //   .set('x-auth', `${this.store.token}`);
+    const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
-      { params, headers }  // query string parameters
+      { params, headers }
     );
   }
   editRowFormData(formData: any) {
@@ -106,12 +103,13 @@ export class HistoryService {
     const params = new HttpParams({
       fromString: `page=${encoded}`
     });
-    const headers = new HttpHeaders()
-      .set('x-auth', `${this.store.token}`);
+    // const headers = new HttpHeaders()
+    //   .set('x-auth', `${this.store.token}`);
+    const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
-      { params, headers }  // query string parameters
+      { params, headers }
     );
   }
   addRowFormData(formData: any) {
@@ -121,12 +119,13 @@ export class HistoryService {
       fromString: `page=${encoded}`
     });
 
-    const headers = new HttpHeaders()
-      .set('x-auth', `${this.store.token}`);
+    // const headers = new HttpHeaders()
+    //   .set('x-auth', `${this.store.token}`);
+    const headers = {}; // <-- header left as empty object
     return this.http.post(
       'https://vcld.ws/badsyaproxystg.php',
       formData,
-      { params, headers }  // query string parameters
+      { params, headers }
     );
   }
 
