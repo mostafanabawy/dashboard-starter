@@ -86,10 +86,14 @@ export class HistoryService {
     )
   }
   getAgentCalls(phoneNumber: string) {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const fromDate = `${year}-${month}-${day}`;
     const params = new HttpParams({})
-      .set('limit', '10') // fetch more
+      .set('limit', '100') // fetch more
       .set('skip', '0')
-      .set('contactNumber', `${phoneNumber}`);
     const headers = new HttpHeaders()
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
