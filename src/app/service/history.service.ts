@@ -94,10 +94,19 @@ export class HistoryService {
     const params = new HttpParams({})
       .set('limit', '100') // fetch more
       .set('skip', '0')
+      .set('contactNumber', phoneNumber) 
     const headers = new HttpHeaders()
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
   }
+/*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Updates the callId and status signals with the latest call
+   * information from the ZIWO API. If the API returns no data, the
+   * signals are set to empty strings.
+   * @param data the response from the ZIWO API
+   */
+/*******  688822c7-cb59-4967-b187-4949331848c0  *******/
   setAgentCalls(data: any) {
     console.log(data);
     if (data.content.length === 0) {
