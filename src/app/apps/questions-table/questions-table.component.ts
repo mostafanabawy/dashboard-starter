@@ -27,7 +27,6 @@ export class QuestionsTableComponent {
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.currentPage.set(res.result.PagingInfo[0].CurrentPage);
       this.loading = false;
-      console.log(res);
     });
     this.translateCols();
     this.translate.onLangChange.subscribe(() => {
@@ -74,7 +73,6 @@ export class QuestionsTableComponent {
 
 
   editRow(row: any) {
-    console.log(row);
     this.singleRowForm.patchValue({
       ID: row.ID,
       Question: row.Question,
@@ -83,7 +81,6 @@ export class QuestionsTableComponent {
     });
   }
   onEdit(modal20: any) {
-    console.log(this.singleRowForm.value);
     this.tabsHisoryService.editRowFormData(this.singleRowForm.value).subscribe((res: any) => {
       const toast: any = Swal.mixin({
         toast: true,
@@ -107,7 +104,6 @@ export class QuestionsTableComponent {
           this.totalRows.set(res.result.PagingInfo[0].TotalRows);
         }
         this.loading = false
-        console.log(res);
       });
     });
   }
@@ -145,7 +141,6 @@ export class QuestionsTableComponent {
           this.totalRows.set(res.result.PagingInfo[0].TotalRows);
         }
         this.loading = false
-        console.log(res);
       });
     });
   }
@@ -163,7 +158,6 @@ export class QuestionsTableComponent {
         this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       }
       this.loading = false
-      console.log(res);
     });
   }
 }

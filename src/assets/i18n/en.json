@@ -184,8 +184,11 @@
         "username": "Username",
         "enterUsername": "Enter username",
         "password": "Password",
-        "enterPassword": "Enter password"
+        "enterPassword": "Enter password",
+        "passwordRequired": "Password is required",
+        "usernameRequired": "Username is required"
     },
     "dateFrom": "Date From",
-    "dateTo": "Date To"
+    "dateTo": "Date To",
+    "LoginZIWO": "Login to ZIWO"
 }

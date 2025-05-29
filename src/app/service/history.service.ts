@@ -2,9 +2,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { QuestionsAPIResponse } from '../types/questions.types';
 import { Observable } from 'rxjs';
-import { HistoryAPIResponse } from '../types/history.types';
+import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
 import { Store } from '@ngrx/store';
 import { AppState } from '../types/auth.types';
+import { AuthState } from '../store/auth/auth.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class HistoryService {
     this.initStore();
   }
   initialHistoryFetchVal = signal<number | null>(null);
-  store!: any;
+  initialHistoryVal = signal<HistoryRecord[] | null>(null);
+  store!: AuthState;
+  callId = signal<string>('');
+  status = signal<string>('');
   initStore() {
     this.storeData
       .select((d) => d.auth)
@@ -26,7 +30,6 @@ export class HistoryService {
       });
   }
   fetchQuestions(pageNo: number, formData: { searchText: string, searchBy: string }): Observable<QuestionsAPIResponse> {
-    console.log(formData);
     let query: any = {};
     if (formData.searchBy && formData.searchText) {
       query[formData.searchBy] = formData.searchText;
@@ -70,7 +73,6 @@ export class HistoryService {
         query.DateTo = new Date(Date.UTC(yearTo, Number(monthTo) - 1, Number(dayTo))).toISOString();
       }
     }
-    console.log(query);
     const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch&pageno=${pageNumber}&pagesize=${pageSize}&sortfield=${sortField}&sortdirection=${sort}`);
     const params = new HttpParams({
       fromString: `page=${encoded}`
@@ -82,6 +84,24 @@ export class HistoryService {
       query,
       { params, headers }
     )
+  }
+  getAgentCalls() {
+    const params = new HttpParams({})
+      .set('limit', '10') // fetch more
+      .set('skip', '0')
+      .set('fromDate', '2024-01-01')
+      .set('toDate', '2025-12-31')
+      .set('fromTime', '00:00:00')
+      .set('toTime', '23:59:59')
+      .set('recordings', 'true');
+    const headers = new HttpHeaders()
+      .set('access_token', `${this.store.tokenZIWO}`);
+    return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
+  }
+  setAgentCalls(data: any) {
+    console.log(data);
+    this.callId.set(data.content[0].callID);
+    this.status.set(data.content[0].status);
   }
   sendFormMainData(formData: any) {
     const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
@@ -113,7 +133,6 @@ export class HistoryService {
     );
   }
   addRowFormData(formData: any) {
-    console.log(this.store.token);
     const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityQuestionsCRUD.ashx?action=insert');
     const params = new HttpParams({
       fromString: `page=${encoded}`

@@ -204,14 +204,18 @@
         "username": "اسم المستخدم",
         "enterUsername": "أدخل اسم المستخدم",
         "password": "كلمة المرور",
-        "enterPassword": "أدخل كلمة المرور"
+        "enterPassword": "أدخل كلمة المرور",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "usernameRequired": "اسم المستخدم مطلوب"
     },
     "table3": {
         "Day": "اليوم",
         "Cases": "الحالات"
     },
     "dateFrom": "التاريخ من",
-    "dateTo": "التاريخ إلى"
+    "dateTo": "التاريخ إلى",
+    "LoginZIWO": "تسجيل الدخول إلى ZIWO",
+    "Call ID": "معرف المكالمة"
 
 
 }

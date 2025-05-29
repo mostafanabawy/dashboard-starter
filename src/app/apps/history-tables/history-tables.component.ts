@@ -1,4 +1,4 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HistoryService } from 'src/app/service/history.service';
 import alasql from 'alasql';
@@ -33,22 +33,18 @@ export class HistoryTablesComponent implements OnInit {
         this.rows.set(res.result.items);
         this.totalRows.set(res.result.PagingInfo[0].TotalRows);
         this.loading = false;
-        console.log(res);
+        
+
       });
     });
     this.basic = {
       dateFormat: 'd-m-y',
-      // position: this.store.rtlClass === 'rtl' ? 'auto right' : 'auto left',
       monthSelectorType: 'dropdown'
     };
   }
   ngOnInit() {
-    this.tabsHisoryService.fetchHistory(this.currentPage(), { searchText: `${this.tabsHisoryService.initialHistoryFetchVal()}`, searchBy: 'PhoneNumber' }).subscribe((res: HistoryAPIResponse) => {
-      this.rows.set(res.result.items);
-      this.totalRows.set(res.result.PagingInfo[0].TotalRows);
-      this.loading = false;
-      console.log(res);
-    });
+    this.rows.set(this.tabsHisoryService.initialHistoryVal());
+    
     (window as any).XLSX = XLSX;
     this.translateCols();
     this.langChangeSub = this.translate.onLangChange.subscribe(() => {
@@ -60,6 +56,9 @@ export class HistoryTablesComponent implements OnInit {
   store!: AuthState;
   private langChangeSub!: Subscription;
   basic: FlatpickrDefaultsInterface;
+  callId = computed<string>(() => {
+    return this.tabsHisoryService.callId();
+  });
   translateCols() {
     const keys = [
       'table.RecordId',
@@ -77,7 +76,8 @@ export class HistoryTablesComponent implements OnInit {
       'table.Date',
       'table.Questions',
       'table.FollowUp',
-      'table.Answer'
+      'table.Answer',
+      'Call ID'
     ];
 
     this.translate.get(keys).subscribe(translations => {
@@ -93,11 +93,12 @@ export class HistoryTablesComponent implements OnInit {
         { field: 'SchoolName', title: translations['table.SchoolName'], maxWidth: '10%' },
         { field: 'Percentage', title: translations['table.Percentage'], maxWidth: '5%' },
         { field: 'CertificateType', title: translations['table.CertificateType'], maxWidth: '7%' },
-        { field: 'Answer', title: translations['table.Notes'], maxWidth: '10%' },
+        { field: 'Notes', title: translations['table.Notes'], maxWidth: '10%' },
         { field: 'CreationDate', title: translations['table.Date'], maxWidth: '6%' },
         { field: 'ExtraField3', title: translations['table.Questions'], maxWidth: '10%' },
         { field: 'FollowUp', title: translations['table.FollowUp'], maxWidth: '6%' },
-        { field: 'Answer', title: translations['table.Answer'], maxWidth: '5%' }
+        { field: 'Answer', title: translations['table.Answer'], maxWidth: '5%' },
+        { field: 'CallID', title: translations['Call ID'], maxWidth: '6%' }
       ];
     });
   }
@@ -109,7 +110,6 @@ export class HistoryTablesComponent implements OnInit {
   totalRows = signal<number>(0);
   loading = true;
   initForm() {
-    console.log(this.store);
     this.searchForm = this.router.url !== "/history" ? this.fb.group({
       searchText: [''],
       searchBy: ['']
@@ -144,9 +144,6 @@ export class HistoryTablesComponent implements OnInit {
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.pageSize.set(res.result.PagingInfo[0].PageSize);
       this.loading = false;
-      console.log(res);
-      console.log(this.rows());
-      console.log(this.totalRows());
     });
   }
   exportData() {
@@ -155,21 +152,18 @@ export class HistoryTablesComponent implements OnInit {
     });
   }
   onServerChange(data: any) {
-    console.log(data);
     switch (data.change_type) {
       case 'page':
         this.currentPage.set(data.current_page)
         this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
-          console.log(res);
         });
         break;
       case 'sort':
         this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
-          console.log(res);
         });
         break;
     }

@@ -15,6 +15,21 @@ export const loginFailure = createAction(
   props<{ error: string }>()
 );
 
+export const loginWithZIWO = createAction(
+  '[Auth] Login With ZIWO',
+  props<{ username: string; password: string }>()
+);
+
+export const loginWithZIWOSuccess = createAction(
+  '[Auth] Login With ZIWO Success',
+  props<{ tokenZIWO: string }>()
+);
+
+export const loginWithZIWOFailure = createAction(
+  '[Auth] Login With ZIWO Failure',
+  props<{ error: string }>()
+);
+
 export const logout = createAction('[Auth] Logout');
 
 export const initAuth = createAction('[Auth] Init');

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/service/app.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as AuthActions from "../store/auth/auth.actions"
 import Swal from 'sweetalert2';
 import { AppState } from '../types/auth.types';
@@ -29,8 +29,8 @@ export class LoginComponent {
   }
   initForm() {
     this.loginForm = this.fb.group({
-      UserName: [''],
-      PassWord: ['']
+      UserName: ['', Validators.required],
+      PassWord: ['', Validators.required]
     })
   }
   async initStore() {
@@ -43,9 +43,9 @@ export class LoginComponent {
 
 
   onSubmit() {
-    console.log('store Values:', this.store);
-    // Dispatch login action
-    this.storeData.dispatch(AuthActions.login(this.loginForm.value));
+    if (this.loginForm.valid) {
+      this.storeData.dispatch(AuthActions.login(this.loginForm.value));      
+    }
     this.isSubmitForm = true;
   }
 }

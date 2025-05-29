@@ -14,6 +14,13 @@
                     <p class="mt-1 text-danger">{{ getErrorMessage("name", "required") }}</p>
                 </ng-container>
             </div>
+            <div>
+                <label for="callID">
+                    {{ "Call ID" | translate}} <span *ngIf="callId()">( {{status()}} )</span>
+                </label>
+                <input id="callID" name="callID" type="text" [placeholder]="'Call ID' | translate" class="form-input"
+                    formControlName="callID" [value]="callId()">
+            </div>
             <div [ngClass]="isSubmitForm ? userForm.controls['PhoneNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
                         class="font-bold text-red-500">*</span></label>
@@ -160,6 +167,7 @@
                     <option value="Medicine">Medicine</option>
                     <option value="Computing and Data Science">Computing and Data Science</option>
                     <option value="School of Physical Therapy">School of Physical Therapy</option>
+                    <option value="School of Fine Arts">School of Fine Arts</option>
                     <option value="Dentistry">Dentistry</option>
                     <option value="Business Administration and Applied Economics">Business Administration and Applied
                         Economics</option>
@@ -168,16 +176,6 @@
                     <option value="Other">Other</option>
                 </select>
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['SchoolName'].errors">
-                    <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
-                </ng-container>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div [ngClass]="isSubmitForm ? userForm.controls['Percentage'].errors ? 'has-error' : 'has-success' : ''">
-                <label class="text-[#2d3f69] font-extrabold" for="Percentage">{{"Percentage" | translate}}</label>
-                <input id="Percentage" name="Percentage" type="number" [placeholder]="'Percentage' | translate"
-                    class="form-input" formControlName="Percentage">
-                <ng-container *ngIf="isSubmitForm && !userForm.controls['Percentage'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
             </div>
@@ -204,12 +202,11 @@
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
             </div>
-            <div
-                [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
-                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{"fieldNames.askedQuestions" | translate}} <span
-                        class="font-bold text-red-500">*</span></label>
-                <ng-select [items]="options"  formControlName="ExtraField3" [multiple]="true"
-                    [clearable]="false" placeholder="Select an option" bindLabel="ExtraField3" labelForId="ExtraField3"
+            <div [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
+                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{"fieldNames.askedQuestions" |
+                    translate}} <span class="font-bold text-red-500">*</span></label>
+                <ng-select [items]="options" formControlName="ExtraField3" [multiple]="true" [clearable]="false"
+                    placeholder="Select an option" bindLabel="ExtraField3" labelForId="ExtraField3"
                     class="custom-multiselect !border h-fit cursor-pointer">
                 </ng-select>
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['ExtraField3'].errors">
@@ -219,22 +216,17 @@
                     <p class="mt-1 text-danger">{{ getErrorMessage("askedQuestions", "required") }}</p>
                 </ng-container>
             </div>
-            <!-- <div [ngClass]="isSubmitForm ? userForm.controls['ExtraField3'].errors ? 'has-error' : 'has-success' : ''">
-                <label class="text-[#2d3f69] font-extrabold" for="ExtraField3">{{ "Asked Questions" | translate }} <span
-                        class="font-bold text-red-500">*</span></label>
-                <select id="ExtraField3" name="ExtraField3" class="form-select cursor-pointer"
-                    formControlName="ExtraField3" aria-label="Asked Questions">
-                    <option value="" disabled selected>{{ "Asked Questions" | translate}}</option>
-                    <option value="Need Answer">Need Answer</option>
-                    <option *ngFor="let option of options" [value]="option">{{ option }}</option>
-                </select>
-                <ng-container *ngIf="isSubmitForm && !userForm.controls['ExtraField3'].errors">
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div [ngClass]="isSubmitForm ? userForm.controls['Percentage'].errors ? 'has-error' : 'has-success' : ''">
+                <label class="text-[#2d3f69] font-extrabold" for="Percentage">{{"Percentage" | translate}}</label>
+                <input id="Percentage" name="Percentage" type="number" [placeholder]="'Percentage' | translate"
+                    class="form-input" formControlName="Percentage">
+                <ng-container *ngIf="isSubmitForm && !userForm.controls['Percentage'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
-                <ng-container *ngIf="isSubmitForm && userForm.controls['ExtraField3'].errors">
-                    <p class="mt-1 text-danger">{{ getErrorMessage("askedQuestions", "required") }}</p>
-                </ng-container>
-            </div> -->
+            </div>
+
         </div>
         <div [ngClass]="isSubmitForm ? userForm.controls['Answer'].errors ? 'has-error' : 'has-success' : ''">
             <label class="text-[#2d3f69] font-extrabold" for="Answer">{{ "Answer" | translate}} <span
@@ -260,5 +252,58 @@
             translate}}</button>
     </form>
 
+    <!-- Modal -->
+    <ngx-custom-modal #modal22 customClass="modal-top auth-modal extra-large-modal" [closeOnOutsideClick]="false"
+        [closeOnEscape]="false" [hideCloseButton]="true">
+        <ng-template #modalHeader>
+            <div class="!py-5">
+                <h3 class="text-2xl font-extrabold text-[#2d3f69] ltr:text-left rtl:text-right">
+                    {{ "LoginZIWO" | translate}}</h3>
+            </div>
+        </ng-template>
+        <ng-template #modalBody>
+            <form (ngSubmit)="onLogin(modal22);" [formGroup]='formZIWO'>
+                <div class="relative mb-4">
+                    <label for="username" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">
+                        {{ 'loginForm.username' | translate }}
+                    </label>
+                    <div class="relative text-white-dark flex items-center">
+                        <input id="username" name="username" type="text"
+                            [placeholder]="'loginForm.enterUsername' | translate"
+                            class="form-input ps-10 placeholder:text-white-dark" formControlName="username" />
+                        <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                            <icon-mail [fill]="true"></icon-mail>
+                        </span>
+                    </div>
+                    <p *ngIf="isSubmitForm && formZIWO.get('username')?.errors?.['required']"
+                        class="text-red-600 text-sm mt-1">
+                        {{ 'loginForm.usernameRequired' | translate }}
+                    </p>
+                </div>
+                <div class="relative mb-4">
+                    <label for="password" class="font-extrabold text-[#2d3f69] rtl:text-right ltr:text-left">
+                        {{ 'loginForm.password' | translate }}
+                    </label>
+                    <div class="relative text-white-dark flex items-center">
+                        <input id="password" name="password" type="password"
+                            [placeholder]="'loginForm.enterPassword' | translate"
+                            class="form-input ps-10 placeholder:text-white-dark" formControlName="password" />
+                        <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                            <icon-lock-dots [fill]="true" />
+                        </span>
+                    </div>
+                    <p *ngIf="isSubmitForm && formZIWO.get('password')?.errors?.['required']"
+                        class="text-red-600 text-sm mt-1">
+                        {{ 'loginForm.passwordRequired' | translate }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-end">
+                    <button class="btn btn-primary mx-3 hover:opacity-80 cursor-pointer">
+                        {{ "Login" | translate }}
+                    </button>
+                </div>
+            </form>
+        </ng-template>
+    </ngx-custom-modal>
     <app-history-tabs></app-history-tabs>
 </section>

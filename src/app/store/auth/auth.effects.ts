@@ -32,7 +32,11 @@ export class AuthEffects {
                             title: "Login successful",
                             padding: '10px 20px',
                         });
-                        this.router.navigate(['/']);
+                        if (response.GroupID === 1004) {
+                            this.router.navigate(['/charts']);
+                        } else {
+                            this.router.navigate(['/']);
+                        }
                         return AuthActions.loginSuccess({ Token: response.Token, UserName: response.UserName, DisplayName: response.DisplayName, GroupID: response.GroupID });
                     }),
                     catchError((err) => {
@@ -56,6 +60,49 @@ export class AuthEffects {
         )
     );
 
+    loginWithZIWO$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.loginWithZIWO),
+            mergeMap(({ username, password }) =>
+                this.authService.loginWithZIWO(username, password).pipe(
+                    map((response) => {
+                        sessionStorage.setItem('tokenZIWO', response.content.access_token);
+                        const toast: any = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            customClass: { container: 'toast' },
+                        });
+                        toast.fire({
+                            icon: "success",
+                            title: "Login with ZIWO successful",
+                            padding: '10px 20px',
+                        });
+                        return AuthActions.loginWithZIWOSuccess({ tokenZIWO: response.content.access_token });
+                    }),
+                    catchError((err) => {
+                        console.log(err)
+                        const toast: any = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            customClass: { container: 'toast' },
+                        });
+                        toast.fire({
+                            icon: 'error',
+                            title: 'ZIWO Login Failed',
+                            padding: '10px 20px',
+                        });
+
+                        return of(AuthActions.loginWithZIWOFailure({ error: err }));
+                    })
+                )
+            )
+        )
+    );
+
     logout$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -65,6 +112,7 @@ export class AuthEffects {
                     sessionStorage.removeItem('UserName');
                     sessionStorage.removeItem('DisplayName');
                     sessionStorage.removeItem('GroupID');
+                    sessionStorage.removeItem('tokenZIWO');
 
                     // Important: tap is better for side effects like routing
                     this.router.navigate(['/login']);

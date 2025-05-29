@@ -38,14 +38,14 @@
                         </button>
                         <div [@slideDownUp]="!activeDropdown.includes('dashboard')" class="accordion-content">
                             <ul class="sub-menu text-gray-500">
-                                <li>
-                                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
-                                        >{{ 'CRM' | translate }}</a
-                                    >
-                                </li>
                                 <li *ngIf="store.auth.GroupID === 1004">
                                     <a routerLink="/charts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
                                         >{{ 'charts' | translate }}</a
+                                    >
+                                </li>
+                                <li>
+                                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="hover:text-[rgb(104 81 46)] cursor-pointer"
+                                        >{{ 'CRM' | translate }}</a
                                     >
                                 </li>
                                 <li *ngIf="store.auth.GroupID === 1004">

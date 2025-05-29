@@ -33,7 +33,6 @@ export class AllChartsComponent {
     this.storeData.dispatch({ type: 'toggleMainLoader', payload: true });
     this.tabsHistoryService.getChartsData(this.dataFromToForm.value).subscribe((res) => {
       this.data = res;
-      console.log('Fetched Data:', this.data);
       this.rows.set(this.data.CaseTrends);
       this.initCharts();
       this.storeData.dispatch({ type: 'toggleMainLoader', payload: false });
@@ -54,11 +53,6 @@ export class AllChartsComponent {
         this.store = d;
       });
   }
-  /* ngOnChanges(changes: SimpleChanges) {
-    if (changes['data'] && this.data && this.data.length > 0) {
-      this.initCharts();
-    }
-  } */
   pieChart: any;
   columnChart: any;
   lineChart: any;
@@ -262,7 +256,6 @@ export class AllChartsComponent {
     this.storeData.dispatch({ type: 'toggleMainLoader', payload: true });
     this.tabsHistoryService.getChartsData(this.dataFromToForm.value).subscribe((res) => {
       this.data = res;
-      console.log('Fetched Data:', this.data);
       this.rows.set(this.data.CaseTrends);
       this.initCharts();
       this.storeData.dispatch({ type: 'toggleMainLoader', payload: false });
