@@ -114,11 +114,10 @@ export class CRMComponent {
             return new Date(item.CreationDate) > new Date(latest.CreationDate) ? item : latest;
           }, res.result.items[0]);
         }
-        this.historyTabsService.getAgentCalls().subscribe((res: any) => {
+        this.historyTabsService.getAgentCalls(phoneNumberValue).subscribe((res: any) => {
           this.historyTabsService.setAgentCalls(res);
           this.userForm.patchValue({
             CallerName: newestItem ? newestItem.CallerName : '',
-            PhoneNumber: newestItem ? newestItem.PhoneNumber : '',
             CallerType: newestItem ? newestItem.CallerType : '',
             ExtraField1: newestItem ? newestItem.ExtraField1 : '',
             ExtraField3: newestItem ? newestItem.ExtraField3.split(';') : [],

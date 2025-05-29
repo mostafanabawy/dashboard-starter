@@ -85,21 +85,22 @@ export class HistoryService {
       { params, headers }
     )
   }
-  getAgentCalls() {
+  getAgentCalls(phoneNumber: string) {
     const params = new HttpParams({})
       .set('limit', '10') // fetch more
       .set('skip', '0')
-      .set('fromDate', '2024-01-01')
-      .set('toDate', '2025-12-31')
-      .set('fromTime', '00:00:00')
-      .set('toTime', '23:59:59')
-      .set('recordings', 'true');
+      .set('contactNumber', `${phoneNumber}`);
     const headers = new HttpHeaders()
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
   }
   setAgentCalls(data: any) {
     console.log(data);
+    if (data.content.length === 0) {
+      this.callId.set('');
+      this.status.set('');
+      return;
+    }
     this.callId.set(data.content[0].callID);
     this.status.set(data.content[0].status);
   }
