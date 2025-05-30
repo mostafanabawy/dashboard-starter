@@ -22,6 +22,7 @@ export class HistoryService {
   store!: AuthState;
   callId = signal<string>('');
   status = signal<string>('');
+  callerNumber = signal<string>('');
   initStore() {
     this.storeData
       .select((d) => d.auth)
@@ -86,19 +87,13 @@ export class HistoryService {
     )
   }
   getAgentCalls(phoneNumber: string) {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const fromDate = `${year}-${month}-${day}`;
-    const params = new HttpParams({})
-      .set('limit', '100') // fetch more
-      .set('skip', '0')
-      .set('contactNumber', phoneNumber) 
+    const params = new HttpParams()
+      .set('limit', '1000') // fetch more
     const headers = new HttpHeaders()
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
   }
+
   setAgentCalls(data: any) {
     console.log(data);
     if (data.content.length === 0) {
@@ -108,6 +103,7 @@ export class HistoryService {
     }
     this.callId.set(data.content[0].callID);
     this.status.set(data.content[0].status);
+    this.callerNumber.set(data.content[0].callerIDNumber);
   }
   sendFormMainData(formData: any) {
     const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');

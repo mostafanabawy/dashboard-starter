@@ -5,11 +5,9 @@ import { HistoryService } from '../service/history.service';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '../types/auth.types';
-import { AuthService } from '../service/auth.service';
 import * as AuthActions from "../store/auth/auth.actions"
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
 import { Subscription } from 'rxjs';
-import { selectTokenZIWO } from '../store/auth/auth.selectors';
 import { HistoryAPIResponse } from '../types/history.types';
 
 @Component({
@@ -27,6 +25,9 @@ export class CRMComponent {
   });
   status = computed<string>(() => {
     return this.historyTabsService.status();
+  });
+  callerNumber = computed<string>(() => {
+    return this.historyTabsService.callerNumber();
   });
 
   options = [
@@ -47,8 +48,7 @@ export class CRMComponent {
     private fb: FormBuilder,
     private historyTabsService: HistoryService,
     private storeData: Store<AppState>,
-    private translate: TranslateService,
-    private authService: AuthService
+    private translate: TranslateService
   ) {
     this.initStore();
     this.initForm();

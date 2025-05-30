@@ -15,11 +15,13 @@
                 </ng-container>
             </div>
             <div>
-                <label for="callID">
+                <label for="callID" class="text-[#2d3f69] font-extrabold">
                     {{ "Call ID" | translate}} <span *ngIf="callId()">( {{status()}} )</span>
                 </label>
                 <input id="callID" name="callID" type="text" [placeholder]="'Call ID' | translate" class="form-input"
                     formControlName="callID" [value]="callId()">
+                
+                <span *ngIf="callId()" class="text-sm text-primary font-extrabold">Caller Number: {{callerNumber()}}</span>
             </div>
             <div [ngClass]="isSubmitForm ? userForm.controls['PhoneNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
