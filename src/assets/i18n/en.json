@@ -190,5 +190,6 @@
     },
     "dateFrom": "Date From",
     "dateTo": "Date To",
-    "LoginZIWO": "Login to ZIWO"
+    "LoginZIWO": "Login to ZIWO",
+    "latestNumber": "Get latest Number"
 }

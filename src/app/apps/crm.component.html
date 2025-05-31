@@ -27,7 +27,7 @@
             <div [ngClass]="isSubmitForm ? userForm.controls['PhoneNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
                         class="font-bold text-red-500">*</span>
-                    <button class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90" type="button" (click)="getNumber()">Get latest Number</button>
+                    <button *ngIf="store.auth.GroupID === 1006" class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90" type="button" (click)="getNumber()">{{"latestNumber" | translate}}</button>
                 </label>
                 <input id="PhoneNumber" name="PhoneNumber" type="tel" placeholder="Phone Number" class="form-input"
                     formControlName="PhoneNumber" (blur)="onPhoneNumberBlur()">
