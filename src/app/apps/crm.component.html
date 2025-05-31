@@ -14,18 +14,21 @@
                     <p class="mt-1 text-danger">{{ getErrorMessage("name", "required") }}</p>
                 </ng-container>
             </div>
-            <div>
+            <div *ngIf="store.auth.GroupID === 1006">
                 <label for="callID" class="text-[#2d3f69] font-extrabold">
                     {{ "Call ID" | translate}} <span *ngIf="callId()">( {{status()}} )</span>
                 </label>
                 <input id="callID" name="callID" type="text" [placeholder]="'Call ID' | translate" class="form-input"
                     formControlName="callID" [value]="callId()">
-                
-                <span *ngIf="callId()" class="text-xs text-primary font-extrabold">Caller Number: {{callerNumber()}}</span>
+
+                <span *ngIf="callId()" class="text-xs text-primary font-extrabold">Caller Number:
+                    {{callerNumber()}}</span>
             </div>
             <div [ngClass]="isSubmitForm ? userForm.controls['PhoneNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
-                        class="font-bold text-red-500">*</span></label>
+                        class="font-bold text-red-500">*</span>
+                    <button class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90" type="button" (click)="getNumber()">Get latest Number</button>
+                </label>
                 <input id="PhoneNumber" name="PhoneNumber" type="tel" placeholder="Phone Number" class="form-input"
                     formControlName="PhoneNumber" (blur)="onPhoneNumberBlur()">
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['PhoneNumber'].errors">

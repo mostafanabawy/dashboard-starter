@@ -11,6 +11,14 @@ import Swal from 'sweetalert2';
   standalone: false
 })
 export class QuestionsTableComponent {
+  rows = signal<any>([])
+  singleRowForm!: FormGroup;
+  searchForm!: FormGroup;
+  currentPage = signal<number>(1);
+  pageSize = signal<number>(10);
+  totalRows = signal<number>(0);
+  loading = true;
+  cols: any[] = [];
   constructor(
     private tabsHisoryService: HistoryService,
     private fb: FormBuilder,
@@ -33,8 +41,7 @@ export class QuestionsTableComponent {
       this.translateCols(); // Re-translate when language changes
     });
   }
-  loading = true;
-  cols: any[] = [];
+  
   translateCols() {
     this.translate.get([
       'table2.Question',
@@ -51,12 +58,7 @@ export class QuestionsTableComponent {
     });
   }
 
-  rows = signal<any>([])
-  singleRowForm!: FormGroup;
-  searchForm!: FormGroup;
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
-  totalRows = signal<number>(0);
+  
   initForm() {
     this.singleRowForm = this.fb.group({
       ID: [{ value: "" }],

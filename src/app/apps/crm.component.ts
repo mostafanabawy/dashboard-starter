@@ -100,6 +100,18 @@ export class CRMComponent {
       password: ['', Validators.required]
     })
   }
+  getNumber() {
+    if (this.store.auth.GroupID === 1006) {
+      this.historyTabsService.getAgentCalls().subscribe((res: any) => {
+        this.historyTabsService.setAgentCalls(res);
+        this.userForm.patchValue({
+          PhoneNumber: res?.content[0].callerIDNumber
+        });
+        this.onPhoneNumberBlur();
+      });
+
+    }
+  }
   onPhoneNumberBlur() {
     if (this.userForm.get('PhoneNumber')!.value) {
       const phoneNumberValue = this.userForm.get('PhoneNumber')!.value;
@@ -114,13 +126,31 @@ export class CRMComponent {
             return new Date(item.CreationDate) > new Date(latest.CreationDate) ? item : latest;
           }, res.result.items[0]);
         }
-        this.historyTabsService.getAgentCalls(phoneNumberValue).subscribe((res: any) => {
-          this.historyTabsService.setAgentCalls(res);
+        if (this.store.auth.GroupID === 1006) {
+          this.historyTabsService.getAgentCalls(phoneNumberValue).subscribe((res: any) => {
+            this.historyTabsService.setAgentCalls(res);
+            this.userForm.patchValue({
+              CallerName: newestItem ? newestItem.CallerName : '',
+              CallerType: newestItem ? newestItem.CallerType : '',
+              ExtraField1: newestItem ? newestItem.ExtraField1 : '',
+              ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter((item => item)) : [],
+              FollowUp: newestItem ? newestItem.FollowUp : '',
+              Percentage: newestItem ? newestItem.Percentage : '',
+              SchoolName: newestItem ? newestItem.SchoolName : '',
+              WhatsAppNumber: newestItem ? newestItem.WhatsAppNumber : '',
+              CertificateType: newestItem ? newestItem.CertificateType : '',
+              City: newestItem ? newestItem.City : '',
+              Answer: newestItem ? newestItem.Answer : '',
+              CallStatus: newestItem ? newestItem.CallStatus : '',
+              notes: newestItem ? newestItem.Notes : '',
+            });
+          })
+        } else {
           this.userForm.patchValue({
             CallerName: newestItem ? newestItem.CallerName : '',
             CallerType: newestItem ? newestItem.CallerType : '',
             ExtraField1: newestItem ? newestItem.ExtraField1 : '',
-            ExtraField3: newestItem ? newestItem.ExtraField3.split(';') : [],
+            ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter((item => item)) : [],
             FollowUp: newestItem ? newestItem.FollowUp : '',
             Percentage: newestItem ? newestItem.Percentage : '',
             SchoolName: newestItem ? newestItem.SchoolName : '',
@@ -131,7 +161,7 @@ export class CRMComponent {
             CallStatus: newestItem ? newestItem.CallStatus : '',
             notes: newestItem ? newestItem.Notes : '',
           });
-        })
+        }
       });
     } else {
       this.historyTabsService.initialHistoryFetchVal.set(null);
@@ -160,6 +190,7 @@ export class CRMComponent {
         formData.callID = this.callId();
         this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
           this.userForm.reset();
+          this.historyTabsService.resetAgentCalls();
           this.isSubmitForm = false;
           this.userForm.markAsPristine();
           this.showMessage('Form submitted successfully.');
@@ -190,5 +221,8 @@ export class CRMComponent {
   getErrorMessage(controlName: string, errorKey: string) {
     const field = this.translate.instant(`fieldNames.${controlName}`);
     return this.translate.instant(`formErrors.${errorKey}`, { field });
+  }
+  ngOnDestroy() {
+    this.historyTabsService.resetAgentCalls();
   }
 }

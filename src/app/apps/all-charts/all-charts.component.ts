@@ -15,6 +15,16 @@ import * as XLSX from 'xlsx';
   templateUrl: './all-charts.component.html'
 })
 export class AllChartsComponent {
+  pieChart: any;
+  columnChart: any;
+  lineChart: any;
+  store!: AppState;
+  data!: ChartStatsResponse;
+  dataFromToForm!: FormGroup;
+  cols: any[] = [];
+  basic: FlatpickrDefaultsInterface;
+  rows = signal<any[]>([]);
+  private langChangeSub!: Subscription;
   constructor(
     private storeData: Store<AppState>,
     private tabsHistoryService: HistoryService,
@@ -53,16 +63,7 @@ export class AllChartsComponent {
         this.store = d;
       });
   }
-  pieChart: any;
-  columnChart: any;
-  lineChart: any;
-  store!: AppState;
-  data!: ChartStatsResponse;
-  dataFromToForm!: FormGroup;
-  cols: any[] = [];
-  basic: FlatpickrDefaultsInterface;
-  rows = signal<any[]>([]);
-  private langChangeSub!: Subscription;
+
   initForm() {
     const today = new Date();
     const thirtyDaysAgo = new Date();
@@ -99,47 +100,47 @@ export class AllChartsComponent {
     const statusCounts = this.data.StatusDistribution.map((item) => {
       return item.Total
     })
-    
-    
+
+
     this.pieChart = {
       series: [...statusCounts],
       chart: {
-      height: 300,
-      type: 'pie',
-      zoom: {
-        enabled: false,
-      },
-      toolbar: {
-        show: false,
-      },
+        height: 300,
+        type: 'pie',
+        zoom: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
       },
       labels: labels,
       // Muted, distinct, non-rainbow palette with clear contrast
       colors: [
-      '#4361ee', // blue
-      '#e7515a', // red
-      '#6c757d', // gray
-      '#e2a03f', // gold
-      '#00ab55', // green
-      '#2e3a59', // dark blue
-      '#b47aea', // muted violet
-      '#f7b267'  // muted orange
+        '#4361ee', // blue
+        '#e7515a', // red
+        '#6c757d', // gray
+        '#e2a03f', // gold
+        '#00ab55', // green
+        '#2e3a59', // dark blue
+        '#b47aea', // muted violet
+        '#f7b267'  // muted orange
       ],
       responsive: [
-      {
-        breakpoint: 480,
-        options: {
-        chart: {
-          width: 200,
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+          },
         },
-        },
-      },
       ],
       stroke: {
-      show: false,
+        show: false,
       },
       legend: {
-      position: 'bottom',
+        position: 'bottom',
       },
     };
 
@@ -252,7 +253,7 @@ export class AllChartsComponent {
       },
     };
   }
-  onSearch(){
+  onSearch() {
     this.storeData.dispatch({ type: 'toggleMainLoader', payload: true });
     this.tabsHistoryService.getChartsData(this.dataFromToForm.value).subscribe((res) => {
       this.data = res;
@@ -262,7 +263,7 @@ export class AllChartsComponent {
     });
   }
   exportData(data: CaseTrendItem[] | FollowUpActivityItem[] | StatusDistributionItem[]) {
-    
+
     alasql('SELECT * INTO XLSX("ChartsData.xlsx",{headers:true}) FROM ?', [data]);
   }
 }

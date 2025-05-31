@@ -16,6 +16,20 @@ import { Router } from '@angular/router';
   templateUrl: './history-tables.component.html'
 })
 export class HistoryTablesComponent implements OnInit {
+  rows = signal<any>([])
+  searchForm!: FormGroup;
+  currentPage = signal<number>(1);
+  pageSize = signal<number>(10);
+  totalRows = signal<number>(0);
+  loading = true;
+  search1 = '';
+  cols: any[] = [];
+  store!: AuthState;
+  private langChangeSub!: Subscription;
+  basic: FlatpickrDefaultsInterface;
+  callId = computed<string>(() => {
+    return this.tabsHisoryService.callId();
+  });
   constructor(
     private tabsHisoryService: HistoryService,
     private fb: FormBuilder,
@@ -33,9 +47,17 @@ export class HistoryTablesComponent implements OnInit {
         this.rows.set(res.result.items);
         this.totalRows.set(res.result.PagingInfo[0].TotalRows);
         this.loading = false;
-        
-
       });
+      if (this.router.url === "/history"){
+        this.searchForm.patchValue({
+          PhoneNumber: value
+        })
+      }else{
+        this.searchForm.patchValue({
+          searchText: value,
+          searchBy: 'PhoneNumber'
+        });
+      }
     });
     this.basic = {
       dateFormat: 'd-m-y',
@@ -51,14 +73,7 @@ export class HistoryTablesComponent implements OnInit {
       this.translateCols();
     });
   }
-  search1 = '';
-  cols: any[] = [];
-  store!: AuthState;
-  private langChangeSub!: Subscription;
-  basic: FlatpickrDefaultsInterface;
-  callId = computed<string>(() => {
-    return this.tabsHisoryService.callId();
-  });
+  
   translateCols() {
     const keys = [
       'table.RecordId',
@@ -103,12 +118,7 @@ export class HistoryTablesComponent implements OnInit {
     });
   }
 
-  rows = signal<any>([])
-  searchForm!: FormGroup;
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
-  totalRows = signal<number>(0);
-  loading = true;
+  
   initForm() {
     this.searchForm = this.router.url !== "/history" ? this.fb.group({
       searchText: [''],
@@ -125,8 +135,6 @@ export class HistoryTablesComponent implements OnInit {
           Validators.pattern(/^\d{11}$/)
         ]]
       });
-
-
   }
 
   initStore() {

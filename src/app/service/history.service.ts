@@ -6,23 +6,25 @@ import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
 import { Store } from '@ngrx/store';
 import { AppState } from '../types/auth.types';
 import { AuthState } from '../store/auth/auth.reducer';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  constructor(
-    private http: HttpClient,
-    private storeData: Store<AppState>
-  ) {
-    this.initStore();
-  }
   initialHistoryFetchVal = signal<number | null>(null);
   initialHistoryVal = signal<HistoryRecord[] | null>(null);
   store!: AuthState;
   callId = signal<string>('');
   status = signal<string>('');
   callerNumber = signal<string>('');
+  private badyaUniversityBaseURL = environment.apiUrl;
+  constructor(
+    private http: HttpClient,
+    private storeData: Store<AppState>
+  ) {
+    this.initStore();
+  }
   initStore() {
     this.storeData
       .select((d) => d.auth)
@@ -47,7 +49,7 @@ export class HistoryService {
       fromString: `page=${encoded}`
     })
     return this.http.post<QuestionsAPIResponse>(
-      'https://vcld.ws/badsyaproxystg.php',
+      `${this.badyaUniversityBaseURL}`,
       query,
       { params, headers }
     );
@@ -81,21 +83,25 @@ export class HistoryService {
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
     // const headers = {}; // <-- header left as empty object
-    return this.http.post<HistoryAPIResponse>('https://vcld.ws/badsyaproxystg.php',
+    return this.http.post<HistoryAPIResponse>(`${this.badyaUniversityBaseURL}`,
       query,
       { params, headers }
     )
   }
-  getAgentCalls(phoneNumber: string) {
+  getAgentCalls(phoneNumber?: string) {
     const params = new HttpParams()
       .set('limit', '1000') // fetch more
     const headers = new HttpHeaders()
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
   }
+  resetAgentCalls(){
+    this.callId.set('');
+    this.status.set('');
+    this.callerNumber.set('');
+  }
 
   setAgentCalls(data: any) {
-    console.log(data);
     if (data.content.length === 0) {
       this.callId.set('');
       this.status.set('');
@@ -114,7 +120,7 @@ export class HistoryService {
       .set('x-auth', `${this.store.token}`);
     // const headers = {}; // <-- header left as empty object
     return this.http.post(
-      'https://vcld.ws/badsyaproxystg.php',
+      `${this.badyaUniversityBaseURL}`,
       formData,
       { params, headers }
     );
@@ -129,7 +135,7 @@ export class HistoryService {
       .set('x-auth', `${this.store.token}`);
     // const headers = {}; // <-- header left as empty object
     return this.http.post(
-      'https://vcld.ws/badsyaproxystg.php',
+      `${this.badyaUniversityBaseURL}`,
       formData,
       { params, headers }
     );
@@ -144,7 +150,7 @@ export class HistoryService {
       .set('x-auth', `${this.store.token}`);
     // const headers = {}; // <-- header left as empty object
     return this.http.post(
-      'https://vcld.ws/badsyaproxystg.php',
+      `${this.badyaUniversityBaseURL}`,
       formData,
       { params, headers }
     );
@@ -158,7 +164,7 @@ export class HistoryService {
     const headers = new HttpHeaders()
       .set('x-auth', `${this.store.token}`);
     return this.http.post(
-      'https://vcld.ws/badsyaproxystg.php',
+      `${this.badyaUniversityBaseURL}`,
       payload,
       { params, headers }
     );
