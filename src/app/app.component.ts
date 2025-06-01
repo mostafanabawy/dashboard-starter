@@ -71,11 +71,11 @@ export class AppComponent {
         // Wait for ZIWO plugin to be ready
         window.addEventListener('ziwo-loaded', () => {
             // Authenticate the agent
-           /*  (window as any).ZIWOClient.login(agentLogin).then(() => {
+            (window as any).ZIWOClient.login(agentLogin).then(() => {
                 console.log('ZIWO logged in successfully');
             }).catch((err: any) => {
                 console.error('Login failed:', err);
-            }); */
+            });
         });
 
         // Optional: Listen to active calls
