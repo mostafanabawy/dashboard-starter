@@ -64,8 +64,8 @@ export class AppComponent {
     ngOnInit(): void {
         // Replace with actual credentials
         const agentLogin = {
-            username: this.authService.ziwo.username,
-            password: this.authService.ziwo.password,
+            username: 'agent3hiconnecteg@gmail.com',
+            password: 'Badya@@123456',
         };
 
         // Wait for ZIWO plugin to be ready
