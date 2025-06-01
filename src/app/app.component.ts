@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { HistoryService } from './service/history.service';
 
 @Component({
     selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
+        private historyTabsService: HistoryService
     ) {
         this.router.events
             .pipe(
@@ -38,5 +40,19 @@ export class AppComponent {
                 }),
             )
             .subscribe();
+    }
+    ngOnInit(): void {
+        window.addEventListener('ziwo-call-active', (event: any) => {
+            const callData = event.detail;
+            console.log("**************************************************************************");
+            console.log(event);
+            console.log("**************************************************************************");
+            console.log(callData);
+            console.log("**************************************************************************");
+            console.log('Caller Number:', callData.contactNumber);
+            console.log("**************************************************************************");
+            this.historyTabsService.setCallerNumber(callData.contactNumber);
+            // You can implement additional logic here, such as displaying the number in the UI
+        });
     }
 }

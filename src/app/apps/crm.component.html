@@ -29,7 +29,7 @@
                         class="font-bold text-red-500">*</span>
                     <button *ngIf="store.auth.GroupID === 1006" class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90" type="button" (click)="getNumber()">{{"latestNumber" | translate}}</button>
                 </label>
-                <input id="PhoneNumber" name="PhoneNumber" type="tel" placeholder="Phone Number" class="form-input"
+                <input id="PhoneNumber" name="PhoneNumber" type="tel" [placeholder]=" 'Phone number' | translate" class="form-input phone-input ltr:!text-left"
                     formControlName="PhoneNumber" (blur)="onPhoneNumberBlur()">
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['PhoneNumber'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>

@@ -111,6 +111,9 @@ export class HistoryService {
     this.status.set(data.content[0].status);
     this.callerNumber.set(data.content[0].callerIDNumber);
   }
+  setCallerNumber(phoneNumber: string) {
+    this.callerNumber.set(phoneNumber);
+  }
   sendFormMainData(formData: any) {
     const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
     const params = new HttpParams({

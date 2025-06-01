@@ -3,8 +3,8 @@
         class="relative flex w-full bg-gradient-to-b from-[#161F3B] to-[#273866] items-center px-5 py-2.5 dark:bg-[#0e1726]">
         <div class="horizontal-logo flex items-center justify-between lg:hidden ltr:mr-2 rtl:ml-2">
             <a routerLink="/" class="main-logo flex shrink-0 items-center">
-                <source srcset="assets/images/logo-BADYA.png" type="image/webp">
-                <img class="inline w-36 ltr:-ml-1 rtl:-mr-1" src="assets/images/logo-BADYA.png"
+                <source srcset="https://vcld.ws/badya/stg/assets/images/logo-BADYA.png" type="image/webp">
+                <img class="inline w-36 ltr:-ml-1 rtl:-mr-1" src="https://vcld.ws/badya/stg/assets/images/logo-BADYA.png"
                     alt="university logo" />
                 <!-- <span
                     class="hidden align-middle text-2xl font-semibold transition-all duration-300 dark:text-white-light md:inline ltr:ml-1.5 rtl:mr-1.5">
@@ -34,7 +34,7 @@
                 <div hlMenu>
                     <button type="button" hlMenuButton
                         class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                        <img [src]="'/assets/images/flags/'+ store.index.locale.toUpperCase() + '.svg'" alt="flag"
+                        <img [src]="'https://vcld.ws/badya/stg/assets/images/flags/'+ store.index.locale.toUpperCase() + '.svg'" alt="flag"
                             class="h-5 w-5 rounded-full object-cover" />
                     </button>
                     <ul *hlMenuItems @toggleAnimation
@@ -44,7 +44,7 @@
                                 [ngClass]="{ 'bg-primary/10 text-primary': translate.currentLang === item.code }"
                                 (click)="changeLanguage(item)">
                                 <img class="h-5 w-5 rounded-full object-cover"
-                                    [src]="'/assets/images/flags/'+ item.code.toUpperCase() + '.svg'" alt="" />
+                                    [src]="'https://vcld.ws/badya/stg/assets/images/flags/'+ item.code.toUpperCase() + '.svg'" alt="" />
                                 <span class="ltr:ml-3 rtl:mr-3">{{ item.name }}</span>
                             </button>
                         </li>
@@ -57,7 +57,7 @@
                 <div hlMenu class="!block">
                     <button type="button" hlMenuButton class="group relative block" aria-label="user settings">
                         <img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100 bg-gray-300 hover:bg-gray-50"
-                            src="/assets/images/user-profile.png" alt="user profile picture avatar" />
+                            src="https://vcld.ws/badya/stg/assets/images/user-profile.png" alt="user profile picture avatar" />
                     </button>
                     <ul *hlMenuItems @toggleAnimation
                         class="top-11 w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90 ltr:right-0 rtl:left-0">
@@ -65,7 +65,7 @@
                             <div class="flex items-center px-4 py-4">
                                 <div class="flex-none">
                                     <img class="h-10 w-10 rounded-md object-cover"
-                                        src="/assets/images/user-profile.png" alt="" />
+                                        src="https://vcld.ws/badya/stg/assets/images/user-profile.png" alt="profile avatar" />
                                 </div>
                                 <div class="truncate ltr:pl-4 rtl:pr-4">
                                     <h4 class="text-base">

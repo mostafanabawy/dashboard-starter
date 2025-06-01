@@ -729,3 +729,21 @@ pre code.hljs {
 .app-background {
     @apply bg-[radial-gradient(rgb(255,254,234)_0%,rgb(255,254,234)_35%,rgba(183,232,235,0.51)_100%)];
 }
+
+
+.phone-input {
+  /* This makes the placeholder appear on the right for the initial state */
+  direction: rtl;
+  text-align: right;
+  padding-right: 10px;
+  padding-left: 10px; /* Keep consistent padding initially */
+}
+
+/* This rule targets the actual input text when it's entered */
+.phone-input:not(:placeholder-shown) {
+  direction: ltr;
+  text-align: left;
+  /* Reset padding right for entered text if needed */
+  padding-right: 10px; /* Adjust as needed */
+  padding-left: 10px; /* Adjust as needed */
+}

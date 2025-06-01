@@ -61,6 +61,15 @@ export class CRMComponent {
         }
       }
     }, { allowSignalWrites: true })
+    effect(() => {
+      let phoneNumber = this.callerNumber();
+      this.userForm.patchValue({
+        phoneNumber
+      })
+      if (phoneNumber) {
+        this.onPhoneNumberBlur();
+      }
+    })
   }
   async initStore() {
     this.storeData

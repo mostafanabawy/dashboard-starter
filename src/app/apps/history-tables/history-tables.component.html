@@ -38,7 +38,7 @@
                     <div>
                         <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{"Phone number" | translate}}</label>
                         <input id="PhoneNumber" type="tel" formControlName="PhoneNumber"
-                            placeholder="Enter Phone Number" class="form-input" />
+                            [placeholder]=" 'Phone number' | translate" class="form-input phone-input ltr:!text-left" />
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -89,7 +89,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary !mt-6 ltr:ms-auto rtl:me-auto">{{"Search" |
+                    <button type="submit" class="btn btn-primary !mt-6 ltr:ms-auto rtl:me-auto">{{"search" |
                         translate}}</button>
                 </form>
             </div>
