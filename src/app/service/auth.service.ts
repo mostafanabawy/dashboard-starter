@@ -19,11 +19,12 @@ export class AuthService {
         password: ''
     }
     loginWithZIWO(username: string, password: string): Observable<any> {
-        this.ziwo = {
-            username: username,
-            password: password
-        }
-        
+            
+        (window as any).ZIWOClient.login({username, password}).then(() => {
+            console.log('ZIWO logged in successfully');
+        }).catch((err: any) => {
+            console.error('Login failed:', err);
+        });
         const body = {
             username: username,
             password: password,
