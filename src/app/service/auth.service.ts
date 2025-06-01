@@ -14,8 +14,15 @@ export class AuthService {
         );
     }
 
+    ziwo = {
+        username: '',
+        password: ''
+    }
     loginWithZIWO(username: string, password: string): Observable<any> {
-        
+        this.ziwo = {
+            username: username,
+            password: password
+        }
         
         const body = {
             username: username,
