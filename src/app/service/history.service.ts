@@ -104,6 +104,7 @@ export class HistoryService {
       this.status.set('');
       return;
     }
+    this.status.set('Active');
     this.callId.set(data.callId);
     this.callerNumber.set(data.number);
   }
