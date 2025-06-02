@@ -113,7 +113,7 @@ export class CRMComponent {
       ExtraFiled2: [''], // Note: spelling as per your list
       FollowUp: ['', Validators.required],
       Percentage: [''],
-      PhoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]],
+      PhoneNumber: ['', [Validators.required, Validators.pattern(/.*/)]],
       SchoolName: [''],
       WhatsAppNumber: ['', Validators.pattern(/^[0-9]{11}$/)],
       notes: [''],
