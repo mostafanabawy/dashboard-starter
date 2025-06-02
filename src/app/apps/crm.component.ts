@@ -133,10 +133,10 @@ export class CRMComponent {
         console.log(this.ziwoClient.calls[0].primaryCallId);
         console.log("*****************************************************");
         
-        this.historyTabsService.setAgentCalls({number: this.ziwoClient.calls[0].phoneNumber, callId: this.ziwoClient.calls[0].primaryCallId});
-        console.log(this.ziwoClient.calls[0].phoneNumber);
+        this.historyTabsService.setAgentCalls({number: this.ziwoClient.calls[this.ziwoClient.calls.length-1].phoneNumber, callId: this.ziwoClient.calls[this.ziwoClient.calls.length-1].primaryCallId});
+        console.log(this.ziwoClient.calls[this.ziwoClient.calls.length-1].phoneNumber);
         this.userForm.patchValue({
-          PhoneNumber: this.ziwoClient.calls[0].phoneNumber
+          PhoneNumber: this.ziwoClient.calls[this.ziwoClient.calls.length-1].phoneNumber
         });
         this.onPhoneNumberBlur();
       }
