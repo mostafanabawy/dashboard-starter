@@ -60,6 +60,22 @@ export class AuthEffects {
         )
     );
 
+     /* ziwoClient = new ziwoCoreFront.ZiwoClient({
+    autoConnect: true, // Automatically connect agent to contact center. Default is true
+    contactCenterName: 'your-contact-center-name', // Contact center you are trying to connect to
+    credentials: { // User's credentials. You can either send an authentication token or directly the user's credentials
+        authenticationToken: 'token_returned_on_login_action',
+        //// If you don't have an authentication token, simply provide user's credentials
+        // email: 'toto@hello.org',
+        // password: 'verysecretpassword',
+    },
+    tags: { // HTML tags of <video> elements available in your DOM
+        selfTag: document.getElementById('self-video'), // `selfTag` is not required if you don't use video
+        peerTag: document.getElementById('peer-video'), // `peerTag` is mandatory. It is used to bind the incoming stream (audio or video)
+    },
+    debug: true, // Will provide additional logs as well as displaying incoming/outgoing Verto messages
+});
+ */
     loginWithZIWO$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.loginWithZIWO),

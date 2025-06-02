@@ -34,9 +34,11 @@
         "ngx-custom-modal": "^18.0.2",
         "ngx-scrollbar": "^15.1.2",
         "rxjs": "~7.8.0",
+        "socket.io-client": "^4.8.1",
         "sweetalert2": "^11.21.1",
         "tslib": "^2.5.2",
         "xlsx": "^0.18.5",
+        "ziwo-core-front": "^1.0.13",
         "zone.js": "~0.14.4"
     },
     "devDependencies": {

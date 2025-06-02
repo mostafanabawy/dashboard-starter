@@ -54,36 +54,33 @@ export class AppComponent {
             )
             .subscribe();
     }
-    storeInit(){
+    storeInit() {
         this.storeData
-        .select((d) => d.auth)
-        .subscribe((d) => {
-            this.store = d;
-        });
+            .select((d) => d.auth)
+            .subscribe((d) => {
+                this.store = d;
+            });
     }
-    ngOnInit(): void {
-        // Replace with actual credentials
-        const agentLogin = {
-            username: 'agent3hiconnecteg@gmail.com',
-            password: 'Badya@@123456',
-        };
-
-        // Wait for ZIWO plugin to be ready
+    /* ngOnInit(): void {
+        // Wait for ZIWO to load
         window.addEventListener('ziwo-loaded', () => {
-            // Authenticate the agent
-            (window as any).ZIWOClient.login(agentLogin).then(() => {
-                console.log('ZIWO logged in successfully');
+            // Step 1: Login (use valid agent credentials or token)
+            (window as any).ZIWOClient.login({
+                username: 'your-agent-email@example.com',
+                password: 'your-password'
+            }).then(() => {
+                console.log('ZIWO Logged in');
+
+                // Step 2: Listen for active call
+                window.addEventListener('ziwo-call-active', (event: any) => {
+                    const callData = event.detail;
+                    console.log('Active Call Data:', callData);
+                    console.log('Caller Number:', callData.contactNumber);
+                });
+
             }).catch((err: any) => {
-                console.error('Login failed:', err);
+                console.error('ZIWO Login failed:', err);
             });
         });
-
-        // Optional: Listen to active calls
-        window.addEventListener('ziwo-call-active', (event: any) => {
-            const callData = event.detail;
-            console.log("*************************************************");
-            console.log('Caller Number:', callData.contactNumber);
-            console.log("*************************************************");
-        });
-    }
+    } */
 }

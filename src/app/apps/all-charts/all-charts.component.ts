@@ -7,7 +7,7 @@ import { FlatpickrDefaultsInterface } from 'angularx-flatpickr';
 import { Subscription } from 'rxjs';
 import { HistoryService } from 'src/app/service/history.service';
 import { AppState } from 'src/app/types/auth.types';
-import { CaseTrendItem, ChartStatsResponse, FollowUpActivityItem, StatusDistributionItem } from 'src/app/types/history.types';
+import { ChartStatsResponse, HistoryAPIResponse, StatusDistributionItem } from 'src/app/types/history.types';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -20,6 +20,7 @@ export class AllChartsComponent {
   lineChart: any;
   store!: AppState;
   data!: ChartStatsResponse;
+  dataListToExport: any[] = [];
   dataFromToForm!: FormGroup;
   cols: any[] = [];
   basic: FlatpickrDefaultsInterface;
@@ -46,6 +47,9 @@ export class AllChartsComponent {
       this.rows.set(this.data.CaseTrends);
       this.initCharts();
       this.storeData.dispatch({ type: 'toggleMainLoader', payload: false });
+    });
+    this.tabsHistoryService.fetchHistory(1, {DateFrom: this.dataFromToForm.value.StartDate, DateTo: this.dataFromToForm.value.EndDate}).subscribe((res: HistoryAPIResponse) => {
+      console.log(res);
     });
     this.translateCols();
     this.langChangeSub = this.translate.onLangChange.subscribe(() => {
@@ -262,7 +266,7 @@ export class AllChartsComponent {
       this.storeData.dispatch({ type: 'toggleMainLoader', payload: false });
     });
   }
-  exportData(data: CaseTrendItem[] | FollowUpActivityItem[] | StatusDistributionItem[]) {
+  exportData(data: any) {
 
     alasql('SELECT * INTO XLSX("ChartsData.xlsx",{headers:true}) FROM ?', [data]);
   }

@@ -8,7 +8,9 @@ import { AppState } from '../types/auth.types';
 import * as AuthActions from "../store/auth/auth.actions"
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
 import { Subscription } from 'rxjs';
+import { ZiwoClient } from 'ziwo-core-front';
 import { HistoryAPIResponse } from '../types/history.types';
+import { io, Socket } from 'socket.io-client';
 
 @Component({
   selector: 'app-crm',
@@ -19,6 +21,7 @@ export class CRMComponent {
   formZIWO!: FormGroup;
   tokenZIWO = signal<string>('');
   isSubmitForm = false;
+
   private storeSubscription!: Subscription;
   callId = computed<string>(() => {
     return this.historyTabsService.callId();
@@ -29,7 +32,7 @@ export class CRMComponent {
   callerNumber = computed<string>(() => {
     return this.historyTabsService.callerNumber();
   });
-
+  ziwoClient: any;
   options = [
     'Schools',
     'Tuition Fees',
@@ -70,7 +73,19 @@ export class CRMComponent {
         this.onPhoneNumberBlur();
       }
     })
+    effect(() => {
+      let token = this.tokenZIWO();
+      if (token) {
+        this.initZIWO(token);
+      }
+    })
   }
+  ngOnInit() {
+    /* this.historyTabsService.getCallLive().subscribe((event: any) => {
+      console.log(event);
+    });
+    window.addEventListener('ziwo-call-active', (e: any) => console.log('Triggered by an active call event', e.detail));
+   */}
   async initStore() {
     this.storeData
       .select((d) => ({
@@ -111,6 +126,7 @@ export class CRMComponent {
   }
   getNumber() {
     if (this.store.auth.GroupID === 1006) {
+      console.log(this.ziwoClient);
       this.historyTabsService.getAgentCalls().subscribe((res: any) => {
         this.historyTabsService.setAgentCalls(res);
         this.userForm.patchValue({
@@ -131,7 +147,7 @@ export class CRMComponent {
         // Find the item with the newest CreationDate
         let newestItem = null;
         if (res.result.items && res.result.items.length > 0) {
-          newestItem = res.result.items.reduce((latest, item) => {
+          newestItem = res.result.items.reduce((latest: any, item: any) => {
             return new Date(item.CreationDate) > new Date(latest.CreationDate) ? item : latest;
           }, res.result.items[0]);
         }
@@ -142,7 +158,7 @@ export class CRMComponent {
               CallerName: newestItem ? newestItem.CallerName : '',
               CallerType: newestItem ? newestItem.CallerType : '',
               ExtraField1: newestItem ? newestItem.ExtraField1 : '',
-              ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter((item => item)) : [],
+              ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter(((item: any) => item)) : [],
               FollowUp: newestItem ? newestItem.FollowUp : '',
               Percentage: newestItem ? newestItem.Percentage : '',
               SchoolName: newestItem ? newestItem.SchoolName : '',
@@ -159,7 +175,7 @@ export class CRMComponent {
             CallerName: newestItem ? newestItem.CallerName : '',
             CallerType: newestItem ? newestItem.CallerType : '',
             ExtraField1: newestItem ? newestItem.ExtraField1 : '',
-            ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter((item => item)) : [],
+            ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter(((item: any) => item)) : [],
             FollowUp: newestItem ? newestItem.FollowUp : '',
             Percentage: newestItem ? newestItem.Percentage : '',
             SchoolName: newestItem ? newestItem.SchoolName : '',
@@ -187,6 +203,32 @@ export class CRMComponent {
       }))
     }
   }
+  initZIWO(token: any) {
+    if (!this.ziwoClient) {
+      this.ziwoClient = new ZiwoClient({
+        autoConnect: true,
+        contactCenterName: 'BadyaUniversity',
+        credentials: {
+          authenticationToken: `${this.tokenZIWO()}`,
+        },
+        tags: {
+          peerTag: document.getElementById('peer-video')
+        },
+        debug: false,
+      });
+      console.log(this.ziwoClient);
+
+      this.ziwoClient.verto.listeners.push({
+        event: 'incomingCall',
+        callback: (call: any) => {
+          console.log("**************************************************");
+          console.log('Incoming call!', call);
+          console.log("**************************************************");
+        }
+      });
+    }
+  }
+
 
   onSubmit() {
     this.isSubmitForm = true;

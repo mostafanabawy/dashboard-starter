@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { QuestionsAPIResponse } from '../types/questions.types';
-import { Observable } from 'rxjs';
+import { filter, Observable, tap } from 'rxjs';
 import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
 import { Store } from '@ngrx/store';
 import { AppState } from '../types/auth.types';
@@ -64,17 +64,6 @@ export class HistoryService {
       query = Object.fromEntries(
         Object.entries(payload).filter(([_, value]) => value !== '' && value !== null && value !== undefined)
       );
-      if (typeof query.DateFrom === 'string') {
-        const [dayFrom, monthFrom, yearFromRaw] = query.DateFrom.split("-");
-        const yearFrom = Number(yearFromRaw.length === 2 ? '20' + yearFromRaw : yearFromRaw);
-        query.DateFrom = new Date(Date.UTC(yearFrom, Number(monthFrom) - 1, Number(dayFrom))).toISOString();
-      }
-
-      if (typeof query.DateTo === 'string') {
-        const [dayTo, monthTo, yearToRaw] = query.DateTo.split("-");
-        const yearTo = Number(yearToRaw.length === 2 ? '20' + yearToRaw : yearToRaw);
-        query.DateTo = new Date(Date.UTC(yearTo, Number(monthTo) - 1, Number(dayTo))).toISOString();
-      }
     }
     const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch&pageno=${pageNumber}&pagesize=${pageSize}&sortfield=${sortField}&sortdirection=${sort}`);
     const params = new HttpParams({
@@ -95,7 +84,13 @@ export class HistoryService {
       .set('access_token', `${this.store.tokenZIWO}`);
     return this.http.get<any>("https://badyauniversity-api.aswat.co/agents/channels/calls", { params, headers })
   }
-  resetAgentCalls(){
+  getCallLive() {
+    return window.ZIWO.calls.callEvents$.pipe(
+      filter((event: any) => event.type === 'active'),
+      tap(() => console.log('Got an active event'))
+    )
+  }
+  resetAgentCalls() {
     this.callId.set('');
     this.status.set('');
     this.callerNumber.set('');

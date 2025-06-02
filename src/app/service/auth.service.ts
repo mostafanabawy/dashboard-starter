@@ -19,14 +19,15 @@ export class AuthService {
         password: ''
     }
     loginWithZIWO(username: string, password: string): Observable<any> {
-            
-       
-  
+
+
+
         const body = {
             username: username,
             password: password,
             remember: true
         };
+       
 
         return this.http.post('https://badyauniversity-api.aswat.co/auth/login', body)
 
