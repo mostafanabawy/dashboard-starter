@@ -97,7 +97,7 @@ export class HistoryService {
   }
 
   setAgentCalls(data: any) {
-    if (data === 0) {
+    if (data) {
       this.callId.set('');
       this.status.set('');
       return;

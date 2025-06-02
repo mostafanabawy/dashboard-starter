@@ -127,7 +127,7 @@ export class CRMComponent {
   getNumber() {
     if (this.store.auth.GroupID === 1006) {
       console.log(this.ziwoClient);
-      if (this.ziwoClient.calls) {
+      if (this.ziwoClient.calls.length) {
         console.log("*****************************************************");
         console.log(this.ziwoClient.calls[0].phoneNumber);
         console.log(this.ziwoClient.calls[0].primaryCallId);
