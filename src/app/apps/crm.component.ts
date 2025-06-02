@@ -127,11 +127,14 @@ export class CRMComponent {
   getNumber() {
     if (this.store.auth.GroupID === 1006) {
       console.log(this.ziwoClient);
-      this.historyTabsService.setAgentCalls(this.ziwoClient.calls[0].primaryCallId);
-      this.userForm.patchValue({
-        PhoneNumber: this.ziwoClient.calls[0].phoneNumber
-      });
-      this.onPhoneNumberBlur();
+      if (this.ziwoClient.calls.length > 0) {
+        this.historyTabsService.setAgentCalls({number: this.ziwoClient.calls[0].primaryCallId, callId: this.ziwoClient.calls[0].primaryCallId});
+        console.log(this.ziwoClient.calls[0].phoneNumber);
+        this.userForm.patchValue({
+          PhoneNumber: this.ziwoClient.calls[0].phoneNumber
+        });
+        this.onPhoneNumberBlur();
+      }
     }
   }
 
