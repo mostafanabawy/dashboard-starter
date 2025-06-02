@@ -102,7 +102,8 @@ export class HistoryService {
       this.status.set('');
       return;
     }
-    /* this.status.set(data.content[0].status); */
+    console.log("data from setAgentCalls: ");
+    console.log(data);
     this.callId.set(data.callId);
     this.callerNumber.set(data.number);
   }
