@@ -219,7 +219,23 @@ export class CRMComponent {
       console.log(this.ziwoClient);
 
       this.ziwoClient.verto.listeners.push({
-        event: 'incomingCall',
+        event: 'ringing',
+        callback: (call: any) => {
+          console.log("**************************************************");
+          console.log('Incoming call!', call);
+          console.log("**************************************************");
+        }
+      });
+      this.ziwoClient.verto.listeners.push({
+        event: 'answering',
+        callback: (call: any) => {
+          console.log("**************************************************");
+          console.log('Incoming call!', call);
+          console.log("**************************************************");
+        }
+      });
+      this.ziwoClient.verto.listeners.push({
+        event: 'active',
         callback: (call: any) => {
           console.log("**************************************************");
           console.log('Incoming call!', call);
