@@ -102,9 +102,9 @@ export class HistoryService {
       this.status.set('');
       return;
     }
-    this.callId.set(data.content[0].callID);/* 
+    this.callId.set(data.callId);/* 
     this.status.set(data.content[0].status); */
-    this.callerNumber.set(data.content[0].callerIDNumber);
+    this.callerNumber.set(data.number);
   }
   setCallerNumber(phoneNumber: string) {
     this.callerNumber.set(phoneNumber);
