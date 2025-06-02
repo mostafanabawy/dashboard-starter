@@ -142,6 +142,7 @@ export class CRMComponent {
         this.onPhoneNumberBlur();
       }
     }
+    this.ziwoClient.calls.pop()
   }
 
   onPhoneNumberBlur() {
