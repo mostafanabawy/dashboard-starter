@@ -102,8 +102,8 @@ export class HistoryService {
       this.status.set('');
       return;
     }
-    this.callId.set(data.callId);/* 
-    this.status.set(data.content[0].status); */
+    /* this.status.set(data.content[0].status); */
+    this.callId.set(data.callId);
     this.callerNumber.set(data.number);
   }
   setCallerNumber(phoneNumber: string) {

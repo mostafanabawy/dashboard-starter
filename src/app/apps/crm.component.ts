@@ -128,7 +128,12 @@ export class CRMComponent {
     if (this.store.auth.GroupID === 1006) {
       console.log(this.ziwoClient);
       if (this.ziwoClient.calls.length > 0) {
-        this.historyTabsService.setAgentCalls({number: this.ziwoClient.calls[0].primaryCallId, callId: this.ziwoClient.calls[0].primaryCallId});
+        console.log("*****************************************************");
+        console.log(this.ziwoClient.calls[0].phoneNumber);
+        console.log(this.ziwoClient.calls[0].primaryCallId);
+        console.log("*****************************************************");
+        
+        this.historyTabsService.setAgentCalls({number: this.ziwoClient.calls[0].phoneNumber, callId: this.ziwoClient.calls[0].primaryCallId});
         console.log(this.ziwoClient.calls[0].phoneNumber);
         this.userForm.patchValue({
           PhoneNumber: this.ziwoClient.calls[0].phoneNumber
@@ -198,7 +203,6 @@ export class CRMComponent {
         },
         debug: false,
       });
-      console.log(this.ziwoClient);
     }
     // Active events
     window.addEventListener('ziwo-call-active', (e: any) => console.log('Triggered by an active call event', e.detail));
