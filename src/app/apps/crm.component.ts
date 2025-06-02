@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '../types/auth.types';
 import * as AuthActions from "../store/auth/auth.actions"
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
-import { Subscription } from 'rxjs';
+import { filter, Subscription, tap } from 'rxjs';
 import { ZiwoClient } from 'ziwo-core-front';
 import { HistoryAPIResponse } from '../types/history.types';
 import { io, Socket } from 'socket.io-client';
@@ -127,16 +127,14 @@ export class CRMComponent {
   getNumber() {
     if (this.store.auth.GroupID === 1006) {
       console.log(this.ziwoClient);
-      this.historyTabsService.getAgentCalls().subscribe((res: any) => {
-        this.historyTabsService.setAgentCalls(res);
-        this.userForm.patchValue({
-          PhoneNumber: res?.content[0].callerIDNumber
-        });
-        this.onPhoneNumberBlur();
+      this.historyTabsService.setAgentCalls(this.ziwoClient.calls[0].primaryCallId);
+      this.userForm.patchValue({
+        PhoneNumber: this.ziwoClient.calls[0].phoneNumber
       });
-
+      this.onPhoneNumberBlur();
     }
   }
+
   onPhoneNumberBlur() {
     if (this.userForm.get('PhoneNumber')!.value) {
       const phoneNumberValue = this.userForm.get('PhoneNumber')!.value;
@@ -152,25 +150,6 @@ export class CRMComponent {
           }, res.result.items[0]);
         }
         if (this.store.auth.GroupID === 1006) {
-          this.historyTabsService.getAgentCalls(phoneNumberValue).subscribe((res: any) => {
-            this.historyTabsService.setAgentCalls(res);
-            this.userForm.patchValue({
-              CallerName: newestItem ? newestItem.CallerName : '',
-              CallerType: newestItem ? newestItem.CallerType : '',
-              ExtraField1: newestItem ? newestItem.ExtraField1 : '',
-              ExtraField3: newestItem ? newestItem.ExtraField3.split(';').filter(((item: any) => item)) : [],
-              FollowUp: newestItem ? newestItem.FollowUp : '',
-              Percentage: newestItem ? newestItem.Percentage : '',
-              SchoolName: newestItem ? newestItem.SchoolName : '',
-              WhatsAppNumber: newestItem ? newestItem.WhatsAppNumber : '',
-              CertificateType: newestItem ? newestItem.CertificateType : '',
-              City: newestItem ? newestItem.City : '',
-              Answer: newestItem ? newestItem.Answer : '',
-              CallStatus: newestItem ? newestItem.CallStatus : '',
-              notes: newestItem ? newestItem.Notes : '',
-            });
-          })
-        } else {
           this.userForm.patchValue({
             CallerName: newestItem ? newestItem.CallerName : '',
             CallerType: newestItem ? newestItem.CallerType : '',
@@ -217,32 +196,9 @@ export class CRMComponent {
         debug: false,
       });
       console.log(this.ziwoClient);
-
-      this.ziwoClient.verto.listeners.push({
-        event: 'ringing',
-        callback: (call: any) => {
-          console.log("**************************************************");
-          console.log('Incoming call!', call);
-          console.log("**************************************************");
-        }
-      });
-      this.ziwoClient.verto.listeners.push({
-        event: 'answering',
-        callback: (call: any) => {
-          console.log("**************************************************");
-          console.log('Incoming call!', call);
-          console.log("**************************************************");
-        }
-      });
-      this.ziwoClient.verto.listeners.push({
-        event: 'active',
-        callback: (call: any) => {
-          console.log("**************************************************");
-          console.log('Incoming call!', call);
-          console.log("**************************************************");
-        }
-      });
     }
+    // Active events
+    window.addEventListener('ziwo-call-active', (e: any) => console.log('Triggered by an active call event', e.detail));
   }
 
 
