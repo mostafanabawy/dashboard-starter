@@ -7,12 +7,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="StartDate">{{ "dateFrom" | translate }}</label>
-                        <input type="text" mwlFlatpickr id="StartDate" formControlName="StartDate" [options]="basic"
+                        <input type="text" mwlFlatpickr id="StartDate" formControlName="StartDate" [options]="basic" aria-label="start date"
                             class="form-input" />
                     </div>
                     <div>
                         <label for="EndDate">{{ "dateTo" | translate }}</label>
-                        <input type="text" mwlFlatpickr id="EndDate" formControlName="EndDate" [options]="basic"
+                        <input type="text" mwlFlatpickr id="EndDate" formControlName="EndDate" [options]="basic" aria-label="end date"
                             class="form-input" />
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 [colors]="pieChart.colors" [responsive]="pieChart.responsive" [stroke]="pieChart.stroke"
                 [legend]="pieChart.legend" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData(data.StatusDistribution)" type="button"
+        <button (click)="exportData(dataListToExport, 'pie')" type="button"
             class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
             "table.Export" | translate}}</button>
     </div>
@@ -39,7 +39,7 @@
 
     @if (columnChart) {
     <div class="panel">
-        <div class="mb-5 overflow-hidden">
+        <div class="mb-5 overflow-hidden" id="columnChartContainer">
             <h6 class="text-[#2d3f69] font-extrabold text-lg">{{"FollowUpChart" | translate}}</h6>
             <apx-chart [series]="columnChart.series" [chart]="columnChart.chart" [colors]="columnChart.colors"
                 [dataLabels]="columnChart.dataLabels" [stroke]="columnChart.stroke"
@@ -47,7 +47,7 @@
                 [yaxis]="columnChart.yaxis" [tooltip]="columnChart.tooltip"
                 class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData(data.FollowUpActivity)" type="button"
+        <button (click)="exportData(dataListToExport, 'column')" type="button"
             class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
             "table.Export" | translate}}</button>
     </div>
@@ -74,7 +74,7 @@
                 [tooltip]="lineChart.tooltip" [stroke]="lineChart.stroke" [xaxis]="lineChart.xaxis"
                 [yaxis]="lineChart.yaxis" [grid]="lineChart.grid" class="rounded-lg bg-white dark:bg-black"></apx-chart>
         </div>
-        <button (click)="exportData(data.CaseTrends)" type="button"
+        <button (click)="exportData(data.CaseTrends, 'line')" type="button"
             class="btn btn-primary cursor-pointer !border-none hover:opacity-80">{{
             "table.Export" | translate}}</button>
     </div>

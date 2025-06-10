@@ -22,8 +22,8 @@ import { SharedModule } from 'src/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // AOT compilation support
-export function HttpLoaderFactory(httpHandler: HttpBackend): TranslateHttpLoader {
-    return new TranslateHttpLoader(new HttpClient(httpHandler));
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 // dashboard
@@ -54,7 +54,7 @@ import { AuthGuard } from './store/auth/auth.guard';
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
-                deps: [HttpBackend],
+                deps: [HttpClient],
             },
         }),
         StoreModule.forRoot({ index: indexReducer , auth: authReducer }),

@@ -54,7 +54,7 @@ export class HistoryService {
       { params, headers }
     );
   }
-  fetchHistory(pageNumber: number, payload: any, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 10): Observable<HistoryAPIResponse> {
+  fetchHistory(pageNumber: number, payload: any, sort: number = 1, sortField: string = 'RecordId', pageSize: number = 10000): Observable<HistoryAPIResponse> {
     let query: any = {};
     if (payload.searchBy && payload.searchText) {
       query[payload.searchBy] = payload.searchText;
@@ -97,8 +97,6 @@ export class HistoryService {
   }
 
   setAgentCalls(data: any) {
-    console.log("data from setAgentCalls: ");
-    console.log(data);
     if (!data.number && !data.callId) {
       this.callId.set('');
       this.status.set('');

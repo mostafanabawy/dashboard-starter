@@ -126,13 +126,7 @@ export class CRMComponent {
   }
   getNumber() {
     if (this.store.auth.GroupID === 1006) {
-      console.log(this.ziwoClient);
-      console.log(this.ziwoClient.calls.length > 0 ? "true" : "false");
       if (this.ziwoClient.calls.length > 0) {
-        console.log("*****************************************************");
-        console.log(this.ziwoClient.calls[0].phoneNumber);
-        console.log(this.ziwoClient.calls[0].primaryCallId);
-        console.log("*****************************************************");
 
         this.historyTabsService.setAgentCalls({ number: this.ziwoClient.calls[this.ziwoClient.calls.length - 1].phoneNumber, callId: this.ziwoClient.calls[this.ziwoClient.calls.length - 1].primaryCallId });
         console.log(this.ziwoClient.calls[this.ziwoClient.calls.length - 1].phoneNumber);
