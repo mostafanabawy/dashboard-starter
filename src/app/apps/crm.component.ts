@@ -155,8 +155,9 @@ export class CRMComponent {
       password: ['', Validators.required]
     })
   }
+  
   getNumber() {
-    console.log(this.ziwoClient.getActiveCall());
+    console.log();
     console.log(this.ziwoClient);
     if (this.store.auth.GroupID === 1006) {
       if (this.ziwoClient.calls.length > 0) {
@@ -239,7 +240,10 @@ export class CRMComponent {
         debug: true,
       });
     }
-    
+    this.ziwoClient.verto.openSocket();
+    this.ziwoClient.verto.addListener((ev: any) =>{
+      console.log(ev);
+    })
     // Active events
     this.ziwoClient.addListener((ev: any) =>{
       console.log(ev);
