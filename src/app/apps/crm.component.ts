@@ -59,6 +59,11 @@ export class CRMComponent {
   ) {
     this.initStore();
     this.initForm();
+    // Automatically answer incoming call
+    window.addEventListener('ziwo-active', (ev) => {
+      // ev holds an instance of the Call in its details
+      console.log(ev);
+    });
     effect(() => {
       if (this.store.auth.GroupID === 1006) {
         if (this.tokenZIWO()) {
