@@ -156,7 +156,7 @@ export class CRMComponent {
     })
   }
   getNumber() {
-    console.log(this.ziwoClient.getActiveCall());
+    /* console.log(this.ziwoClient.getActiveCall()); */
     console.log(this.ziwoClient);
     if (this.store.auth.GroupID === 1006) {
       if (this.ziwoClient.calls.length > 0) {
