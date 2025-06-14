@@ -9,7 +9,7 @@ import * as AuthActions from "../store/auth/auth.actions"
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
 import { filter, Subscription, tap } from 'rxjs';
 import { ZiwoClient } from 'ziwo-core-front';
-import { HistoryAPIResponse } from '../types/history.types';
+import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
 import { io, Socket } from 'socket.io-client';
 
 @Component({
@@ -21,6 +21,7 @@ export class CRMComponent {
   formZIWO!: FormGroup;
   tokenZIWO = signal<string>('');
   isSubmitForm = false;
+  isEditData = false;
 
   private storeSubscription!: Subscription;
   callId = computed<string>(() => {
@@ -32,6 +33,9 @@ export class CRMComponent {
   callerNumber = computed<string>(() => {
     return this.historyTabsService.callerNumber();
   });
+  followUpEditRow = computed<HistoryRecord | null>(() => {
+    return this.historyTabsService.followUpEditRow();
+  })
   ziwoClient: any;
   options = [
     'Schools',
@@ -79,6 +83,31 @@ export class CRMComponent {
         this.initZIWO(token);
       }
     })
+    effect(() => {
+      let followUpEditRow = this.followUpEditRow();
+      console.log(followUpEditRow);
+      if (followUpEditRow) {
+        this.isEditData = true;
+        this.userForm.patchValue({
+          Answer: followUpEditRow.Answer || '',
+          CallStatus: followUpEditRow.CallStatus || '',
+          CallerName: followUpEditRow.CallerName || '',
+          CallerType: followUpEditRow.CallerType || '',
+          CertificateType: followUpEditRow.CertificateType || '',
+          City: followUpEditRow.City || '',
+          ExtraField1: followUpEditRow.ExtraField1 || '',
+          ExtraField3: followUpEditRow.ExtraField3.split(';').filter(((item: any) => item)) || [],
+          ExtraFiled2: followUpEditRow.ExtraFiled2 || '',
+          FollowUp: followUpEditRow.FollowUp || '',
+          Percentage: followUpEditRow.Percentage || '',
+          PhoneNumber: followUpEditRow.PhoneNumber || '',
+          SchoolName: followUpEditRow.SchoolName || '',
+          WhatsAppNumber: followUpEditRow.WhatsAppNumber || '',
+          notes: followUpEditRow.Notes || '',
+        })
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
   }
   ngOnInit() {
     /* this.historyTabsService.getCallLive().subscribe((event: any) => {
@@ -125,6 +154,8 @@ export class CRMComponent {
     })
   }
   getNumber() {
+    console.log('btn clicked');
+    console.log(this.ziwoClient);
     if (this.store.auth.GroupID === 1006) {
       if (this.ziwoClient.calls.length > 0) {
 
@@ -140,7 +171,7 @@ export class CRMComponent {
   }
 
   onPhoneNumberBlur() {
-    if (this.userForm.get('PhoneNumber')!.value) {
+    if (this.userForm.get('PhoneNumber')!.value && !this.isEditData) {
       const phoneNumberValue = this.userForm.get('PhoneNumber')!.value;
       this.historyTabsService.fetchHistory(1, { PhoneNumber: phoneNumberValue }, 2, 'CreationDate', 100).subscribe((res: HistoryAPIResponse) => {
         this.historyTabsService.initialHistoryVal.set(res.result.items);
@@ -170,6 +201,12 @@ export class CRMComponent {
             notes: newestItem ? newestItem.Notes : '',
           });
         }
+      });
+    } else if (this.userForm.get('PhoneNumber')!.value && this.isEditData) {
+      const phoneNumberValue = this.userForm.get('PhoneNumber')!.value;
+      this.historyTabsService.fetchHistory(1, { PhoneNumber: phoneNumberValue }, 2, 'CreationDate', 100).subscribe((res: HistoryAPIResponse) => {
+        this.historyTabsService.initialHistoryVal.set(res.result.items);
+        this.historyTabsService.initialHistoryFetchVal.set(phoneNumberValue);
       });
     } else {
       this.historyTabsService.initialHistoryFetchVal.set(null);
@@ -214,13 +251,29 @@ export class CRMComponent {
         formData.ExtraField3 = formData.ExtraField3.join(';');
         formData.extrafiled2 = this.store.auth.UserName
         formData.callID = this.callId();
-        this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
-          this.userForm.reset();
-          this.historyTabsService.resetAgentCalls();
-          this.isSubmitForm = false;
-          this.userForm.markAsPristine();
-          this.showMessage('Form submitted successfully.');
-        });
+        if (this.followUpEditRow()) {
+          this.historyTabsService.updateFollowUp(formData.CallStatus).subscribe((res: any) => {
+            if (res.result.result === "OK") {
+              this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
+                this.userForm.reset();
+                this.historyTabsService.resetAgentCalls();
+                this.isSubmitForm = false;
+                this.userForm.markAsPristine();
+                this.showMessage('Form submitted successfully.');
+                this.historyTabsService.unsetFollowUpEditRow();
+              })
+            }
+          })
+        } else {
+
+          this.historyTabsService.sendFormMainData(formData).subscribe((res: any) => {
+            this.userForm.reset();
+            this.historyTabsService.resetAgentCalls();
+            this.isSubmitForm = false;
+            this.userForm.markAsPristine();
+            this.showMessage('Form submitted successfully.');
+          });
+        }
       } catch (error) {
         console.error('Error:', error);
         this.showMessage('Error occurred while submitting the form.', 'error');

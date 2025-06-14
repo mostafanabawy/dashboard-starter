@@ -747,3 +747,8 @@ pre code.hljs {
   padding-right: 10px; /* Adjust as needed */
   padding-left: 10px; /* Adjust as needed */
 }
+
+.bh-flex.bh-items-center {
+    @apply text-nowrap
+}
+

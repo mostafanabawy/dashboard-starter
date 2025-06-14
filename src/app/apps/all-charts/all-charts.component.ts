@@ -259,9 +259,19 @@ export class AllChartsComponent {
           show: false,
         },
         events: {
-          dataPointSelection: (event: any, chartContext: any, config: any) => {
-            const barIndex = config.dataPointIndex;
+          click: (event: any, chartContext: any, config: any) => {
+            let barIndex = config.dataPointIndex;
+            if (barIndex === -1) {
+              const clickedLabel = (event.target as HTMLElement)?.textContent?.trim();
+              if (clickedLabel && this.columnChart.xaxis.categories.includes(clickedLabel)) {
+                barIndex = this.columnChart.xaxis.categories.indexOf(clickedLabel);
+              } else {
+                return; // still not a valid label or bar, exit early
+              }
+            }
+
             const categoryName = this.columnChart.xaxis.categories[barIndex];
+
 
             // First click logic: use partialColumnChartDataFlag to handle first time click
             if (this.partialColumnChartDataFlag === false) {
@@ -315,8 +325,9 @@ export class AllChartsComponent {
                 });
               }, 0);
             }
+            console.log(this.selectedColumnLabel);
             return false; // prevent default toggle
-          },
+          }
         }
       },
       colors: ['#805dca', '#e7515a'],
@@ -441,7 +452,16 @@ export class AllChartsComponent {
       case 'column':
         dataToExport = Object.keys(this.selectedColumnLabel).filter(key => this.selectedColumnLabel[key] === 1);
         data = this.dataListToExport.filter((item: any) => {
-          return dataToExport.includes(item.ExtraFiled2) && item.FollowUp === 'Need Answer'
+          // Condition 1: item.ExtraFiled2 is in dataToExport AND FollowUp is 'Need Answer'
+          const condition1 = dataToExport.includes(item.ExtraFiled2) && item.FollowUp === 'Need Answer';
+
+          // Condition 2: selectedColumnLabel['Unknown'] is 1 AND FollowUp is 'Need Answer'
+          //             AND extrafiled2 is null, empty string, or undefined
+          const condition2 = this.selectedColumnLabel['Unknown'] === 1 &&
+            item.FollowUp === 'Need Answer' &&
+            (item.ExtraFiled2 === null || item.ExtraFiled2 === '' || typeof item.ExtraFiled2 === 'undefined');
+
+          return condition1 || condition2;
         });
         break;
 

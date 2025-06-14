@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { QuestionsAPIResponse } from '../types/questions.types';
 import { filter, Observable, tap } from 'rxjs';
-import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
+import { FollowUpAPIResponse, HistoryAPIResponse, HistoryRecord } from '../types/history.types';
 import { Store } from '@ngrx/store';
 import { AppState } from '../types/auth.types';
 import { AuthState } from '../store/auth/auth.reducer';
@@ -18,6 +18,7 @@ export class HistoryService {
   callId = signal<string>('');
   status = signal<string>('');
   callerNumber = signal<string>('');
+  followUpEditRow = signal<HistoryRecord | null>(null);
   private badyaUniversityBaseURL = environment.apiUrl;
   constructor(
     private http: HttpClient,
@@ -65,6 +66,7 @@ export class HistoryService {
         Object.entries(payload).filter(([_, value]) => value !== '' && value !== null && value !== undefined)
       );
     }
+    console.log({ pageNumber, payload, sort, sortField, pageSize });
     const encoded = encodeURIComponent(`/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=getpagewithsearch&pageno=${pageNumber}&pagesize=${pageSize}&sortfield=${sortField}&sortdirection=${sort}`);
     const params = new HttpParams({
       fromString: `page=${encoded}`
@@ -90,25 +92,7 @@ export class HistoryService {
       tap(() => console.log('Got an active event'))
     )
   }
-  resetAgentCalls() {
-    this.callId.set('');
-    this.status.set('');
-    this.callerNumber.set('');
-  }
 
-  setAgentCalls(data: any) {
-    if (!data.number && !data.callId) {
-      this.callId.set('');
-      this.status.set('');
-      return;
-    }
-    this.status.set('Active');
-    this.callId.set(data.callId);
-    this.callerNumber.set(data.number);
-  }
-  setCallerNumber(phoneNumber: string) {
-    this.callerNumber.set(phoneNumber);
-  }
   sendFormMainData(formData: any) {
     const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=insert');
     const params = new HttpParams({
@@ -166,6 +150,64 @@ export class HistoryService {
       payload,
       { params, headers }
     );
+  }
+
+  fetchFollowUp(): Observable<FollowUpAPIResponse> {
+    const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=followup&pageno=1&pagesize=10&sortfield=RecordId&sortdirection=1');
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+
+    const body = { ExtraFiled2: this.store.UserName }
+    return this.http.post<FollowUpAPIResponse>(
+      `${this.badyaUniversityBaseURL}`,
+      body,
+      { params, headers }
+    );
+  }
+
+  updateFollowUp(callStatus: any): Observable<any> {
+    const encoded = encodeURIComponent('/CRUDGenericHandler/BUBadyaUniversityCRUD.ashx?action=updatefollowUp');
+    const params = new HttpParams({
+      fromString: `page=${encoded}`
+    });
+    const headers = new HttpHeaders()
+      .set('x-auth', `${this.store.token}`);
+
+
+    const body = { CallStatus: callStatus, "RecordId": this.followUpEditRow()!.RecordId }
+    return this.http.post<any>(
+      `${this.badyaUniversityBaseURL}`,
+      body,
+      { params, headers }
+    );
+  }
+
+
+  /* variables manipulators */
+  unsetFollowUpEditRow() {
+    this.followUpEditRow.set(null);
+  }
+  resetAgentCalls() {
+    this.callId.set('');
+    this.status.set('');
+    this.callerNumber.set('');
+  }
+
+  setAgentCalls(data: any) {
+    if (!data.number && !data.callId) {
+      this.callId.set('');
+      this.status.set('');
+      return;
+    }
+    this.status.set('Active');
+    this.callId.set(data.callId);
+    this.callerNumber.set(data.number);
+  }
+  setCallerNumber(phoneNumber: string) {
+    this.callerNumber.set(phoneNumber);
   }
 
 }

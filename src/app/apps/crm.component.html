@@ -27,10 +27,13 @@
             <div [ngClass]="isSubmitForm ? userForm.controls['PhoneNumber'].errors ? 'has-error' : 'has-success' : ''">
                 <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{ "Phone number" | translate}} <span
                         class="font-bold text-red-500">*</span>
-                    <button *ngIf="store.auth.GroupID === 1006" class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90" type="button" (click)="getNumber()">{{"latestNumber" | translate}}</button>
+                    <button *ngIf="store.auth.GroupID === 1006"
+                        class="text-xs text-white font-extrabold bg-gradient-to-b from-[#161F3B] to-[#273866] rounded-xl px-2 py-1 ltr:ml-4 rtl:mr-4 cursor-pointer hover:opacity-90"
+                        type="button" (click)="getNumber()">{{"latestNumber" | translate}}</button>
                 </label>
-                <input id="PhoneNumber" name="PhoneNumber" type="tel" [placeholder]=" 'Phone number' | translate" class="form-input phone-input ltr:!text-left"
-                    formControlName="PhoneNumber" (blur)="onPhoneNumberBlur()">
+                <input id="PhoneNumber" name="PhoneNumber" type="tel" [placeholder]=" 'Phone number' | translate"
+                    class="form-input phone-input ltr:!text-left" formControlName="PhoneNumber"
+                    (blur)="onPhoneNumberBlur()">
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['PhoneNumber'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
                 </ng-container>
@@ -65,7 +68,7 @@
                     aria-label="type of call">
                     <option value="" disabled selected>{{ "Type of Call" | translate}}</option>
                     <option value="Outgoing">Outbound Calls</option>
-                    <option value="Incoming">Inbound Calls</option>
+                    <option value="Inbound">Inbound Calls</option>
                 </select>
                 <ng-container *ngIf="isSubmitForm && !userForm.controls['ExtraField1'].errors">
                     <p class="mt-1 text-[#1abc9c]">{{"good" |translate}}</p>
@@ -169,7 +172,7 @@
                 <select id="SchoolName" name="SchoolName" class="form-select cursor-pointer"
                     formControlName="SchoolName" aria-label="school">
                     <option value="" disabled selected>{{ "School" | translate}}</option>
-                    <option value="Medicine">Medicine</option>
+                    <option value="Medicine ">Medicine</option>
                     <option value="Computing and Data Science">Computing and Data Science</option>
                     <option value="School of Physical Therapy">School of Physical Therapy</option>
                     <option value="School of Fine Arts">School of Fine Arts</option>

@@ -60,7 +60,8 @@ export class HistoryTablesComponent implements OnInit {
       }
     });
     this.basic = {
-      dateFormat: 'd-m-y',
+      dateFormat: 'Y-m-d',
+      // position: this.store.rtlClass === 'rtl' ? 'auto right' : 'auto left',
       monthSelectorType: 'dropdown'
     };
   }
@@ -147,7 +148,7 @@ export class HistoryTablesComponent implements OnInit {
   onSearch() {
     this.loading = true;
     this.currentPage.set(1);
-    this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value).subscribe((res: any) => {
+    this.tabsHisoryService.fetchHistory(this.currentPage(), this.searchForm.value, 1, 'RecordId', this.pageSize()).subscribe((res: any) => {
       this.rows.set(res.result.items);
       this.totalRows.set(res.result.PagingInfo[0].TotalRows);
       this.pageSize.set(res.result.PagingInfo[0].PageSize);
@@ -160,16 +161,17 @@ export class HistoryTablesComponent implements OnInit {
     });
   }
   onServerChange(data: any) {
+    console.log(data);
     switch (data.change_type) {
       case 'page':
         this.currentPage.set(data.current_page)
-        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value).subscribe((res: HistoryAPIResponse) => {
+        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column, this.pageSize()).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
         });
         break;
       case 'sort':
-        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column).subscribe((res: HistoryAPIResponse) => {
+        this.tabsHisoryService.fetchHistory(data.current_page, this.searchForm.value, data.sort_direction === "asc" ? 1 : 2, data.sort_column, this.pageSize()).subscribe((res: HistoryAPIResponse) => {
           this.rows.set(res.result.items)
           this.loading = false
         });

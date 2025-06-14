@@ -12,21 +12,36 @@
             (click)="tab1 = 'history'">
             {{ "History" | translate }}
         </a>
+
+        <a href="javascript:;"
+            class="-mb-[1px] block border border-transparent p-3.5 py-2 !outline-none transition duration-300 hover:text-secondary dark:hover:border-b-black cursor-pointer"
+            [ngClass]="{ '!border-white-light !border-b-white text-secondary dark:!border-[#191e3a] dark:!border-b-black': tab1.toLowerCase() === 'followup' }"
+            (click)="tab1 = 'followup'">
+            {{ "Follow Up"| translate }}
+        </a>
     </div>
     <div class="flex-1 pt-5 text-sm">
         <div *ngIf="tab1.toLowerCase() === 'questions'">
             <h3 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{"All Questions" | translate}}</h3>
             <app-questions-table></app-questions-table>
-            
+
         </div>
         <div *ngIf="tab1.toLowerCase() === 'history'" class="">
             <div class="flex items-start">
                 <div class="flex-auto overflow-x-auto relative">
                     <h3 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "All History" | translate}}</h3>
-                   <app-history-tables></app-history-tables>
+                    <app-history-tables></app-history-tables>
                 </div>
             </div>
         </div>
-        
+        <div *ngIf="tab1.toLowerCase() === 'followup'" class="">
+            <div class="flex items-start">
+                <div class="flex-auto overflow-x-auto relative">
+                    <h3 class="mb-4 text-2xl font-extrabold text-[#2d3f69]">{{ "Follow Up" | translate}}</h3>
+                    <app-follow-up-table></app-follow-up-table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

@@ -36,13 +36,15 @@
                 <form *ngIf="store.GroupID === 1004 && router.url === '/history'" [formGroup]="searchForm"
                     (ngSubmit)="onSearch()" class="space-y-5">
                     <div>
-                        <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{"Phone number" | translate}}</label>
+                        <label class="text-[#2d3f69] font-extrabold" for="PhoneNumber">{{"Phone number" |
+                            translate}}</label>
                         <input id="PhoneNumber" type="tel" formControlName="PhoneNumber"
                             [placeholder]=" 'Phone number' | translate" class="form-input phone-input ltr:!text-left" />
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-[#2d3f69] font-extrabold" for="ExtraField1">{{"fieldNames.typeOfCall" | translate}}</label>
+                            <label class="text-[#2d3f69] font-extrabold" for="ExtraField1">{{"fieldNames.typeOfCall" |
+                                translate}}</label>
                             <select id="ExtraField1" name="ExtraField1" class="form-select"
                                 formControlName="ExtraField1" aria-label="type of call">
                                 <option value="" disabled selected>{{ "Type of Call" | translate}}</option>
@@ -51,7 +53,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="text-[#2d3f69] font-extrabold" for="CallStatus">{{"fieldNames.callStatus" | translate}}</label>
+                            <label class="text-[#2d3f69] font-extrabold" for="CallStatus">{{"fieldNames.callStatus" |
+                                translate}}</label>
                             <select id="CallStatus" name="CallStatus" class="form-select cursor-pointer"
                                 formControlName="CallStatus" aria-label="call status">
                                 <option value="" disabled selected>{{ "Call Status" | translate}}</option>
@@ -67,20 +70,22 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-[#2d3f69] font-extrabold" for="DateFrom">{{ "dateFrom" | translate }}</label>
+                            <label class="text-[#2d3f69] font-extrabold" for="DateFrom">{{ "dateFrom" | translate
+                                }}</label>
                             <!-- <ng2-flatpickr id="DateFrom" [config]="basic" formControlName="DateFrom" addClass="form-input"></ng2-flatpickr> -->
                             <input type="text" mwlFlatpickr id="DateFrom" formControlName="DateFrom" [options]="basic"
                                 class="form-input" />
-                            </div>
-                            <div>
-                                <label class="text-[#2d3f69] font-extrabold" for="DateTo">{{ "dateTo" | translate }}</label>
-                                <input type="text" mwlFlatpickr id="DateTo" formControlName="DateTo" [options]="basic"
-                                    class="form-input" />
+                        </div>
+                        <div>
+                            <label class="text-[#2d3f69] font-extrabold" for="DateTo">{{ "dateTo" | translate }}</label>
+                            <input type="text" mwlFlatpickr id="DateTo" formControlName="DateTo" [options]="basic"
+                                class="form-input" />
                         </div>
                     </div>
                     <div>
                         <div>
-                            <label class="text-[#2d3f69] font-extrabold" for="FollowUp">{{"table.FollowUp" | translate}}</label>
+                            <label class="text-[#2d3f69] font-extrabold" for="FollowUp">{{"table.FollowUp" |
+                                translate}}</label>
                             <select id="FollowUp" name="FollowUp" class="form-select cursor-pointer"
                                 formControlName="FollowUp" aria-label="follow up">
                                 <option value="" disabled selected>{{ "Follow Up" | translate}}</option>
@@ -91,14 +96,16 @@
                     </div>
                     <button type="submit" class="btn btn-primary !mt-6 ltr:ms-auto rtl:me-auto">{{"search" |
                         translate}}</button>
+                    <button (click)="exportData()" type="button"
+                        class="btn btn-primary cursor-pointer !border-none hover:opacity-80 ltr:ml-auto rtl:mr-auto">{{
+                        "table.Export" | translate}}</button>
                 </form>
             </div>
         </div>
         <div class="datatable">
-            <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap"
-                [sortable]="true" [stickyHeader]="true" [isServerMode]="true"
-                [loading]="loading ? true : false" [totalRows]="totalRows()" [pageSize]="pageSize()"
-                [showPageSize]="false" (changeServer)="onServerChange($event)"
+            <ng-datatable [rows]="rows()" [columns]="cols" skin="whitespace-wrap" [sortable]="true"
+                [stickyHeader]="true" [isServerMode]="true" [loading]="loading ? true : false" [totalRows]="totalRows()"
+                [pageSize]="pageSize()" [showPageSize]="false" (changeServer)="onServerChange($event)"
                 skin="whitespace-wrap table-hover"
                 firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
                 lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg> '

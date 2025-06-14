@@ -37,6 +37,9 @@ export interface HistoryAPIResponse {
     PagingInfo: PagingInfo[];
   };
 }
+export interface FollowUpAPIResponse {
+  FollowUp: HistoryRecord[];
+}
 
 export type StatusDistributionItem = {
     CallStatus: string;
