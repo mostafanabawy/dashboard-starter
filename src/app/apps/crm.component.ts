@@ -7,10 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '../types/auth.types';
 import * as AuthActions from "../store/auth/auth.actions"
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
-import { filter, Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ZiwoClient } from 'ziwo-core-front';
 import { HistoryAPIResponse, HistoryRecord } from '../types/history.types';
-import { io, Socket } from 'socket.io-client';
 
 @Component({
   selector: 'app-crm',
@@ -60,7 +59,7 @@ export class CRMComponent {
     this.initStore();
     this.initForm();
     // Automatically answer incoming call
-   
+
     effect(() => {
       if (this.store.auth.GroupID === 1006) {
         if (this.tokenZIWO()) {
@@ -127,10 +126,7 @@ export class CRMComponent {
         this.store = d;
         this.tokenZIWO.set(this.store.auth.tokenZIWO!);
       });
-       window.addEventListener('ziwo-active', (ev) => {
-      // ev holds an instance of the Call in its details
-      console.log(ev);
-    });
+
   }
 
   @ViewChild('modal22') modal22!: NgxCustomModalComponent;
@@ -160,7 +156,7 @@ export class CRMComponent {
     })
   }
   getNumber() {
-    console.log('btn clicked');
+    console.log(this.ziwoClient.getActiveCall());
     console.log(this.ziwoClient);
     if (this.store.auth.GroupID === 1006) {
       if (this.ziwoClient.calls.length > 0) {
@@ -243,8 +239,11 @@ export class CRMComponent {
         debug: false,
       });
     }
+    
     // Active events
-    window.addEventListener('ziwo-call-active', (e: any) => console.log('Triggered by an active call event', e.detail));
+    this.ziwoClient.addListener((ev: any) =>{
+      console.log(ev);
+    })
   }
 
 
