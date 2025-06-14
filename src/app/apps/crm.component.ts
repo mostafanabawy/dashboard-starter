@@ -60,10 +60,7 @@ export class CRMComponent {
     this.initStore();
     this.initForm();
     // Automatically answer incoming call
-    window.addEventListener('ziwo-active', (ev) => {
-      // ev holds an instance of the Call in its details
-      console.log(ev);
-    });
+   
     effect(() => {
       if (this.store.auth.GroupID === 1006) {
         if (this.tokenZIWO()) {
@@ -130,6 +127,10 @@ export class CRMComponent {
         this.store = d;
         this.tokenZIWO.set(this.store.auth.tokenZIWO!);
       });
+       window.addEventListener('ziwo-active', (ev) => {
+      // ev holds an instance of the Call in its details
+      console.log(ev);
+    });
   }
 
   @ViewChild('modal22') modal22!: NgxCustomModalComponent;
